@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ColorCut AI — AI Background Remover &amp; Color Changer</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#acedff",
+            "secondary-fixed-dim": "#bec6e0",
+            "primary": "#3525cd",
+            "surface-container": "#e5eeff",
+            "on-error-container": "#93000a",
+            "surface": "#f8f9ff",
+            "secondary-container": "#dae2fd",
+            "on-secondary-container": "#5c647a",
+            "surface-bright": "#f8f9ff",
+            "primary-fixed": "#e2dfff",
+            "surface-container-lowest": "#ffffff",
+            "tertiary": "#00505f",
+            "transparency-light": "#FFFFFF",
+            "border-hover": "#CBD5E1",
+            "on-primary-container": "#dad7ff",
+            "surface-tint": "#4d44e3",
+            "inverse-primary": "#c3c0ff",
+            "surface-container-high": "#dce9ff",
+            "on-background": "#0b1c30",
+            "secondary": "#565e74",
+            "on-surface": "#0b1c30",
+            "inverse-surface": "#213145",
+            "alert-rose": "#F43F5E",
+            "on-secondary-fixed": "#131b2e",
+            "on-tertiary-container": "#93e8ff",
+            "on-secondary-fixed-variant": "#3f465c",
+            "success-emerald": "#10B981",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "on-primary": "#ffffff",
+            "transparency-dark": "#E2E8F0",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-fixed-variant": "#3323cc",
+            "surface-canvas": "#F8FAFC",
+            "on-primary-fixed": "#0f0069",
+            "border-subtle": "#E2E8F0",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "surface-variant": "#d3e4fe",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#464555",
+            "secondary-fixed": "#dae2fd",
+            "tertiary-container": "#006a7c",
+            "outline-variant": "#c7c4d8",
+            "surface-container-highest": "#d3e4fe",
+            "surface-dim": "#cbdbf5",
+            "on-tertiary-fixed": "#001f26",
+            "outline": "#777587",
+            "on-tertiary": "#ffffff",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#c3c0ff",
+            "accent-indigo-light": "#6366F1",
+            "primary-container": "#4f46e5",
+            "on-error": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-2xl": "2rem",
+            "space-lg": "1rem",
+            "space-xxs": "0.125rem",
+            "gutter-desktop": "1.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "0.75rem",
+            "space-3xl": "3rem",
+            "space-sm": "0.5rem",
+            "margin-tablet": "2rem",
+            "gutter": "1rem",
+            "margin-desktop": "3rem",
+            "margin": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-hero-mobile": ["Plus Jakarta Sans"],
+            "label-mono": ["JetBrains Mono"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-hero-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .checkerboard-pattern {
+      background-image: linear-gradient(45deg, #E2E8F0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #E2E8F0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #E2E8F0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #E2E8F0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #FFFFFF;
+    }
+    .drop-active {
+      border-color: #4f46e5 !important;
+      background-color: rgba(79, 70, 229, 0.04) !important;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- 1. TopNavBar (Shared Component from JSON) -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-border-subtle dark:border-outline-variant shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-16">
+<!-- Brand Logo -->
+<a class="flex items-center gap-2.5 text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary tracking-tight" href="#">
+<div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="content_cut">content_cut</span>
+</div>
+<span class="flex items-center gap-1.5">
+          ColorCut AI
+          <span class="bg-secondary-container text-on-secondary-container text-label-sm font-label-sm px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Free Tool</span>
+</span>
+</a>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 text-body-md font-body-md">
+<a class="text-primary-container dark:text-inverse-primary font-semibold border-b-2 border-primary-container dark:border-inverse-primary pb-1" href="#hero">Home</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-on-surface dark:hover:text-inverse-on-surface font-medium transition-colors" href="#how-it-works">How It Works</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-on-surface dark:hover:text-inverse-on-surface font-medium transition-colors" href="#faq">FAQ</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-3">
+<button aria-label="Help" class="w-9 h-9 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+</button>
+<button aria-label="Toggle theme contrast" class="w-9 h-9 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="contrast">contrast</span>
+</button>
+<a class="bg-primary-container hover:bg-primary text-on-primary text-label-md font-label-md px-4 py-2 rounded-xl font-medium shadow-sm active:scale-95 transition-all duration-150 flex items-center gap-1.5" href="#upload-card">
+<span class="material-symbols-outlined text-[18px]" data-icon="cloud_upload">cloud_upload</span>
+          Upload Image
+        </a>
+</div>
+</div>
+</header>
+<!-- 2. Hero Section -->
+<section class="relative pt-12 pb-16 md:py-20 overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-surface" id="hero">
+<!-- Subtle Background Ambient Rings -->
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-primary-fixed opacity-40 blur-3xl pointer-events-none rounded-full"></div>
+<div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+<!-- Copy Anchor -->
+<div class="text-center max-w-3xl mx-auto mb-10 md:mb-12">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-lowest border border-border-subtle shadow-sm mb-4">
+<span class="w-2 h-2 rounded-full bg-success-emerald animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-secondary font-medium tracking-wide">Version 2.4 Browser-Direct Engine Active</span>
+</div>
+<h1 class="text-display-hero-mobile md:text-display-hero font-display-hero text-on-surface tracking-tight mb-4">
+          Remove Backgrounds.<br class="hidden sm:inline"/>
+<span class="text-primary-container">Change Colors. Done.</span>
+</h1>
+<p class="text-body-lg font-body-lg text-secondary max-w-2xl mx-auto">
+          Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and no account required.
+        </p>
+</div>
+<!-- Prominent Upload Card Area -->
+<div class="max-w-3xl mx-auto" id="upload-card">
+<div class="bg-surface-container-lowest rounded-2xl border border-border-subtle shadow-lg p-6 md:p-10 transition-all duration-200">
+<!-- Dropzone -->
+<div class="border-2 border-dashed border-border-subtle hover:border-primary-container rounded-2xl p-8 md:p-12 text-center transition-all duration-200 cursor-pointer bg-surface/50 group" id="drop-zone">
+<input accept="image/png, image/jpeg, image/webp" class="hidden" id="file-input" type="file"/>
+<div class="w-16 h-16 rounded-2xl bg-surface-container-low group-hover:bg-primary-fixed text-primary-container mx-auto flex items-center justify-center mb-4 transition-colors duration-200">
+<span class="material-symbols-outlined text-[32px]" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-1">
+              Upload Your Image
+            </h3>
+<p class="text-body-md font-body-md text-secondary mb-6">
+              Drag and drop your image here or click browse
+            </p>
+<button class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-on-primary text-label-md font-label-md font-medium px-6 py-3 rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all duration-150" onclick="document.getElementById('file-input').click()" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_photo_alternate">add_photo_alternate</span>
+              Choose Image
+            </button>
+<!-- Metadata info -->
+<div class="flex flex-wrap items-center justify-center gap-4 mt-6 text-body-sm font-body-sm text-secondary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="check_circle">check_circle</span>
+                JPG, PNG, WebP
+              </span>
+<span class="text-border-subtle">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="straighten">straighten</span>
+                Max 15MB
+              </span>
+<span class="text-border-subtle">•</span>
+<span class="flex items-center gap-1 text-primary-container font-medium">
+<span class="material-symbols-outlined text-[16px]" data-icon="bolt">bolt</span>
+                Instant AI processing
+              </span>
+</div>
+</div>
+<!-- Browser Security Tag -->
+<div class="mt-4 pt-4 border-t border-border-subtle flex items-center justify-center gap-2 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px] text-success-emerald" data-icon="shield">shield</span>
+<span>Your images are processed in your browser whenever possible.</span>
+</div>
+</div>
+<!-- Sample Row -->
+<div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-wider font-semibold">
+            Or test with a sample photo:
+          </span>
+<div class="flex items-center gap-3">
+<!-- Sample 1 -->
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-xl border border-border-subtle bg-surface-container-lowest hover:border-primary-container hover:shadow-sm transition-all duration-150" onclick="loadSample(1)" type="button">
+<div class="w-7 h-7 rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Close up studio portrait photography of a confident professional woman wearing a dark navy blazer, warm studio key lighting against a blurred bustling modern office backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEVmGuQ_9UW4-UlyxG_s7QqJN1f_vKpWQCjfaxHHD7mVmj0_BuXmzgusVgp2qtEVDmVPsge41fbdGUIz630Ad89HolmoYEDFI0Cvg-DaV5Jp9mPi_QKweaAyiB2dr8bHstnlP2O63mH-Y4yV7KfYM4wrFK36RUzFWyRBk1MWB6n8RC-LKjNjTW3lBOO6VlpyAEE6fi-emBE9llORGby7ZgbUFQK-BM7qwFsXnUCFpuK3B9M16p1NZc"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface font-medium group-hover:text-primary">Portrait</span>
+</button>
+<!-- Sample 2 -->
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-xl border border-border-subtle bg-surface-container-lowest hover:border-primary-container hover:shadow-sm transition-all duration-150" onclick="loadSample(2)" type="button">
+<div class="w-7 h-7 rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="High quality commercial product photography of a modern minimalist wireless leather headphone set shot on an outdoor stone bench with warm natural golden hour light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4BJQNsggXHpVV4VG20Gaqoh9rS1JxB7cht_rPiG0OfyFaRQiULW8nR2_WMIauI-HyCAVBnAm3YrA55bnKJE1RanSDqLNsKlgnE5b8YjH2hodgCBsAv-y3ctCXpn6V1IEvWJJs25pPglfCg9P4-vfV4eb2EwpNps-MArjPiYJ257ypcy0az_JrCJIhgyeACfrS7tOmDbUQsUFxHPVF9-nyXRAGa476jNGvtBIMkS1msFEhMy60PuLV"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface font-medium group-hover:text-primary">Product</span>
+</button>
+<!-- Sample 3 -->
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-xl border border-border-subtle bg-surface-container-lowest hover:border-primary-container hover:shadow-sm transition-all duration-150" onclick="loadSample(3)" type="button">
+<div class="w-7 h-7 rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Crisp profile portrait photograph of a smiling young man in a clean casual white shirt, shot outdoors with dappled green park trees in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDoBMsxmV-7I2IDkrODeg33WsDBEsGFzdxE7S68rx37VrkVTd3sBsJLhJA3QmO2KZgEbY4sogCOw4fEwCtoePTzKW8d-a8EmQpL9PQ15Sye5mKs_aUlNbEB0cwzj0oILFh83dD3LFUA4_37Bz9A9uG7JOZZ2Ryyf4fulj8-UV1kRpc11ontMcQxPe46tcEfaPXCjaiO5_0LRT71S5oI2SREFaV3w4noFoOjR0mzDYCaJ9Yw4Ovkzh_"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface font-medium group-hover:text-primary">Casual</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Interactive Before-and-After Comparison Showcase -->
+<section class="py-16 md:py-24 bg-surface-container-lowest border-y border-border-subtle">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<span class="text-label-sm font-label-sm text-primary-container uppercase font-semibold tracking-wider">AI Precision Cutout Engine</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mt-1">
+            See the Magic: Three Visual States
+          </h2>
+<p class="text-body-md font-body-md text-secondary mt-1">
+            Inspect the sub-pixel hair cutouts, flawless transparency, and rich solid color fills.
+          </p>
+</div>
+<!-- State Selector Tabs -->
+<div class="inline-flex p-1 rounded-xl bg-surface-container-low border border-border-subtle self-start md:self-auto">
+<button class="px-4 py-1.5 rounded-lg text-label-md font-label-md font-medium text-secondary hover:text-on-surface transition-all" id="tab-btn-original" onclick="switchState('original')">
+            Original
+          </button>
+<button class="px-4 py-1.5 rounded-lg text-label-md font-label-md font-medium bg-surface-container-lowest text-primary shadow-sm" id="tab-btn-cutout" onclick="switchState('cutout')">
+            Cutout (Transparent)
+          </button>
+<button class="px-4 py-1.5 rounded-lg text-label-md font-label-md font-medium text-secondary hover:text-on-surface transition-all" id="tab-btn-solid" onclick="switchState('solid')">
+            Solid Color
+          </button>
+</div>
+</div>
+<!-- The 3 Comparison Cards Grid (Desktop View) & Interactive Focus View -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Step 1: Original Busy Portrait -->
+<div class="group relative rounded-2xl border border-border-subtle overflow-hidden bg-surface-canvas hover:shadow-md transition-all duration-200">
+<div class="p-4 border-b border-border-subtle flex items-center justify-between bg-surface-container-lowest">
+<span class="text-label-md font-label-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-label-sm">1</span>
+              Original Portrait
+            </span>
+<span class="text-label-sm font-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded">Cluttered BG</span>
+</div>
+<div class="h-80 relative overflow-hidden bg-surface-container flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Portrait photography of a confident entrepreneur standing in a crowded, visually busy co-working coffee shop with warm ambient street lights and bokeh blur in the deep background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyuzjDeZL3qlBR_F8qJvY0VJDOsA0u22Rj1qQO-NhB8AxbwcbcNbNgAxU1rtuVnGWetmiWPtLVQqQGg_jAPY80dymjE1VrS4hiXRbLyXvSJdvkQ1j6a6drc65AMhaVYOgn3f8q4gzXsC6QylYIx-27WfF6VPmyI-5romthofWRTU838e9GcVn32nko4AQPmYDBmnKM3th95t20HpP_iMnaVdsbvFx8TW2zNXklzTGuAMeMIdIh7-ta"/>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 backdrop-blur-sm text-inverse-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="photo_camera">photo_camera</span>
+              Original photo
+            </div>
+</div>
+</div>
+<!-- Step 2: Clean Cutout on Checkerboard -->
+<div class="group relative rounded-2xl border-2 border-primary-container shadow-md overflow-hidden bg-surface-container-lowest">
+<div class="p-4 border-b border-border-subtle flex items-center justify-between bg-surface-container-lowest">
+<span class="text-label-md font-label-md font-semibold text-primary flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-label-sm font-label-sm">2</span>
+              Clean Cutout
+            </span>
+<span class="text-label-sm font-label-sm text-primary font-medium bg-primary-fixed px-2 py-0.5 rounded">Alpha PNG</span>
+</div>
+<!-- Checkerboard canvas layer -->
+<div class="h-80 relative checkerboard-pattern flex items-center justify-center">
+<img class="w-full h-full object-contain p-2" data-alt="Flawless transparent cutout portrait of an elegant woman with intricate flyaway hair strands isolated seamlessly with zero background artifacts, high contrast clean edge detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKp333PvdLIYrd5smoL9yoakQwLHOlLL9-oNLqQJTCMKJHVwa3Is2iispU4_iTDwhbGGH3NBW98KN6c-9vuyqWl47zTjC64QoU76Dnjf-bVahSAPcjG2aa0BvTERho6HZD2wi0bwHf11NGPdAQHM0SvWvbpg2oqzpdGvehcAYPZR_LNZUU0zOh67PoqkXgpMzzVjQRGcitfC9Mj88UGOXvq8S3Q3E_6USfFPgH3Fms6pUGtZ8y4THX"/>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm border border-border-subtle shadow-xs flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="grid_view">grid_view</span>
+              Checkerboard transparency
+            </div>
+</div>
+</div>
+<!-- Step 3: Studio Solid Color Background -->
+<div class="group relative rounded-2xl border border-border-subtle overflow-hidden bg-surface-canvas hover:shadow-md transition-all duration-200" id="solid-card">
+<div class="p-4 border-b border-border-subtle flex items-center justify-between bg-surface-container-lowest">
+<span class="text-label-md font-label-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-label-sm">3</span>
+              Studio Solid Color
+            </span>
+<!-- Swatches selector bar -->
+<div class="flex items-center gap-1.5" id="swatch-container">
+<button class="w-5 h-5 rounded-full bg-primary-container ring-2 ring-primary ring-offset-1 transition-transform hover:scale-110" onclick="setStudioColor('#4F46E5')" title="Indigo"></button>
+<button class="w-5 h-5 rounded-full bg-surface-container ring-1 ring-border-subtle hover:scale-110 transition-transform" onclick="setStudioColor('#E0E7FF')" title="Soft Blue"></button>
+<button class="w-5 h-5 rounded-full bg-surface-canvas ring-1 ring-border-subtle hover:scale-110 transition-transform" onclick="setStudioColor('#F1F5F9')" title="Clean Slate"></button>
+<button class="w-5 h-5 rounded-full bg-amber-100 ring-1 ring-border-subtle hover:scale-110 transition-transform" onclick="setStudioColor('#FEF3C7')" title="Warm Beige"></button>
+</div>
+</div>
+<div class="h-80 relative bg-primary-container flex items-center justify-center transition-colors duration-300" id="studio-bg-display">
+<img class="w-full h-full object-contain p-2" data-alt="Cutout subject rendered against a clean solid minimal studio color backdrop, creating a polished executive headshot suitable for corporate and creative profiles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPrlE0HcVRXJRQrOqJ5zVPwhcb6D6ZxNXJNHp17xfpyGTPv4h4DMKG2tkqqnKFSvOmTNDhV7au3mcc4DeO-cUMBqy8MASZ91T1ZXwZzg1EIsuBI9U6I-uztgP2VvmM5KtU2eO1t9gKM9ZszkZhdzElnAeol7bYd3pmi1NsAqkFgqogYZzhJ22-B4HHpPuUm8TG8dBv8RJfXEjSik9YMLpiu237tGIb6z2tIsalvO14G4uHYpXa10CX"/>
+<div class="absolute bottom-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm border border-border-subtle shadow-xs flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="palette">palette</span>
+              Custom solid fill
+            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. How It Works Section -->
+<section class="py-16 md:py-24 bg-surface" id="how-it-works">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-label-sm font-label-sm text-primary-container uppercase font-semibold tracking-wider">Streamlined 3-Step Flow</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mt-2">
+          How ColorCut Works
+        </h2>
+<p class="text-body-md font-body-md text-secondary mt-2">
+          Transform any photo into a ready-to-publish graphic in three simple interactions.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Step 1 Card -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-border-subtle shadow-sm hover:shadow-md transition-all duration-200 relative">
+<div class="w-12 h-12 rounded-xl bg-secondary-container text-primary flex items-center justify-center font-bold text-headline-sm font-headline-sm mb-6">
+            1
+          </div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary-container mb-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="file_upload">file_upload</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">
+            Upload Your Image
+          </h3>
+<p class="text-body-md font-body-md text-secondary">
+            Choose a photo from your device. Supported formats include JPG, PNG, and WebP up to 15MB.
+          </p>
+</div>
+<!-- Step 2 Card -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-border-subtle shadow-sm hover:shadow-md transition-all duration-200 relative">
+<div class="w-12 h-12 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-bold text-headline-sm font-headline-sm mb-6">
+            2
+          </div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary-container mb-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">
+            Remove the Background
+          </h3>
+<p class="text-body-md font-body-md text-secondary">
+            Automatically separate your subject from the background using local browser-accelerated segmentation neural networks.
+          </p>
+</div>
+<!-- Step 3 Card -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-border-subtle shadow-sm hover:shadow-md transition-all duration-200 relative">
+<div class="w-12 h-12 rounded-xl bg-secondary-container text-primary flex items-center justify-center font-bold text-headline-sm font-headline-sm mb-6">
+            3
+          </div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary-container mb-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="download">download</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">
+            Choose a Color &amp; Download
+          </h3>
+<p class="text-body-md font-body-md text-secondary">
+            Select your preferred color or export clean transparent PNGs. Save full resolution outputs instantly with zero watermarks.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Supported Use Cases (4 Clean Grid Cards) -->
+<section class="py-16 md:py-24 bg-surface-container-lowest border-t border-border-subtle">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<span class="text-label-sm font-label-sm text-primary-container uppercase font-semibold tracking-wider">Versatile Applications</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mt-1">
+            Tailored For Every Creator &amp; Professional
+          </h2>
+<p class="text-body-md font-body-md text-secondary mt-1">
+            From marketplaces to executive boards, produce industry-standard imagery in seconds.
+          </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Use Case 1: Professional Profile Photos -->
+<div class="rounded-2xl border border-border-subtle bg-surface hover:border-primary-container transition-all duration-200 overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sophisticated corporate headshot of a business executive against a solid soft grey background, wearing a tailored charcoal suit, sharp professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfyVvYMFZ2PsYyd6UbJLkp2CK3pTlO-spJHOkPPclAv0PuuAXzpUOW0KN76qrzz1XRilD_OehXu62DHqUvp3PDySaffhbI-r4et8ahQ1OR1ShbUgGu_uha_NS2nZsuynpVuklPL7x1FS2gYc_mjVN7jlOIhRWnoj8L46aOR8cPR-xnaC65PKAv_O_LdIk4swtE2XYBfeaukGY4pBrV4AFPdO4bspjch6WiKwXG45MJe0SeZyeykFnp"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface font-medium border border-border-subtle">
+              LinkedIn &amp; Resumes
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-1">
+                Professional Profile Photos
+              </h3>
+<p class="text-body-sm font-body-sm text-secondary">
+                Eliminate kitchen or living room backdrops. Replace them with sleek neutral studio tones for LinkedIn and resumes.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center text-primary text-label-sm font-label-sm font-semibold gap-1">
+<span>Ready in 1 click</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Use Case 2: E-commerce Product Images -->
+<div class="rounded-2xl border border-border-subtle bg-surface hover:border-primary-container transition-all duration-200 overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Clean minimalist e-commerce product photograph of a modern designer wristwatch isolated on a crisp pure white marketplace backdrop, soft shadow below." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRoGrWIBbSZVDuRyjqSp-nRE162SiCn08YQNcjAAUhiK1vmZeoIBUn9zP9TrjD_fQqiS6atBw3k3J72dzx-hB6RbquRoL2kZsuQ4Vhg2Y9yFeMRkCeURuWpEJk_aG78MTlO675KnDfZtG1FMWl82J0OpJsej3GBHz-sR2L7_JPSyyj0-R3bYY0EOb40If08OhAHpHKvtqEXUonre_HqL3S4lPXr78To5QWmzYP4hwf7raPNFmzr8H-"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface font-medium border border-border-subtle">
+              Amazon &amp; Shopify
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-1">
+                E-commerce Product Images
+              </h3>
+<p class="text-body-sm font-body-sm text-secondary">
+                Generate clean, compliant pure white marketplace backgrounds that increase customer trust and conversion rates.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center text-primary text-label-sm font-label-sm font-semibold gap-1">
+<span>Amazon compliant</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Use Case 3: Job Application Photos -->
+<div class="rounded-2xl border border-border-subtle bg-surface hover:border-primary-container transition-all duration-200 overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Official passport identification photo portrait of a young person on an immaculate pale blue background, neutral expression, balanced high-key frontal lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7RNcGO_DwhFBDcJ4I8TSGq8kcduPdvO8CC0X5qrS6Sf8tkhwaRSXUSJh09D5VKDU2U9tCDE_4yutuDOalkv_8QtINIVesrqme6ReSH1pHpqsX6Ie64aKNlPe7Oa3bOeaQll9wGX70Dg4XklLqA3oPWc9YwTXo-B4-_-sJUvAvp0vJtx0G6USYbgfINUV9MKSD5pDMCMehtiBiuXv2NVf0XJdjnVmcYQlTVBtXCvFNMWb2N1gzzPmC"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface font-medium border border-border-subtle">
+              ID &amp; Visa Standards
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-1">
+                Job Application Photos
+              </h3>
+<p class="text-body-sm font-body-sm text-secondary">
+                Create clean neutral passport and ID tones (off-white, subtle light cyan, light gray) suited for global visa standards.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center text-primary text-label-sm font-label-sm font-semibold gap-1">
+<span>Official specs</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Use Case 4: Social Media Content -->
+<div class="rounded-2xl border border-border-subtle bg-surface hover:border-primary-container transition-all duration-200 overflow-hidden flex flex-col group">
+<div class="h-48 overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Dynamic social media content creator portrait on a bright vibrant electric indigo background, expressive joyful pose, studio aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZgRw1IA-IDxjCfWp3fUez80FtQ_6yDXolz2OagM9QWShipIYPe2nX5UP2cICXWox0TLLsRyKULSlvmG8ZjyQGIbx1sFPIp3Cgu0sdhqTVYNJ7m7zpnNJ-9XdCtoYBq_2qlJ5lz0ElVXpbwjY31FFpJsibt9bggG7wPmMDrBfCAxgCf8i-QRbGh6EyP7xp0a2wIjgXgfjKV_bYJrNUhIhTVC02w6knyD-VjMXUMK_pSgCy5tLIFVbN"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-0.5 rounded text-label-sm font-label-sm text-on-surface font-medium border border-border-subtle">
+              YouTube &amp; TikTok
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-1">
+                Social Media Content
+              </h3>
+<p class="text-body-sm font-body-sm text-secondary">
+                Design eye-catching colored portrait cutouts that pop on feeds, YouTube thumbnails, podcast covers, and banners.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center text-primary text-label-sm font-label-sm font-semibold gap-1">
+<span>Maximum engagement</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Frequently Asked Questions (FAQ Accordion) -->
+<section class="py-16 md:py-24 bg-surface" id="faq">
+<div class="max-w-4xl mx-auto px-6 md:px-12">
+<div class="text-center mb-12">
+<span class="text-label-sm font-label-sm text-primary-container uppercase font-semibold tracking-wider">Got Questions?</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mt-2">
+          Frequently Asked Questions
+        </h2>
+<p class="text-body-md font-body-md text-secondary mt-1">
+          Everything you need to know about ColorCut's privacy, capabilities, and formats.
+        </p>
+</div>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Is ColorCut free to use?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            Yes! ColorCut is 100% free with no hidden paywalls, subscription tiers, or watermark penalties on your downloaded files.
+          </div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Do I need to create an account?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            No account, email, or registration is required. You can simply drag and drop your image, process it instantly, and download the finished result right away.
+          </div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Which image formats are supported?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            We support standard JPG, JPEG, PNG, and modern WebP image formats. Maximum supported file size is 15MB to ensure optimal browser rendering performance.
+          </div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Can I change the background to white or another solid color?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            Yes, absolutely. Once the background is removed, you can choose from curated color presets (white, warm beige, corporate navy, slate gray) or enter custom HEX codes using the color picker.
+          </div>
+</div>
+<!-- FAQ Item 5 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Can I download a transparent PNG?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            Yes. You can leave the alpha transparency layer intact and export high-resolution transparent PNG files ready to drag directly into Figma, Canva, or Photoshop.
+          </div>
+</div>
+<!-- FAQ Item 6 -->
+<div class="faq-item bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden transition-all duration-200">
+<button class="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none" onclick="toggleFaq(this)" type="button">
+<span class="text-headline-sm font-headline-sm text-on-surface font-semibold">Are my images uploaded to a server?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 pt-0 text-body-md font-body-md text-secondary">
+            Whenever possible, ColorCut compiles lightweight WebAssembly segmentation models directly into your browser memory. Your private photos never leave your device or touch external storage drives.
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Footer (Shared Component from JSON) -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface full-width border-t border-border-subtle dark:border-outline-variant flat no shadows">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto py-8 gap-4">
+<!-- Brand & Tagline -->
+<div class="flex flex-col items-center md:items-start gap-1">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-lg bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_cut">content_cut</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary">
+            ColorCut AI
+          </span>
+</div>
+<p class="text-body-sm font-body-sm text-secondary dark:text-secondary-fixed-dim">
+          Remove backgrounds. Make images yours.
+        </p>
+</div>
+<!-- Copyright Statement -->
+<div class="text-body-sm font-body-sm text-secondary dark:text-secondary-fixed-dim text-center md:text-left">
+        © 2025 ColorCut AI. All client-side image processing stays in your browser.
+      </div>
+<!-- Navigation Links -->
+<div class="flex items-center gap-6 text-label-sm font-label-sm">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:underline transition-all duration-150" href="#">Privacy Policy</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:underline transition-all duration-150" href="#">Terms of Service</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:underline transition-all duration-150" href="#">API</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-inverse-primary hover:underline transition-all duration-150" href="#">Feedback</a>
+</div>
+</div>
+</footer>
+<!-- Inline Vanilla Interactions -->
+<script>
+    // FAQ Accordion Toggle
+    function toggleFaq(button) {
+      const parent = button.parentElement;
+      const content = parent.querySelector('.faq-content');
+      const icon = button.querySelector('.faq-icon');
+      
+      const isOpen = !content.classList.contains('hidden');
+      
+      // Close all others
+      document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+      
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Interactive Comparison State Switcher
+    function switchState(state) {
+      const btnOriginal = document.getElementById('tab-btn-original');
+      const btnCutout = document.getElementById('tab-btn-cutout');
+      const btnSolid = document.getElementById('tab-btn-solid');
+      
+      const inactiveClass = 'px-4 py-1.5 rounded-lg text-label-md font-label-md font-medium text-secondary hover:text-on-surface transition-all';
+      const activeClass = 'px-4 py-1.5 rounded-lg text-label-md font-label-md font-medium bg-surface-container-lowest text-primary shadow-sm';
+
+      btnOriginal.className = inactiveClass;
+      btnCutout.className = inactiveClass;
+      btnSolid.className = inactiveClass;
+
+      if(state === 'original') {
+        btnOriginal.className = activeClass;
+      } else if(state === 'cutout') {
+        btnCutout.className = activeClass;
+      } else if(state === 'solid') {
+        btnSolid.className = activeClass;
+      }
+    }
+
+    // Studio Background Swatch Switcher
+    function setStudioColor(hex) {
+      const display = document.getElementById('studio-bg-display');
+      display.style.backgroundColor = hex;
+    }
+
+    // Sample Loader Feedback
+    function loadSample(id) {
+      const dropZone = document.getElementById('drop-zone');
+      dropZone.classList.add('drop-active');
+      setTimeout(() => {
+        dropZone.classList.remove('drop-active');
+      }, 400);
+    }
+
+    // Drag and Drop Event Feedback
+    const dropArea = document.getElementById('drop-zone');
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropArea.classList.add('drop-active');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('drop-active');
+      }, false);
+    });
+  </script>
+</body></html>

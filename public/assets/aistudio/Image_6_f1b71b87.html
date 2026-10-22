@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>ColorCut AI - Mobile Homepage</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-tertiary-container": "#93e8ff",
+            "secondary-fixed-dim": "#bec6e0",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "surface": "#f8f9ff",
+            "on-secondary-container": "#5c647a",
+            "on-primary-container": "#dad7ff",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "border-hover": "#CBD5E1",
+            "alert-rose": "#F43F5E",
+            "outline": "#777587",
+            "inverse-on-surface": "#eaf1ff",
+            "primary-fixed-dim": "#c3c0ff",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed": "#131b2e",
+            "on-primary-fixed": "#0f0069",
+            "on-surface-variant": "#464555",
+            "tertiary-container": "#006a7c",
+            "surface-dim": "#cbdbf5",
+            "surface-variant": "#d3e4fe",
+            "inverse-surface": "#213145",
+            "on-error": "#ffffff",
+            "success-emerald": "#10B981",
+            "primary": "#3525cd",
+            "surface-container-highest": "#d3e4fe",
+            "surface-canvas": "#F8FAFC",
+            "on-surface": "#0b1c30",
+            "primary-fixed": "#e2dfff",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-fixed": "#acedff",
+            "on-tertiary": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "secondary": "#565e74",
+            "surface-container-low": "#eff4ff",
+            "transparency-light": "#FFFFFF",
+            "surface-container": "#e5eeff",
+            "primary-container": "#4f46e5",
+            "outline-variant": "#c7c4d8",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed": "#001f26",
+            "tertiary": "#00505f",
+            "surface-container-high": "#dce9ff",
+            "secondary-fixed": "#dae2fd",
+            "surface-tint": "#4d44e3",
+            "on-primary-fixed-variant": "#3323cc",
+            "background": "#f8f9ff",
+            "border-subtle": "#E2E8F0",
+            "on-primary": "#ffffff",
+            "transparency-dark": "#E2E8F0",
+            "accent-indigo-light": "#6366F1",
+            "secondary-container": "#dae2fd",
+            "inverse-primary": "#c3c0ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-2xl": "2rem",
+            "space-xl": "1.5rem",
+            "gutter": "1rem",
+            "space-3xl": "3rem",
+            "space-xxs": "0.125rem",
+            "gutter-desktop": "1.5rem",
+            "margin-tablet": "2rem",
+            "margin-desktop": "3rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "label-md": ["Inter"],
+            "display-hero": ["Plus Jakarta Sans"],
+            "label-mono": ["JetBrains Mono"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "display-hero-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "display-hero": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-mono": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+            "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+            "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "display-hero-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .checkerboard-pattern {
+      background-color: #ffffff;
+      background-image: 
+        linear-gradient(45deg, #f1f5f9 25%, transparent 25%), 
+        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #f1f5f9 75%), 
+        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+    /* Mobile app container viewport constraint */
+    .mobile-frame {
+      max-width: 390px;
+      margin: 0 auto;
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(15, 23, 42, 0.08);
+      position: relative;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-canvas text-on-surface antialiased font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<div class="mobile-frame bg-surface-canvas flex flex-col min-h-screen">
+<!-- 1. Header (Shared Component: TopNavBar adapted for Mobile 390px) -->
+<header class="sticky top-0 z-50 bg-surface-container-lowest border-b border-border-subtle shadow-sm px-4 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-sm text-headline-sm font-extrabold text-primary tracking-tight">ColorCut AI</span>
+<span class="bg-surface-container text-primary-container text-[10px] font-semibold px-1.5 py-0.5 rounded-full border border-secondary-container">Free Tool</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="Upload shortcut" class="p-2 text-secondary hover:text-on-surface rounded-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]" data-icon="contrast">contrast</span>
+</button>
+<button aria-label="Open mobile menu" class="p-2 text-secondary hover:text-on-surface rounded-lg active:scale-95 transition-transform" id="menu-btn">
+<span class="material-symbols-outlined text-[24px]" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<!-- Mobile Drawer Navigation (Interactive Menu overlay) -->
+<div class="hidden fixed inset-0 z-40 bg-on-surface/40 backdrop-blur-xs" id="mobile-menu">
+<div class="bg-surface-container-lowest w-4/5 max-w-[300px] h-full p-6 shadow-xl flex flex-col justify-between">
+<div class="space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-border-subtle">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">ColorCut AI</span>
+<button class="p-1 rounded-lg hover:bg-surface-container-low text-secondary" id="close-menu-btn">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<nav class="flex flex-col space-y-3">
+<a class="text-primary-container font-semibold border-b-2 border-primary-container pb-1 w-fit" href="#hero">Home</a>
+<a class="text-secondary hover:text-on-surface font-medium transition-colors py-1" href="#how-it-works">How It Works</a>
+<a class="text-secondary hover:text-on-surface font-medium transition-colors py-1" href="#faq">FAQ</a>
+<a class="text-secondary hover:text-on-surface font-medium transition-colors py-1" href="#use-cases">Use Cases</a>
+</nav>
+</div>
+<div class="pt-6 border-t border-border-subtle">
+<div class="flex items-center gap-2 text-secondary text-body-sm font-body-sm mb-4">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+<span>100% Client-Side Private</span>
+</div>
+<button class="w-full bg-primary-container text-on-primary font-headline-sm py-2.5 rounded-xl shadow-sm text-center">
+            Upload Image
+          </button>
+</div>
+</div>
+</div>
+<!-- Main Content Container -->
+<main class="flex-1 flex flex-col">
+<!-- 2. Hero & Mobile Upload Area -->
+<section class="px-4 pt-6 pb-8 flex flex-col items-center text-center" id="hero">
+<!-- Engine Status Badge -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-secondary-container text-secondary text-label-sm font-label-sm mb-4">
+<span class="w-2 h-2 rounded-full bg-success-emerald animate-pulse"></span>
+<span>Version 2.4 Browser-Direct Engine Active</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display-hero-mobile text-display-hero-mobile text-on-surface tracking-tight mb-3">
+          Remove Backgrounds.<br/><span class="text-primary-container">Change Colors.</span> Done.
+        </h1>
+<!-- Subheading -->
+<p class="font-body-md text-body-md text-secondary max-w-[340px] mb-6">
+          Instantly remove image backgrounds and replace with solid colors. Free, simple, no account required.
+        </p>
+<!-- High-priority touch-friendly Upload Card -->
+<div class="w-full bg-surface-container-lowest rounded-2xl border-2 border-dashed border-border-hover p-5 shadow-sm relative transition-all hover:border-primary-container hover:bg-primary-container/[0.02]">
+<div class="flex flex-col items-center">
+<!-- Upload Icon Cloud -->
+<div class="w-14 h-14 rounded-2xl bg-surface-container-low text-primary-container flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-[32px]" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-1">Upload Your Image</h2>
+<p class="font-body-sm text-body-sm text-secondary mb-4">Tap to browse or drop photo</p>
+<!-- Prominent Primary CTA Button -->
+<label class="w-full h-12 bg-primary-container active:scale-[0.98] hover:bg-primary transition-all duration-150 rounded-xl text-on-primary font-headline-sm text-headline-sm flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-primary-container/20">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_photo_alternate">add_photo_alternate</span>
+<span>Choose Image</span>
+<input accept="image/png, image/jpeg, image/webp" class="hidden" type="file"/>
+</label>
+<!-- Specs Info -->
+<div class="flex items-center gap-1.5 text-secondary text-[11px] font-label-mono mt-3">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+<span>JPG, PNG, WebP • Max 15MB • Instant AI</span>
+</div>
+<!-- Privacy Guarantee -->
+<div class="mt-4 pt-3 border-t border-border-subtle w-full flex items-center justify-center gap-1.5 text-secondary text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px] text-success-emerald" data-icon="lock">lock</span>
+<span>Your images are processed in your browser whenever possible.</span>
+</div>
+</div>
+</div>
+<!-- Quick Test Sample Avatars Row -->
+<div class="w-full mt-5 bg-surface-container-low/70 rounded-xl p-3 border border-border-subtle">
+<div class="text-left font-label-sm text-label-sm text-secondary mb-2 flex items-center justify-between">
+<span>Or test with a sample:</span>
+<span class="text-primary-container text-[11px] font-semibold">1-Tap Demo</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<!-- Sample 1 -->
+<button class="sample-btn flex items-center gap-2 p-1.5 rounded-lg bg-surface-container-lowest border border-border-subtle active:scale-95 transition-all text-left">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Close up crisp studio portrait headshot of a woman with vibrant lighting against an uncluttered professional grey studio backdrop, modern crisp aesthetic with high detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVwlHhtS72eNh39aDTYAkY0mHn8nhfYDGYT38mypnGjPg_EDq2L1I4c7ED5eqlt6KXBLyF_vj45crMcSPuv9SBr5OBnnNQTH5hrLNV49DoR_HO8FZMz6rqaF1whxf_oNiJSMGo-0A3oRZsqrgECS12Cqcjkoar0irKVWVE9deNtEEYZQStFmicKkA83CT50zOQAh8LwmQpKS5ZGdPtF706U5gsF2HO2daN1Ih3i4mOeWjckcJqhfOc"/>
+<div class="overflow-hidden">
+<div class="font-label-sm text-label-sm font-semibold truncate text-on-surface">Portrait</div>
+<div class="text-[10px] text-secondary truncate">Human AI</div>
+</div>
+</button>
+<!-- Sample 2 -->
+<button class="sample-btn flex items-center gap-2 p-1.5 rounded-lg bg-surface-container-lowest border border-border-subtle active:scale-95 transition-all text-left">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="High quality commercial product shot of modern sleek wireless headphones resting on a minimalist surface with subtle shadows and clean studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQdHssPV7Ax64mwu-3z4g4tsfP6g9nnbU477jOSQXsP7X51Tt7S8qoMHByiQ0TSMyFmNtyq_YpQLVmbap9IUC7FFh7oLaxvb0mkD8GameyjpqJMBTC-_8N93mdz92tzDH0i9qms6Nc30SPvEo_gwljlf0vo-qq2_gLdAsFQWCYeZ2mosh-cGRHkL6T1wcstGQKOKRFwlTF9jB3-TZXKZbgeYlPGTUYL2NYQH5eMQgtDxy2uAH8qP_H"/>
+<div class="overflow-hidden">
+<div class="font-label-sm text-label-sm font-semibold truncate text-on-surface">Product</div>
+<div class="text-[10px] text-secondary truncate">E-comm</div>
+</div>
+</button>
+<!-- Sample 3 -->
+<button class="sample-btn flex items-center gap-2 p-1.5 rounded-lg bg-surface-container-lowest border border-border-subtle active:scale-95 transition-all text-left">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A stylish casual street style photograph of a smiling young creative outdoors in soft natural daylight, shallow depth of field with architectural background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKfcbrlpF8cWpQUjsrkfY1cmdpEAx6gMJgnI0kdm0Pd0aT_g_tjBpw_QzlyU2jmtmrypyi4kIprYmAeOuQusEmIZoO6b-IJjoVOzYixldk5Xkl2PjSfeJAd4_WO_0XpTpTc9okeDtqx71phboOKUF47m54JEjc05BhW-M3zDoFYbv3WucD7z352i1Vr278GOTLRjjJ-WB54q8RCW2qmmrLn5SYEJYoI-RT_D35sP8uS-paGF3wxAja"/>
+<div class="overflow-hidden">
+<div class="font-label-sm text-label-sm font-semibold truncate text-on-surface">Casual</div>
+<div class="text-[10px] text-secondary truncate">Social</div>
+</div>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. Interactive Before/After Showcase -->
+<section class="px-4 py-6 bg-surface-container-low/50 border-y border-border-subtle">
+<div class="flex items-center justify-between mb-3">
+<div>
+<span class="text-primary font-label-sm text-label-sm tracking-wider uppercase">Live Interactive Demo</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">See the Magic: Three Visual States</h2>
+</div>
+</div>
+<!-- Segmented Pills Switcher -->
+<div class="flex p-1 bg-surface-container rounded-xl mb-4 border border-border-subtle" id="state-selector">
+<button class="state-tab flex-1 py-1.5 text-center font-label-md text-label-md rounded-lg text-secondary transition-all" data-state="original">
+            Original
+          </button>
+<button class="state-tab flex-1 py-1.5 text-center font-label-md text-label-md rounded-lg bg-surface-container-lowest text-primary font-semibold shadow-sm transition-all" data-state="cutout">
+            Cutout (PNG)
+          </button>
+<button class="state-tab flex-1 py-1.5 text-center font-label-md text-label-md rounded-lg text-secondary transition-all" data-state="color">
+            Solid Color
+          </button>
+</div>
+<!-- Showcase Card -->
+<div class="bg-surface-container-lowest rounded-2xl border border-border-subtle overflow-hidden shadow-sm">
+<!-- Viewport Box -->
+<div class="relative w-full h-72 checkerboard-pattern flex items-center justify-center overflow-hidden transition-colors duration-300" id="preview-stage">
+<!-- Cutout / Subject -->
+<img class="h-64 object-contain z-10 drop-shadow-md transition-all duration-300" data-alt="Ultra clean cutout portrait of a creative professional designer looking forward against a transparent background with precise hair mask edges and crisp rim illumination." id="stage-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpccwjP-QHw0HCWmJPkcLehckDSYOhMjyLSbqi28kNAMGKWjPouLVEUSiUq1WviVn3MKTXItlDCVVytb8us993Irh-DKi5wQznLs7pL__8OTjRYfTo7A1l73KmSB9AHFa0S1ELGhlyCt8z30e1T7Jp6ALo0hizcTI5Nrg3L0Pik_tL7rhvkAbuxYZhsHoA4ibdCIOtJeJuT1FDuArG7faR_cZzLXB2qc73f2GDzvlGK9SWXVA7jLgX"/>
+<!-- State indicator badge -->
+<div class="absolute top-3 left-3 z-20 bg-on-surface/80 backdrop-blur-md text-surface font-label-mono text-[11px] px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-sm" id="stage-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-success-emerald"></span>
+<span id="stage-badge-text">Alpha Transparency</span>
+</div>
+<!-- Viewport Crop Edge Crosshairs -->
+<div class="absolute inset-2 border border-dashed border-outline-variant/40 rounded-xl pointer-events-none z-10 flex flex-col justify-between p-1.5">
+<div class="flex justify-between text-outline/50 font-label-mono text-[9px]">
+<span>+ [0, 0]</span>
+<span>[1080 x 1080] +</span>
+</div>
+<div class="flex justify-between text-outline/50 font-label-mono text-[9px]">
+<span>+ 100%</span>
+<span>RGB/A +</span>
+</div>
+</div>
+</div>
+<!-- Color Customizer Drawer (Visible when Solid Color selected or preset chosen) -->
+<div class="p-3 bg-surface-container-lowest border-t border-border-subtle flex items-center justify-between gap-2">
+<span class="font-label-sm text-label-sm text-secondary">Quick Backdrop:</span>
+<div class="flex items-center gap-2">
+<button class="w-7 h-7 rounded-lg checkerboard-pattern border border-border-subtle focus:ring-2 focus:ring-primary focus:outline-none" onclick="setBackdrop('checkerboard')" title="Transparent"></button>
+<button class="w-7 h-7 rounded-lg bg-primary-container border border-white shadow-xs focus:ring-2 focus:ring-primary focus:outline-none" onclick="setBackdrop('#4F46E5')" title="Indigo"></button>
+<button class="w-7 h-7 rounded-lg bg-slate-900 border border-white shadow-xs focus:ring-2 focus:ring-primary focus:outline-none" onclick="setBackdrop('#0F172A')" title="Dark Slate"></button>
+<button class="w-7 h-7 rounded-lg bg-alert-rose border border-white shadow-xs focus:ring-2 focus:ring-primary focus:outline-none" onclick="setBackdrop('#F43F5E')" title="Vibrant Rose"></button>
+<button class="w-7 h-7 rounded-lg bg-success-emerald border border-white shadow-xs focus:ring-2 focus:ring-primary focus:outline-none" onclick="setBackdrop('#10B981')" title="Emerald"></button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. How It Works (Stacked 3-Step Flow) -->
+<section class="px-4 py-8" id="how-it-works">
+<div class="text-center mb-6">
+<span class="text-primary font-label-sm text-label-sm uppercase tracking-wider">Streamlined Pipeline</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold mt-1">Effortless in 3 Steps</h2>
+</div>
+<div class="space-y-3">
+<!-- Step 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-border-subtle flex items-start gap-3 shadow-xs">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center font-bold text-headline-sm shrink-0">
+              1
+            </div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="file_upload">file_upload</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Upload or Drop</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                Pick any portrait, product, or pet image from your phone gallery. No compression loss.
+              </p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-border-subtle flex items-start gap-3 shadow-xs">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-headline-sm shrink-0">
+              2
+            </div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="magic_button">magic_button</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">AI Isolates Subject</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                Our lightweight browser engine segments complex hair, fine edges, and fine details in 2 seconds.
+              </p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-border-subtle flex items-start gap-3 shadow-xs">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed text-tertiary-container flex items-center justify-center font-bold text-headline-sm shrink-0">
+              3
+            </div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="palette">palette</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Color & Download</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                Keep pure transparency or select studio color swatches. Export full-resolution PNG immediately.
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Versatile Use Cases -->
+<section class="px-4 py-8 bg-surface-container-low/40 border-t border-border-subtle" id="use-cases">
+<div class="text-center mb-6">
+<span class="text-primary font-label-sm text-label-sm uppercase tracking-wider">Versatile Use Cases</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold mt-1">Built For Every Workflow</h2>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-3.5 rounded-xl border border-border-subtle flex flex-col justify-between shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container mb-3">
+<span class="material-symbols-outlined text-[20px]" data-icon="badge">badge</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-[15px] font-bold text-on-surface mb-1 leading-snug">Profile Photos</h3>
+<p class="font-body-sm text-body-sm text-secondary text-[12px] leading-relaxed">
+                LinkedIn, Twitter, and Slack headshots with clean, distraction-free backdrops.
+              </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-3.5 rounded-xl border border-border-subtle flex flex-col justify-between shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container mb-3">
+<span class="material-symbols-outlined text-[20px]" data-icon="storefront">storefront</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-[15px] font-bold text-on-surface mb-1 leading-snug">E-commerce</h3>
+<p class="font-body-sm text-body-sm text-secondary text-[12px] leading-relaxed">
+                Uniform Amazon, Shopify & Etsy catalog shots on pure neutral white backgrounds.
+              </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-3.5 rounded-xl border border-border-subtle flex flex-col justify-between shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container mb-3">
+<span class="material-symbols-outlined text-[20px]" data-icon="contact_page">contact_page</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-[15px] font-bold text-on-surface mb-1 leading-snug">Job Applications</h3>
+<p class="font-body-sm text-body-sm text-secondary text-[12px] leading-relaxed">
+                Resume-ready portraits adhering to passport & visa photo color specifications.
+              </p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-3.5 rounded-xl border border-border-subtle flex flex-col justify-between shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container mb-3">
+<span class="material-symbols-outlined text-[20px]" data-icon="campaign">campaign</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-[15px] font-bold text-on-surface mb-1 leading-snug">Social Media</h3>
+<p class="font-body-sm text-body-sm text-secondary text-[12px] leading-relaxed">
+                Eye-popping YouTube thumbnails, stickers, and Instagram creator assets.
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FAQ Accordion -->
+<section class="px-4 py-8" id="faq">
+<div class="text-center mb-6">
+<span class="text-primary font-label-sm text-label-sm uppercase tracking-wider">Answers</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold mt-1">Frequently Asked</h2>
+</div>
+<div class="space-y-2.5">
+<!-- FAQ Item 1 -->
+<div class="border border-border-subtle rounded-xl bg-surface-container-lowest overflow-hidden">
+<button class="faq-toggle w-full px-4 py-3.5 text-left flex items-center justify-between gap-2 active:bg-surface-container-low transition-colors">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Is ColorCut free?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-4 pb-4 pt-1 font-body-sm text-body-sm text-secondary border-t border-border-subtle/50">
+              Yes, 100% free! You can isolate backgrounds and export high-resolution cutouts with zero watermarks or subscription traps.
+            </div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="border border-border-subtle rounded-xl bg-surface-container-lowest overflow-hidden">
+<button class="faq-toggle w-full px-4 py-3.5 text-left flex items-center justify-between gap-2 active:bg-surface-container-low transition-colors">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Do I need an account?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-4 pb-4 pt-1 font-body-sm text-body-sm text-secondary border-t border-border-subtle/50">
+              No registration or credit card is required. Simply select your image, customize the backdrop, and download your export instantly.
+            </div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="border border-border-subtle rounded-xl bg-surface-container-lowest overflow-hidden">
+<button class="faq-toggle w-full px-4 py-3.5 text-left flex items-center justify-between gap-2 active:bg-surface-container-low transition-colors">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Which formats are supported?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-4 pb-4 pt-1 font-body-sm text-body-sm text-secondary border-t border-border-subtle/50">
+              We support standard JPG, JPEG, PNG, and WebP files up to 15MB. Output is rendered as crisp transparent 32-bit PNG.
+            </div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="border border-border-subtle rounded-xl bg-surface-container-lowest overflow-hidden">
+<button class="faq-toggle w-full px-4 py-3.5 text-left flex items-center justify-between gap-2 active:bg-surface-container-low transition-colors">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Can I download transparent PNG?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 faq-icon" data-icon="expand_more">expand_more</span>
+</button>
+<div class="faq-content hidden px-4 pb-4 pt-1 font-body-sm text-body-sm text-secondary border-t border-border-subtle/50">
+              Absolutely. Choose the Cutout/Transparent tab, and the download file will have full alpha transparency ready for Figma, Canva, or Photoshop.
+            </div>
+</div>
+</div>
+</section>
+<!-- Bottom Floating Quick-Action Bar for Mobile UX -->
+<div class="sticky bottom-0 z-30 p-3 bg-surface-container-lowest/90 backdrop-blur-md border-t border-border-subtle">
+<label class="w-full h-11 bg-primary-container text-on-primary font-headline-sm text-headline-sm rounded-xl flex items-center justify-center gap-2 active:scale-95 shadow-md shadow-primary-container/25 cursor-pointer">
+<span class="material-symbols-outlined text-[20px]" data-icon="upload">upload</span>
+<span>Upload Image Now</span>
+<input accept="image/png, image/jpeg, image/webp" class="hidden" type="file"/>
+</label>
+</div>
+</main>
+<!-- 7. Mobile Footer (Shared Component: Footer adaptation) -->
+<footer class="bg-surface-container-lowest border-t border-border-subtle px-4 py-8 mt-auto">
+<div class="flex flex-col items-center text-center space-y-4">
+<!-- Brand Signature -->
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-md bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">ColorCut AI</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary max-w-[280px]">
+          Remove backgrounds. Make images yours.
+        </p>
+<!-- Privacy assurance -->
+<div class="flex items-center gap-1.5 text-label-sm font-label-sm text-secondary bg-surface-container px-3 py-1.5 rounded-full border border-border-subtle">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="security">security</span>
+<span>© 2025 ColorCut AI. All client-side image processing stays in your browser.</span>
+</div>
+<!-- Links Cluster -->
+<div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-label-sm font-label-sm pt-2">
+<a class="text-secondary hover:text-on-surface hover:underline transition-all" href="#">Privacy Policy</a>
+<span class="text-border-hover">•</span>
+<a class="text-secondary hover:text-on-surface hover:underline transition-all" href="#">Terms of Service</a>
+<span class="text-border-hover">•</span>
+<a class="text-secondary hover:text-on-surface hover:underline transition-all" href="#">API</a>
+<span class="text-border-hover">•</span>
+<a class="text-secondary hover:text-on-surface hover:underline transition-all" href="#">Feedback</a>
+</div>
+</div>
+</footer>
+</div>
+<!-- Interactive Logic -->
+<script>
+    // Mobile Drawer Toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function toggleMenu() {
+      mobileMenu.classList.toggle('hidden');
+    }
+
+    menuBtn?.addEventListener('click', toggleMenu);
+    closeMenuBtn?.addEventListener('click', toggleMenu);
+    mobileMenu?.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) toggleMenu();
+    });
+
+    // FAQ Accordion Interactivity
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.faq-icon');
+        const isOpen = !content.classList.contains('hidden');
+
+        // Close all other faqs
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Before/After State Switcher
+    const stage = document.getElementById('preview-stage');
+    const badgeText = document.getElementById('stage-badge-text');
+    const stateTabs = document.querySelectorAll('.state-tab');
+
+    stateTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        stateTabs.forEach(t => {
+          t.classList.remove('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-sm');
+          t.classList.add('text-secondary');
+        });
+        tab.classList.remove('text-secondary');
+        tab.classList.add('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-sm');
+
+        const state = tab.getAttribute('data-state');
+        if (state === 'original') {
+          stage.style.backgroundColor = '#CBD5E1';
+          stage.classList.remove('checkerboard-pattern');
+          badgeText.textContent = 'Original Raw Backdrop';
+        } else if (state === 'cutout') {
+          stage.style.backgroundColor = '';
+          stage.classList.add('checkerboard-pattern');
+          badgeText.textContent = 'Alpha Transparency';
+        } else if (state === 'color') {
+          stage.classList.remove('checkerboard-pattern');
+          stage.style.backgroundColor = '#4F46E5';
+          badgeText.textContent = 'Solid Color Replacement';
+        }
+      });
+    });
+
+    function setBackdrop(color) {
+      if (color === 'checkerboard') {
+        stage.style.backgroundColor = '';
+        stage.classList.add('checkerboard-pattern');
+        badgeText.textContent = 'Alpha Transparency';
+      } else {
+        stage.classList.remove('checkerboard-pattern');
+        stage.style.backgroundColor = color;
+        badgeText.textContent = 'Solid Color: ' + color;
+      }
+    }
+  </script>
+</body></html>

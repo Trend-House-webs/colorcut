@@ -1,0 +1,8 @@
+{
+  "name": "ColorCut",
+  "description": "Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-surface-canvas" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ColorCut AI — Image Editor Workspace</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#acedff",
+            "secondary-fixed-dim": "#bec6e0",
+            "primary": "#3525cd",
+            "surface-container": "#e5eeff",
+            "on-error-container": "#93000a",
+            "surface": "#f8f9ff",
+            "secondary-container": "#dae2fd",
+            "on-secondary-container": "#5c647a",
+            "surface-bright": "#f8f9ff",
+            "primary-fixed": "#e2dfff",
+            "surface-container-lowest": "#ffffff",
+            "tertiary": "#00505f",
+            "transparency-light": "#FFFFFF",
+            "border-hover": "#CBD5E1",
+            "on-primary-container": "#dad7ff",
+            "surface-tint": "#4d44e3",
+            "inverse-primary": "#c3c0ff",
+            "surface-container-high": "#dce9ff",
+            "on-background": "#0b1c30",
+            "secondary": "#565e74",
+            "on-surface": "#0b1c30",
+            "inverse-surface": "#213145",
+            "alert-rose": "#F43F5E",
+            "on-secondary-fixed": "#131b2e",
+            "on-tertiary-container": "#93e8ff",
+            "on-secondary-fixed-variant": "#3f465c",
+            "success-emerald": "#10B981",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "on-primary": "#ffffff",
+            "transparency-dark": "#E2E8F0",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-fixed-variant": "#3323cc",
+            "surface-canvas": "#F8FAFC",
+            "on-primary-fixed": "#0f0069",
+            "border-subtle": "#E2E8F0",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "surface-variant": "#d3e4fe",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#464555",
+            "secondary-fixed": "#dae2fd",
+            "tertiary-container": "#006a7c",
+            "outline-variant": "#c7c4d8",
+            "surface-container-highest": "#d3e4fe",
+            "surface-dim": "#cbdbf5",
+            "on-tertiary-fixed": "#001f26",
+            "outline": "#777587",
+            "on-tertiary": "#ffffff",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#c3c0ff",
+            "accent-indigo-light": "#6366F1",
+            "primary-container": "#4f46e5",
+            "on-error": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-2xl": "2rem",
+            "space-lg": "1rem",
+            "space-xxs": "0.125rem",
+            "gutter-desktop": "1.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "0.75rem",
+            "space-3xl": "3rem",
+            "space-sm": "0.5rem",
+            "margin-tablet": "2rem",
+            "gutter": "1rem",
+            "margin-desktop": "3rem",
+            "margin": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-hero-mobile": ["Plus Jakarta Sans"],
+            "label-mono": ["JetBrains Mono"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-hero-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .checkerboard-pattern {
+      background-image: 
+        linear-gradient(45deg, #E2E8F0 25%, transparent 25%), 
+        linear-gradient(-45deg, #E2E8F0 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #E2E8F0 75%), 
+        linear-gradient(-45deg, transparent 75%, #E2E8F0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #FFFFFF;
+    }
+    .checkerboard-pattern-sm {
+      background-image: 
+        linear-gradient(45deg, #CBD5E1 25%, transparent 25%), 
+        linear-gradient(-45deg, #CBD5E1 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #CBD5E1 75%), 
+        linear-gradient(-45deg, transparent 75%, #CBD5E1 75%);
+      background-size: 8px 8px;
+      background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+      background-color: #FFFFFF;
+    }
+    .swatch-inset-shadow {
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.12);
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-body-md text-on-surface bg-surface-canvas overflow-x-hidden antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- 1. HEADER BAR (Studio Docked Workspace Header) -->
+<header class="h-16 w-full bg-surface-container-lowest border-b border-border-subtle sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between shadow-sm">
+<div class="flex items-center space-x-4">
+<!-- Brand Logo -->
+<a class="flex items-center space-x-2.5" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<span class="font-headline-md text-headline-md font-extrabold text-primary tracking-tight">ColorCut AI</span>
+</a>
+<div class="h-5 w-px bg-border-subtle hidden sm:block"></div>
+<!-- File info badge & removal status -->
+<div class="hidden sm:flex items-center space-x-2">
+<div class="flex items-center space-x-2 px-2.5 py-1 rounded-lg bg-surface border border-border-subtle text-secondary font-label-mono text-label-mono">
+<span class="material-symbols-outlined text-[15px] text-secondary" data-icon="image">image</span>
+<span class="text-on-surface font-medium truncate max-w-[180px]">portrait-model.png</span>
+<span class="text-outline">•</span>
+<span>2.4 MB</span>
+<span class="text-outline">•</span>
+<span>1920×1080</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-emerald animate-pulse"></span>
+          Background Removed
+        </div>
+</div>
+</div>
+<!-- Right Header Actions -->
+<div class="flex items-center space-x-2 sm:space-x-3">
+<!-- Simulate States Overlay Trigger Dropdown -->
+<div class="relative inline-block text-left">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-surface text-secondary hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md transition-colors" id="toggle-sim-menu" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary-container" data-icon="tune">tune</span>
+<span class="hidden md:inline">Simulate States</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+<div class="hidden absolute right-0 mt-2 w-56 rounded-xl bg-surface-container-lowest border border-border-subtle shadow-lg py-1.5 z-50" id="sim-menu-dropdown">
+<button class="w-full text-left px-4 py-2 text-body-sm font-body-sm hover:bg-surface-container-low flex items-center gap-2" onclick="showProcessingModal()">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="hourglass_top">hourglass_top</span>
+            Processing Modal
+          </button>
+<button class="w-full text-left px-4 py-2 text-body-sm font-body-sm text-alert-rose hover:bg-rose-50 flex items-center gap-2" onclick="showErrorModal()">
+<span class="material-symbols-outlined text-[16px] text-alert-rose" data-icon="warning">warning</span>
+            Error Alert State
+          </button>
+</div>
+</div>
+<!-- Reset Canvas Action -->
+<button class="px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md flex items-center gap-1.5 transition-colors" id="btn-reset">
+<span class="material-symbols-outlined text-[18px]" data-icon="restart_alt">restart_alt</span>
+<span class="hidden md:inline">Reset</span>
+</button>
+<!-- Change Image Secondary Button -->
+<button class="px-3.5 py-1.5 rounded-xl border border-border-subtle bg-surface-container-lowest text-on-surface hover:bg-surface hover:border-border-hover font-label-md text-label-md flex items-center gap-1.5 transition-all shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="add_photo_alternate">add_photo_alternate</span>
+<span>Change Image</span>
+</button>
+</div>
+</header>
+<!-- 2. TWO-COLUMN WORKSPACE CANVAS & SIDEBAR -->
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+<!-- LEFT COLUMN: Image Preview Canvas Viewport -->
+<section class="flex-1 flex flex-col bg-surface-canvas relative border-r border-border-subtle select-none overflow-hidden">
+<!-- Top Viewport Control Bar -->
+<div class="h-12 px-4 md:px-6 flex items-center justify-between border-b border-border-subtle bg-surface-container-lowest/80 backdrop-blur-sm z-20">
+<!-- Zoom toolbar -->
+<div class="flex items-center space-x-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors" id="zoom-out-btn" title="Zoom Out">
+<span class="material-symbols-outlined text-[18px]" data-icon="zoom_out">zoom_out</span>
+</button>
+<span class="px-2 text-label-mono font-label-mono text-secondary min-w-[52px] text-center" id="zoom-level-text">100%</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors" id="zoom-in-btn" title="Zoom In">
+<span class="material-symbols-outlined text-[18px]" data-icon="zoom_in">zoom_in</span>
+</button>
+<div class="h-4 w-px bg-border-subtle mx-1"></div>
+<button class="px-2.5 py-1 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-low font-label-sm text-label-sm flex items-center gap-1 transition-colors" id="zoom-fit-btn">
+<span class="material-symbols-outlined text-[16px]" data-icon="fit_screen">fit_screen</span>
+<span>Fit to Screen</span>
+</button>
+</div>
+<!-- Canvas Badges & Fullscreen -->
+<div class="flex items-center space-x-2">
+<!-- Client-side Processing Badge -->
+<div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-low border border-border-subtle text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary-container" data-icon="memory">memory</span>
+<span>Client-side processing: High Precision</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors" id="fullscreen-toggle" title="Toggle Fullscreen">
+<span class="material-symbols-outlined text-[18px]" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Central Viewport Display Container -->
+<div class="flex-1 flex items-center justify-center p-6 md:p-10 relative overflow-hidden bg-slate-100/60" id="canvas-container">
+<!-- Framing Matte Board with subtle shadow -->
+<div class="relative max-w-2xl max-h-[768px] w-auto h-auto rounded-xl shadow-xl overflow-hidden transition-transform duration-200 border border-slate-300/80 bg-white" id="image-frame-wrapper">
+<!-- Background Composite Layer (Dynamically recolored or checkerboard) -->
+<div class="absolute inset-0 checkerboard-pattern transition-colors duration-200" id="composite-bg-layer"></div>
+<!-- Cutout Foreground Subject Image -->
+<img class="relative z-10 block max-h-[614px] max-w-full w-auto object-contain pointer-events-none select-none" data-alt="A clean, razor-sharp studio portrait of a woman with curly hair cut out flawlessly against a transparent alpha channel. The subject is well-lit with soft natural studio light and fine hair strand details preserved crisply for a professional creative UI." id="cutout-subject" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb4FZcyUU0njfBTZDaShIHZDJQlYEnFODxwWlpw3SqUGZxnI2ICiIcdPQhoF41tzCRA1y_s9GV4c3q5-VbovXJnX14gKX2uqBIT7Ss9LcWWio29FhYQ9SUd_zSAqr44H9d2NJtfd77gGIXQQ7Qw1_OD1lscHxK6UJRcH_NlJlobMJx73NYyTzWxiUljRzfrFp8KVTJ8FO59EmzDrrgT0VR6w9K6vri1tbzKCq5ZnYUfks8T8vsnvhU"/>
+<!-- Original Image Layer for Compare Inspection (Hidden by default, shown when holding compare button) -->
+<div class="absolute inset-0 z-20 hidden transition-opacity duration-150" id="original-compare-layer">
+<img class="w-full h-full object-cover" data-alt="The original high-resolution studio portrait of a woman with curly hair photographed directly in front of a cluttered urban studio background with warm sunlight and soft indoor props. Pristine editorial photography showing sharp detail before background removal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdvb8CNcqDf3d1K5SN9XvCWmZCYHa24lwaz5lq5H1lepGtmh54w4JcfZkyDOgNL9cPn_aOqVAeyx9Pko3QUc3JB2QkGUx0z-CioSfonY0-Y_WYxrGI_TDtK5Q-SYjytEdBKGfnQfEIntbdKo8ox6NFyj8Uu4LQeMJGoxjjEDTdoC-d6twssit3tryPwvrhC5iCFFue0p1eiCgVLGdHcr_nTvMqFJclXZM_ikotChRlxiAZ5wLmVxfJ"/>
+<div class="absolute top-3 left-3 bg-inverse-surface/85 backdrop-blur-md text-white px-2.5 py-1 rounded-md font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="visibility">visibility</span>
+              Original Image
+            </div>
+</div>
+<!-- Subdued Viewport Grid Markers (Subtle precision design touches) -->
+<div class="absolute top-2 left-2 z-30 pointer-events-none text-slate-400 font-label-mono text-[10px] opacity-75">x: 0, y: 0</div>
+<div class="absolute bottom-2 right-2 z-30 pointer-events-none text-slate-400 font-label-mono text-[10px] opacity-75">1920 × 1080 px</div>
+</div>
+<!-- Floating Comparison Pill (Press & Hold Interaction) -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center">
+<button class="group px-4 py-2 rounded-full bg-inverse-surface/90 hover:bg-inverse-surface text-inverse-on-surface shadow-lg backdrop-blur-md flex items-center gap-2 font-label-md text-label-md active:scale-95 transition-all select-none" id="compare-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-inverse-primary" data-icon="compare">compare</span>
+<span>Hold to Compare with Original</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Editor Sidebar & Controls (360px - 400px fixed width desktop) -->
+<aside class="w-full lg:w-[390px] xl:w-[420px] bg-surface-container-lowest flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-border-subtle overflow-y-auto">
+<div class="p-6 md:p-8 space-y-6">
+<!-- Section Title & Subtext -->
+<div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Background Color</h2>
+<span class="font-label-mono text-label-mono text-primary font-semibold px-2 py-0.5 rounded bg-surface-container" id="active-color-name">Transparent</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Select a preset or pick a custom solid color</p>
+</div>
+<!-- Preset Color Swatches Bento Grid -->
+<div class="space-y-3">
+<label class="font-label-sm text-label-sm font-semibold text-secondary uppercase tracking-wider block">Palette Presets</label>
+<div class="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-4 gap-2.5" id="swatch-grid">
+<!-- Swatch 1: Transparent (Initial Active) -->
+<button class="swatch-btn group relative h-11 rounded-lg border-2 border-primary-container p-0.5 flex items-center justify-center transition-all ring-2 ring-primary-container/20" data-color="transparent" data-name="Transparent" title="Transparent Background">
+<span class="w-full h-full rounded-md checkerboard-pattern-sm flex items-center justify-center relative overflow-hidden">
+<span class="material-symbols-outlined text-primary-container text-[20px] font-bold" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 2: White -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#FFFFFF" data-name="White" title="White (#FFFFFF)">
+<span class="w-full h-full rounded-md bg-white swatch-inset-shadow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-800 text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 3: Black -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#000000" data-name="Black" title="Black (#000000)">
+<span class="w-full h-full rounded-md bg-black flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 4: Light Gray -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#F3F4F6" data-name="Light Gray" title="Light Gray (#F3F4F6)">
+<span class="w-full h-full rounded-md bg-[#F3F4F6] swatch-inset-shadow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-700 text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 5: Gray -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#808080" data-name="Gray" title="Gray (#808080)">
+<span class="w-full h-full rounded-md bg-[#808080] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 6: Red -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#EF4444" data-name="Red" title="Red (#EF4444)">
+<span class="w-full h-full rounded-md bg-[#EF4444] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 7: Blue -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#2563EB" data-name="Blue" title="Blue (#2563EB)">
+<span class="w-full h-full rounded-md bg-[#2563EB] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 8: Light Blue -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#87CEEB" data-name="Light Blue" title="Light Blue (#87CEEB)">
+<span class="w-full h-full rounded-md bg-[#87CEEB] flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-800 text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 9: Navy -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#1E3A8A" data-name="Navy" title="Navy (#1E3A8A)">
+<span class="w-full h-full rounded-md bg-[#1E3A8A] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 10: Green -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#22C55E" data-name="Green" title="Green (#22C55E)">
+<span class="w-full h-full rounded-md bg-[#22C55E] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 11: Yellow -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#FACC15" data-name="Yellow" title="Yellow (#FACC15)">
+<span class="w-full h-full rounded-md bg-[#FACC15] flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 12: Orange -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#F97316" data-name="Orange" title="Orange (#F97316)">
+<span class="w-full h-full rounded-md bg-[#F97316] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 13: Pink -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#EC4899" data-name="Pink" title="Pink (#EC4899)">
+<span class="w-full h-full rounded-md bg-[#EC4899] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 14: Purple -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#8B5CF6" data-name="Purple" title="Purple (#8B5CF6)">
+<span class="w-full h-full rounded-md bg-[#8B5CF6] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 15: Beige -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#F5F5DC" data-name="Beige" title="Beige (#F5F5DC)">
+<span class="w-full h-full rounded-md bg-[#F5F5DC] swatch-inset-shadow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-800 text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+<!-- Swatch 16: Brown -->
+<button class="swatch-btn group relative h-11 rounded-lg border border-border-subtle p-0.5 flex items-center justify-center hover:border-border-hover transition-all" data-color="#8B5E3C" data-name="Brown" title="Brown (#8B5E3C)">
+<span class="w-full h-full rounded-md bg-[#8B5E3C] flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 group-hover:opacity-40 transition-opacity" data-icon="check">check</span>
+</span>
+</button>
+</div>
+</div>
+<!-- Custom Color Picker Box -->
+<div class="space-y-3 pt-2">
+<label class="font-label-sm text-label-sm font-semibold text-secondary uppercase tracking-wider block">Custom Color</label>
+<div class="p-3.5 rounded-xl border border-border-subtle bg-surface space-y-3">
+<div class="flex items-center space-x-3">
+<!-- Color Indicator & Native Picker Container -->
+<div class="relative w-10 h-10 rounded-lg overflow-hidden border border-border-subtle shadow-sm flex-shrink-0 cursor-pointer">
+<input class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10" id="native-color-picker" type="color" value="#2563EB"/>
+<div class="w-full h-full bg-[#2563EB]" id="custom-color-indicator"></div>
+</div>
+<!-- Hex Code Input with integrated hash -->
+<div class="flex-1 relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline font-label-mono text-label-mono">#</div>
+<input class="w-full pl-7 pr-3 py-2 text-label-mono font-label-mono text-on-surface bg-surface-container-lowest border border-border-subtle rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all text-sm uppercase" id="hex-input-val" maxlength="6" type="text" value="2563EB"/>
+</div>
+<!-- Eyedropper Utility Button -->
+<button class="w-10 h-10 rounded-lg border border-border-subtle bg-surface-container-lowest hover:bg-surface text-secondary hover:text-on-surface flex items-center justify-center transition-colors" id="eyedropper-btn" title="Pick from image" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="colorize">colorize</span>
+</button>
+</div>
+<!-- RGB Channel Values Breakdown -->
+<div class="grid grid-cols-3 gap-2 pt-1 font-label-mono text-[11px] text-secondary">
+<div class="flex items-center justify-between px-2 py-1 bg-surface-container-lowest rounded border border-border-subtle">
+<span class="text-outline font-bold">R</span>
+<span id="rgb-r">37</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 bg-surface-container-lowest rounded border border-border-subtle">
+<span class="text-outline font-bold">G</span>
+<span id="rgb-g">99</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 bg-surface-container-lowest rounded border border-border-subtle">
+<span class="text-outline font-bold">B</span>
+<span id="rgb-b">235</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Download Action Panel (Pinned to bottom of sidebar) -->
+<div class="p-6 md:p-8 border-t border-border-subtle bg-surface-container-lowest space-y-3">
+<!-- Primary Download CTA: Transparent PNG -->
+<button class="w-full py-3 px-4 rounded-xl bg-primary-container hover:bg-[#4338CA] text-on-primary font-headline-sm text-headline-sm font-semibold shadow-md hover:shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98]" id="download-png-btn">
+<span class="material-symbols-outlined text-[22px]" data-icon="download">download</span>
+<span>Download PNG — Transparent</span>
+</button>
+<!-- Secondary Download CTA: Solid JPG -->
+<button class="w-full py-2.5 px-4 rounded-xl border border-border-subtle bg-surface hover:bg-surface-container-low text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98]" id="download-jpg-btn">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="image">image</span>
+<span>Download JPG — Selected Color</span>
+</button>
+<!-- Trust & Quality Subtext Note -->
+<div class="pt-2 flex items-center justify-center gap-2 text-secondary font-label-sm text-label-sm text-center">
+<span class="material-symbols-outlined text-[14px] text-success-emerald" data-icon="verified">verified</span>
+<span>Instant download • No watermark • 100% Free</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- 3. INTERACTIVE STATES MODALS / OVERLAYS -->
+<!-- STATE A: Processing Overlay Modal (Hidden by default) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="processing-modal">
+<div class="w-full max-w-md p-6 bg-surface-container-lowest rounded-2xl shadow-2xl border border-border-subtle text-center space-y-5 transform scale-95 transition-transform duration-200" id="processing-modal-card">
+<!-- Animated Processing Loader Ring -->
+<div class="relative w-16 h-16 mx-auto flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-4 border-primary-container/20 border-t-primary-container animate-spin"></div>
+<span class="material-symbols-outlined text-primary-container text-[24px]" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="space-y-1.5">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">Removing Background...</h3>
+<p class="font-body-md text-body-md text-secondary">Neural segmentation running locally in your browser. This may take a few moments.</p>
+</div>
+<!-- Subtle Progress Simulation Bar -->
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-2/3 rounded-full animate-pulse"></div>
+</div>
+<div class="pt-2">
+<button class="px-5 py-2 rounded-xl border border-border-subtle text-secondary hover:text-on-surface hover:bg-surface font-label-md text-label-md transition-colors" onclick="hideProcessingModal()">
+          Cancel
+        </button>
+</div>
+</div>
+</div>
+<!-- STATE B: Error Alert Modal (Hidden by default) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="error-modal">
+<div class="w-full max-w-md p-6 bg-surface-container-lowest rounded-2xl shadow-2xl border border-red-200 text-center space-y-5 transform scale-95 transition-transform duration-200" id="error-modal-card">
+<div class="w-14 h-14 rounded-full bg-red-100 text-alert-rose flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-[28px]" data-icon="error_outline">error_outline</span>
+</div>
+<div class="space-y-1.5">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">Processing Error</h3>
+<p class="font-body-md text-body-md text-secondary">Unsupported image format or WebGL memory limitation occurred. Please try a different asset.</p>
+</div>
+<div class="flex items-center justify-center gap-3 pt-2">
+<button class="px-4 py-2 rounded-xl border border-border-subtle text-secondary hover:bg-surface font-label-md text-label-md transition-colors" onclick="hideErrorModal()">
+          Dismiss
+        </button>
+<button class="px-5 py-2 rounded-xl bg-alert-rose hover:bg-rose-600 text-white font-label-md text-label-md font-semibold transition-colors shadow-sm" onclick="hideErrorModal()">
+          Try Again
+        </button>
+</div>
+</div>
+</div>
+<!-- Client-side Interactive Micro-scripts -->
+<script>
+    // State Variables
+    let currentZoom = 100;
+    const canvasWrapper = document.getElementById('image-frame-wrapper');
+    const zoomText = document.getElementById('zoom-level-text');
+    const compositeLayer = document.getElementById('composite-bg-layer');
+    const colorLabel = document.getElementById('active-color-name');
+    const hexInput = document.getElementById('hex-input-val');
+    const nativeColorPicker = document.getElementById('native-color-picker');
+    const colorIndicator = document.getElementById('custom-color-indicator');
+    const compareLayer = document.getElementById('original-compare-layer');
+    const compareBtn = document.getElementById('compare-btn');
+
+    // Helper: Hex to RGB breakdown
+    function updateRGB(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+      if (hex.length !== 6) return;
+      const r = parseInt(hex.substring(0, 2), 16) || 0;
+      const g = parseInt(hex.substring(2, 4), 16) || 0;
+      const b = parseInt(hex.substring(4, 6), 16) || 0;
+      document.getElementById('rgb-r').textContent = r;
+      document.getElementById('rgb-g').textContent = g;
+      document.getElementById('rgb-b').textContent = b;
+    }
+
+    // Swatch Selection Handling
+    const swatchButtons = document.querySelectorAll('.swatch-btn');
+    swatchButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Clear active styles on all swatches
+        swatchButtons.forEach(b => {
+          b.classList.remove('border-primary-container', 'ring-2', 'ring-primary-container/20');
+          b.classList.add('border-border-subtle');
+          const checkIcon = b.querySelector('.material-symbols-outlined');
+          if (checkIcon) {
+            checkIcon.classList.add('opacity-0');
+            checkIcon.classList.remove('text-primary-container', 'font-bold');
+          }
+        });
+
+        // Set active style on clicked
+        btn.classList.add('border-primary-container', 'ring-2', 'ring-primary-container/20');
+        btn.classList.remove('border-border-subtle');
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.classList.remove('opacity-0');
+        }
+
+        const color = btn.getAttribute('data-color');
+        const name = btn.getAttribute('data-name');
+        colorLabel.textContent = name;
+
+        if (color === 'transparent') {
+          compositeLayer.style.backgroundColor = 'transparent';
+          compositeLayer.classList.add('checkerboard-pattern');
+          hexInput.value = 'FFFFFF';
+          updateRGB('FFFFFF');
+        } else {
+          compositeLayer.classList.remove('checkerboard-pattern');
+          compositeLayer.style.backgroundColor = color;
+          const cleanHex = color.replace('#', '');
+          hexInput.value = cleanHex;
+          colorIndicator.style.backgroundColor = color;
+          nativeColorPicker.value = color;
+          updateRGB(cleanHex);
+        }
+      });
+    });
+
+    // Custom Color Input Handlers
+    nativeColorPicker.addEventListener('input', (e) => {
+      const color = e.target.value;
+      colorIndicator.style.backgroundColor = color;
+      const hex = color.replace('#', '').toUpperCase();
+      hexInput.value = hex;
+      colorLabel.textContent = '#' + hex;
+      compositeLayer.classList.remove('checkerboard-pattern');
+      compositeLayer.style.backgroundColor = color;
+      updateRGB(hex);
+      clearSwatchSelection();
+    });
+
+    hexInput.addEventListener('input', (e) => {
+      let val = e.target.value.trim().replace('#', '');
+      if (val.length === 6) {
+        const fullHex = '#' + val;
+        colorIndicator.style.backgroundColor = fullHex;
+        nativeColorPicker.value = fullHex;
+        colorLabel.textContent = fullHex.toUpperCase();
+        compositeLayer.classList.remove('checkerboard-pattern');
+        compositeLayer.style.backgroundColor = fullHex;
+        updateRGB(val);
+        clearSwatchSelection();
+      }
+    });
+
+    function clearSwatchSelection() {
+      swatchButtons.forEach(b => {
+        b.classList.remove('border-primary-container', 'ring-2', 'ring-primary-container/20');
+        b.classList.add('border-border-subtle');
+        const checkIcon = b.querySelector('.material-symbols-outlined');
+        if (checkIcon) checkIcon.classList.add('opacity-0');
+      });
+    }
+
+    // Zoom Controls
+    function setZoom(val) {
+      currentZoom = Math.min(Math.max(val, 25), 300);
+      zoomText.textContent = currentZoom + '%';
+      canvasWrapper.style.transform = `scale(${currentZoom / 100})`;
+    }
+
+    document.getElementById('zoom-in-btn').addEventListener('click', () => setZoom(currentZoom + 25));
+    document.getElementById('zoom-out-btn').addEventListener('click', () => setZoom(currentZoom - 25));
+    document.getElementById('zoom-fit-btn').addEventListener('click', () => setZoom(100));
+
+    // Reset Button
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      setZoom(100);
+      document.querySelector('[data-color="transparent"]').click();
+    });
+
+    // Hold to Compare Interaction
+    compareBtn.addEventListener('mousedown', () => compareLayer.classList.remove('hidden'));
+    compareBtn.addEventListener('mouseup', () => compareLayer.classList.add('hidden'));
+    compareBtn.addEventListener('mouseleave', () => compareLayer.classList.add('hidden'));
+    compareBtn.addEventListener('touchstart', (e) => { e.preventDefault(); compareLayer.classList.remove('hidden'); });
+    compareBtn.addEventListener('touchend', () => compareLayer.classList.add('hidden'));
+
+    // Simulation Dropdown
+    const simBtn = document.getElementById('toggle-sim-menu');
+    const simDropdown = document.getElementById('sim-menu-dropdown');
+    simBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      simDropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => {
+      if (!simDropdown.classList.contains('hidden')) simDropdown.classList.add('hidden');
+    });
+
+    // Modal Display Functions
+    function showProcessingModal() {
+      const modal = document.getElementById('processing-modal');
+      const card = document.getElementById('processing-modal-card');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+      }, 10);
+    }
+    function hideProcessingModal() {
+      const modal = document.getElementById('processing-modal');
+      const card = document.getElementById('processing-modal-card');
+      modal.classList.add('opacity-0');
+      card.classList.add('scale-95');
+      setTimeout(() => modal.classList.add('hidden'), 200);
+    }
+
+    function showErrorModal() {
+      const modal = document.getElementById('error-modal');
+      const card = document.getElementById('error-modal-card');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+      }, 10);
+    }
+    function hideErrorModal() {
+      const modal = document.getElementById('error-modal');
+      const card = document.getElementById('error-modal-card');
+      modal.classList.add('opacity-0');
+      card.classList.add('scale-95');
+      setTimeout(() => modal.classList.add('hidden'), 200);
+    }
+
+    // Eyedropper API support check or fallback notification
+    document.getElementById('eyedropper-btn').addEventListener('click', async () => {
+      if ('EyeDropper' in window) {
+        try {
+          const eyeDropper = new EyeDropper();
+          const result = await eyeDropper.open();
+          const color = result.sRGBHex;
+          nativeColorPicker.value = color;
+          colorIndicator.style.backgroundColor = color;
+          const hex = color.replace('#', '').toUpperCase();
+          hexInput.value = hex;
+          colorLabel.textContent = '#' + hex;
+          compositeLayer.classList.remove('checkerboard-pattern');
+          compositeLayer.style.backgroundColor = color;
+          updateRGB(hex);
+          clearSwatchSelection();
+        } catch (e) {
+          // User canceled selection
+        }
+      } else {
+        nativeColorPicker.click();
+      }
+    });
+
+    // Fullscreen Toggle
+    document.getElementById('fullscreen-toggle').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+  </script>
+</body></html>

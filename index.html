@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Safeguard for browser extensions (e.g. VPN or request interceptors) that reassign window.fetch
+      (function() {
+        try {
+          var currentFetch = window.fetch;
+          var getFetch = function() {
+            return currentFetch;
+          };
+          var setFetch = function(val) {
+            currentFetch = typeof val === 'function' ? val : currentFetch;
+          };
+
+          try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: getFetch,
+                set: setFetch,
+                configurable: true,
+                enumerable: true
+              });
+            }
+          } catch (e1) {}
+
+          try {
+            Object.defineProperty(window, 'fetch', {
+              get: getFetch,
+              set: setFetch,
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e2) {}
+        } catch (err) {}
+
+        // Suppress external chrome-extension content script errors from breaking the application
+        var filterExtError = function(e) {
+          try {
+            var s = '' + (e && (e.message || e.filename || ''));
+            if (e && e.error && e.error.stack) s += ' ' + e.error.stack;
+            if (s.indexOf('chrome-extension://') !== -1 || s.indexOf('requests.js') !== -1 || s.indexOf('initInterceptor') !== -1) {
+              if (typeof e.preventDefault === 'function') e.preventDefault();
+              if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+              return true;
+            }
+          } catch (ignore) {}
+          return false;
+        };
+
+        window.addEventListener('error', filterExtError, true);
+        window.addEventListener('unhandledrejection', function(e) {
+          try {
+            var reason = e.reason;
+            var s = '' + (reason && (reason.message || reason.stack || reason));
+            if (s.indexOf('chrome-extension://') !== -1 || s.indexOf('requests.js') !== -1 || s.indexOf('initInterceptor') !== -1) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              return true;
+            }
+          } catch (ignore) {}
+        }, true);
+
+        var prevOnError = window.onerror;
+        window.onerror = function(msg, src, lineno, colno, err) {
+          var s = '' + msg + ' ' + src + ' ' + (err && err.stack ? err.stack : '');
+          if (s.indexOf('chrome-extension://') !== -1 || s.indexOf('requests.js') !== -1 || s.indexOf('initInterceptor') !== -1) {
+            return true;
+          }
+          if (typeof prevOnError === 'function') {
+            return prevOnError.apply(this, arguments);
+          }
+          return false;
+        };
+      })();
+    </script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- SEO Meta Tags -->
+    <title>ColorCut AI — Free AI Background Remover &amp; Color Changer</title>
+    <meta name="description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
+    <meta name="keywords" content="background remover, remove background, change background color, transparent png, white background, solid color background, ai background removal, colorcut" />
+    <meta name="author" content="ColorCut" />
+    <meta name="theme-color" content="#4f46e5" />
+
+    <!-- Open Graph Social Share Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ColorCut AI" />
+    <meta property="og:title" content="ColorCut AI — Free AI Background Remover &amp; Color Changer" />
+    <meta property="og:description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
+    <meta property="og:image" content="/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ColorCut AI — Free AI Background Remover &amp; Color Changer" />
+    <meta name="twitter:description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
+    <meta name="twitter:image" content="/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
+
+    <!-- Schema.org Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ColorCut",
+        "alternateName": "ColorCut AI",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires WebAssembly and Canvas support",
+        "description": "Remove image backgrounds, choose a solid background color, and download transparent PNG or colored JPG images with ColorCut.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Automatic AI background removal in browser",
+          "Transparent PNG download",
+          "Solid background color selection with 17 curated presets",
+          "Custom HEX color picker",
+          "Zero watermark and full resolution exports"
+        ]
+      }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-[#111827] antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
