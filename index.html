@@ -80,6 +80,9 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://color.cutfree.workers.dev/" />
+
     <!-- SEO Meta Tags -->
     <title>ColorCut AI — Free AI Background Remover &amp; Color Changer</title>
     <meta name="description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
@@ -90,15 +93,17 @@
     <!-- Open Graph Social Share Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ColorCut AI" />
+    <meta property="og:url" content="https://color.cutfree.workers.dev/" />
     <meta property="og:title" content="ColorCut AI — Free AI Background Remover &amp; Color Changer" />
     <meta property="og:description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
-    <meta property="og:image" content="/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
+    <meta property="og:image" content="https://color.cutfree.workers.dev/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
 
     <!-- Twitter / X Cards -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://color.cutfree.workers.dev/" />
     <meta name="twitter:title" content="ColorCut AI — Free AI Background Remover &amp; Color Changer" />
     <meta name="twitter:description" content="Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing." />
-    <meta name="twitter:image" content="/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
+    <meta name="twitter:image" content="https://color.cutfree.workers.dev/assets/aistudio/ChatGPT_Image_Oct_20__2026__02_43_40_PM_30899a20.png" />
 
     <!-- Schema.org Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -107,6 +112,7 @@
         "@type": "WebApplication",
         "name": "ColorCut",
         "alternateName": "ColorCut AI",
+        "url": "https://color.cutfree.workers.dev/",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires WebAssembly and Canvas support",
@@ -126,10 +132,14 @@
       }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Optimized asynchronous loading with display=swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL@20..24,400..600,0..1&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL@20..24,400..600,0..1&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL@20..24,400..600,0..1&display=swap" />
+    </noscript>
   </head>
   <body class="bg-white text-[#111827] antialiased">
     <div id="root"></div>

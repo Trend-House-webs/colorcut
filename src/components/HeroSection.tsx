@@ -184,6 +184,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <img
                       src={sample.originalUrl}
                       alt={sample.category || sample.name}
+                      width={32}
+                      height={32}
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />

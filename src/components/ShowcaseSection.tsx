@@ -108,6 +108,10 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
               <img
                 src={originalImage}
                 alt="Original subject with original visible background"
+                width={600}
+                height={400}
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain select-none"
               />
@@ -142,6 +146,10 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
               <img
                 src={cutoutImage}
                 alt="Flawless transparent cutout on checkerboard pattern"
+                width={600}
+                height={400}
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain select-none"
               />
@@ -199,6 +207,10 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
               <img
                 src={cutoutImage}
                 alt="Subject composited over chosen solid background"
+                width={600}
+                height={400}
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain select-none"
               />

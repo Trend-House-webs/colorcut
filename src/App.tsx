@@ -4,7 +4,9 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { EditorWorkspace } from './components/EditorWorkspace';
+const EditorWorkspace = React.lazy(() =>
+  import('./components/EditorWorkspace').then(m => ({ default: m.EditorWorkspace }))
+);
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
@@ -273,11 +275,13 @@ export default function App() {
           />
         </>
       ) : (
-        <EditorWorkspace
-          currentImage={currentImage}
-          onNavigateHome={() => setCurrentView('home')}
-          onChangeImage={handleTriggerUpload}
-        />
+        <React.Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-[#6B7280]">Loading editor workspace...</div>}>
+          <EditorWorkspace
+            currentImage={currentImage}
+            onNavigateHome={() => setCurrentView('home')}
+            onChangeImage={handleTriggerUpload}
+          />
+        </React.Suspense>
       )}
 
       {/* Global Processing State Modal */}

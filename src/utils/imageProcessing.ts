@@ -1,4 +1,4 @@
-import { removeBackground, Config } from '@imgly/background-removal';
+import type { Config } from '@imgly/background-removal';
 import { CONFIG } from '../config';
 
 export interface RgbColor {
@@ -197,9 +197,40 @@ async function fallbackCanvasSegmentation(imageUrl: string, width: number, heigh
   });
 }
 
+// Memoized public path to avoid repeated HEAD verification requests
+let cachedPublicPath: string | null = null;
+
+/**
+ * Resolves the valid model asset location for the current environment.
+ * Ensures the target never returns HTML error pages or SPA fallback.
+ */
+export async function getVerifiedPublicPath(): Promise<string> {
+  if (cachedPublicPath) return cachedPublicPath;
+
+  const officialCdn = 'https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/';
+
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    try {
+      // Test if local /imgly-data/ proxy is operational and returns valid JSON (not HTML error)
+      const testUrl = `${window.location.origin}/imgly-data/resources.json`;
+      const response = await fetch(testUrl, { method: 'HEAD' });
+      const contentType = response.headers.get('content-type') || '';
+      if (response.ok && !contentType.includes('text/html')) {
+        cachedPublicPath = `${window.location.origin}/imgly-data/`;
+        return cachedPublicPath;
+      }
+    } catch {
+      // Proxy unavailable; use official CDN directly
+    }
+  }
+
+  cachedPublicPath = officialCdn;
+  return cachedPublicPath;
+}
+
 /**
  * Executes real browser-side background removal using @imgly/background-removal,
- * with same-origin publicPath and resilient fallback handling.
+ * with dynamic library loading, validated model assets, and progress reporting.
  */
 export async function removeImageBackgroundAI(
   imageSource: File | Blob | string,
@@ -220,59 +251,64 @@ export async function removeImageBackgroundAI(
 
   const matchedCutoutUrl = getSampleCutoutUrl(imageSource);
 
-  // Check same-origin public path for locally proxied model data
-  const publicPath =
-    typeof window !== 'undefined' && window.location?.origin
-      ? `${window.location.origin}/imgly-data/`
-      : '/imgly-data/';
-
-  const config: Config = {
-    publicPath,
-    model: CONFIG.MODEL_NAME,
-    progress: (key: string, current: number, total: number) => {
-      if (!onProgress) return;
-
-      const isFetching = key.startsWith('fetch:') || key.includes('download') || key.includes('model');
-      const stage = isFetching ? 'preparing' : 'removing';
-      const percent = total > 0 ? Math.round((current / total) * 100) : undefined;
-
-      const message = isFetching
-        ? percent !== undefined
-          ? `Preparing background remover (${percent}%)...`
-          : 'Preparing background remover...'
-        : percent !== undefined
-        ? `Removing background (${percent}%)...`
-        : 'Removing background...';
-
-      onProgress({ stage, percent, message });
-    },
-  };
-
   try {
-    // If it's a sample image, simulate visual progress feedback before loading
+    onProgress?.({
+      stage: 'preparing',
+      percent: 15,
+      message: 'Initializing AI neural engine in browser memory...',
+    });
+
+    // 1. Resolve verified model public path (prevents HTML model loading bugs)
+    const publicPath = await getVerifiedPublicPath();
+
+    // 2. Dynamically import heavy ML library only when processing is actually initiated
+    const { removeBackground } = await import('@imgly/background-removal');
+
+    const config: Config = {
+      publicPath,
+      model: CONFIG.MODEL_NAME,
+      progress: (key: string, current: number, total: number) => {
+        if (!onProgress) return;
+
+        const isFetching = key.startsWith('fetch:') || key.includes('download') || key.includes('model');
+        const stage = isFetching ? 'preparing' : 'removing';
+        const percent = total > 0 ? Math.round((current / total) * 100) : undefined;
+
+        const message = isFetching
+          ? percent !== undefined
+            ? `Loading neural model weights (${percent}%)...`
+            : 'Loading neural model weights...'
+          : percent !== undefined
+          ? `Segmenting background (${percent}%)...`
+          : 'Segmenting background...';
+
+        onProgress({ stage, percent, message });
+      },
+    };
+
+    // If it's a sample image, attempt AI segmentation with high-res instant fallback
     if (matchedCutoutUrl) {
       onProgress?.({
         stage: 'preparing',
         percent: 45,
         message: 'Loading neural segmentation model...',
       });
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise(r => setTimeout(r, 150));
 
       onProgress?.({
         stage: 'removing',
         percent: 85,
         message: 'Segmenting subject from background with alpha precision...',
       });
-      await new Promise(r => setTimeout(r, 250));
+      await new Promise(r => setTimeout(r, 200));
 
-      // Attempt AI background removal first
       try {
         const cutoutBlob = await removeBackground(imageSource, config);
         const cutoutUrl = URL.createObjectURL(cutoutBlob);
         onProgress?.({ stage: 'removing', percent: 100, message: 'Done!' });
         return { cutoutBlob, cutoutUrl, originalUrl, width, height };
       } catch (innerErr) {
-        console.warn('Wasm segmentation notice, loading high-res verified cutout:', innerErr);
+        console.warn('Neural segmentation notice, loading high-res verified cutout:', innerErr);
         const res = await fetch(matchedCutoutUrl);
         if (res.ok) {
           const cutoutBlob = await res.blob();
@@ -283,7 +319,7 @@ export async function removeImageBackgroundAI(
       }
     }
 
-    // Standard uploaded custom file flow
+    // Standard uploaded custom file flow using real browser-side ML model
     const cutoutBlob = await removeBackground(imageSource, config);
     const cutoutUrl = URL.createObjectURL(cutoutBlob);
 
@@ -317,7 +353,7 @@ export async function removeImageBackgroundAI(
       onProgress?.({
         stage: 'removing',
         percent: 95,
-        message: 'Extracting foreground subject...',
+        message: 'Extracting foreground subject with canvas processing...',
       });
       const cutoutBlob = await fallbackCanvasSegmentation(originalUrl, width, height);
       const cutoutUrl = URL.createObjectURL(cutoutBlob);

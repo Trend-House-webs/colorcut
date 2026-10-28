@@ -91,6 +91,10 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({
                 <img
                   src={card.imageUrl}
                   alt={card.title}
+                  width={400}
+                  height={300}
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className={`w-full h-full ${card.imageFit} group-hover:scale-103 transition-transform duration-300`}
                 />
