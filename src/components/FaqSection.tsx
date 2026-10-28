@@ -57,16 +57,16 @@ export const FaqSection: React.FC = () => {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div
-                    id={answerId}
-                    role="region"
-                    aria-labelledby={headerId}
-                    className="px-5 sm:px-6 pb-6 text-[14px] text-[#6B7280] leading-relaxed border-t border-[#E5E7EB]/60 pt-4"
-                  >
-                    {item.answer}
-                  </div>
-                )}
+                <div
+                  id={answerId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  className={`px-5 sm:px-6 pb-6 text-[14px] text-[#6B7280] leading-relaxed border-t border-[#E5E7EB]/60 pt-4 ${
+                    isOpen ? 'block' : 'hidden'
+                  }`}
+                >
+                  {item.answer}
+                </div>
               </div>
             );
           })}
