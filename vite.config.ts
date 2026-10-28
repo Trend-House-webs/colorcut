@@ -5,67 +5,158 @@ import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 
 function statusAndRoutingPlugin(): Plugin {
-  const notFoundHandler = (req: any, res: any, next: any) => {
+  const getSecurityHeaders = (req: any): Record<string, string> => {
+    const proto = req.headers['x-forwarded-proto'];
+    const host = req.headers['host'] || '';
+
+    const headers: Record<string, string> = {
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+    };
+
+    if (proto === 'https' || host.includes('workers.dev')) {
+      headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload';
+      headers['X-Frame-Options'] = 'SAMEORIGIN';
+    }
+
+    return headers;
+  };
+
+  const devHandler = (req: any, res: any, next: any) => {
     const rawUrl = req.url || '/';
     const parsedUrl = new URL(rawUrl, 'http://localhost');
     const pathname = parsedUrl.pathname;
-
-    // 1. Issue A: Check for HTTP protocol via headers
     const proto = req.headers['x-forwarded-proto'];
     const host = req.headers['host'] || '';
+
+    const securityHeaders = getSecurityHeaders(req);
+    for (const [k, v] of Object.entries(securityHeaders)) {
+      res.setHeader(k, v);
+    }
+
+    // 1. Issue A: Check for HTTP protocol via headers
     if (proto === 'http' && (host.includes('workers.dev') || host.includes('colorcut'))) {
       const httpsUrl = `https://${host}${rawUrl}`;
       res.writeHead(301, {
         Location: httpsUrl,
         'Content-Type': 'text/plain; charset=utf-8',
+        ...securityHeaders,
       });
       res.end(`301 Moved Permanently: Redirecting to ${httpsUrl}`);
       return;
     }
 
-    // 2. Allow known valid routes and application paths:
-    // - Root / homepage: '/' or '/index.html'
-    // - Vite internal dev assets: starts with '/@', '/__', '/src/', '/node_modules/'
-    // - Static assets proxy: starts with '/imgly-data/'
+    // 2. In Vite dev server, allow all valid application routes and internal assets to be transformed natively
+    const trimmedPath = pathname.replace(/\/$/, '') || '/';
+    const validPublicRoutes = ['/', '/index.html', '/privacy', '/terms', '/about', '/how-it-works'];
+
     if (
-      pathname === '/' ||
-      pathname === '/index.html' ||
+      validPublicRoutes.includes(trimmedPath) ||
       pathname.startsWith('/@') ||
       pathname.startsWith('/__') ||
       pathname.startsWith('/src/') ||
       pathname.startsWith('/node_modules/') ||
-      pathname.startsWith('/imgly-data/')
+      pathname.startsWith('/imgly-data/') ||
+      pathname.startsWith('/assets/') ||
+      pathname.startsWith('/favicon')
     ) {
       return next();
     }
 
-    // Check if the requested file exists in public/ or dist/
+    // Check if the requested file exists in public/
     const publicFilePath = path.resolve('public', pathname.replace(/^\//, ''));
     if (fs.existsSync(publicFilePath) && fs.statSync(publicFilePath).isFile()) {
       return next();
     }
 
-    const distFilePath = path.resolve('dist', pathname.replace(/^\//, ''));
-    if (fs.existsSync(distFilePath) && fs.statSync(distFilePath).isFile()) {
-      return next();
-    }
-
-    // 3. Issue B: Unknown route requested.
-    // Return genuine HTTP 404 with branded 404.html content
+    // 3. Issue B: Unknown route requested -> Return genuine HTTP 404
     const notFoundHtmlPath = path.resolve('public', '404.html');
     let notFoundContent = '<!doctype html><html><body><h1>404 Not Found</h1></body></html>';
     try {
       if (fs.existsSync(notFoundHtmlPath)) {
         notFoundContent = fs.readFileSync(notFoundHtmlPath, 'utf-8');
       }
-    } catch {
-      // fallback to default string
-    }
+    } catch {}
 
     res.writeHead(404, {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'X-Robots-Tag': 'noindex, nofollow',
+      ...securityHeaders,
+    });
+    res.end(notFoundContent);
+  };
+
+  const previewHandler = (req: any, res: any, next: any) => {
+    const rawUrl = req.url || '/';
+    const parsedUrl = new URL(rawUrl, 'http://localhost');
+    const pathname = parsedUrl.pathname;
+    const proto = req.headers['x-forwarded-proto'];
+    const host = req.headers['host'] || '';
+
+    const securityHeaders = getSecurityHeaders(req);
+    for (const [k, v] of Object.entries(securityHeaders)) {
+      res.setHeader(k, v);
+    }
+
+    if (proto === 'http' && (host.includes('workers.dev') || host.includes('colorcut'))) {
+      const httpsUrl = `https://${host}${rawUrl}`;
+      res.writeHead(301, {
+        Location: httpsUrl,
+        'Content-Type': 'text/plain; charset=utf-8',
+        ...securityHeaders,
+      });
+      res.end(`301 Moved Permanently: Redirecting to ${httpsUrl}`);
+      return;
+    }
+
+    const trimmedPath = pathname.replace(/\/$/, '') || '/';
+    const validPublicRoutes = ['/', '/index.html', '/privacy', '/terms', '/about', '/how-it-works'];
+
+    // In preview mode, serve prerendered clean routes
+    if (['/privacy', '/terms', '/about', '/how-it-works'].includes(trimmedPath)) {
+      const distRoutePath = path.resolve('dist', trimmedPath.slice(1), 'index.html');
+      if (fs.existsSync(distRoutePath)) {
+        const content = fs.readFileSync(distRoutePath, 'utf-8');
+        res.writeHead(200, {
+          'Content-Type': 'text/html; charset=utf-8',
+          ...securityHeaders,
+        });
+        res.end(content);
+        return;
+      }
+    }
+
+    // Check if file exists in dist/ or public/
+    const distFilePath = path.resolve('dist', pathname.replace(/^\//, ''));
+    if (fs.existsSync(distFilePath) && fs.statSync(distFilePath).isFile()) {
+      return next();
+    }
+
+    const publicFilePath = path.resolve('public', pathname.replace(/^\//, ''));
+    if (fs.existsSync(publicFilePath) && fs.statSync(publicFilePath).isFile()) {
+      return next();
+    }
+
+    if (validPublicRoutes.includes(trimmedPath) || pathname.startsWith('/imgly-data/')) {
+      return next();
+    }
+
+    // Unknown route in preview -> genuine 404
+    const notFoundHtmlPath = path.resolve('public', '404.html');
+    let notFoundContent = '<!doctype html><html><body><h1>404 Not Found</h1></body></html>';
+    try {
+      if (fs.existsSync(notFoundHtmlPath)) {
+        notFoundContent = fs.readFileSync(notFoundHtmlPath, 'utf-8');
+      }
+    } catch {}
+
+    res.writeHead(404, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'X-Robots-Tag': 'noindex, nofollow',
+      ...securityHeaders,
     });
     res.end(notFoundContent);
   };
@@ -73,10 +164,10 @@ function statusAndRoutingPlugin(): Plugin {
   return {
     name: 'status-and-routing-plugin',
     configureServer(server) {
-      server.middlewares.use(notFoundHandler);
+      server.middlewares.use(devHandler);
     },
     configurePreviewServer(server) {
-      server.middlewares.use(notFoundHandler);
+      server.middlewares.use(previewHandler);
     },
   };
 }

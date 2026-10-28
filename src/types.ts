@@ -16,6 +16,6 @@ export interface ColorPreset {
   textHex?: string;
 }
 
-export type ViewState = 'home' | 'editor';
+export type ViewState = 'home' | 'editor' | 'privacy' | 'terms' | 'about' | 'how-it-works';
 
 export type ComparisonState = 'original' | 'cutout' | 'solid';

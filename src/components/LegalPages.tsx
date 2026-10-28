@@ -240,6 +240,16 @@ export const LegalModal: React.FC<LegalModalProps> = ({
 
           {activeTab === 'feedback' && (
             <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+              <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[13px] flex items-start gap-2.5">
+                <span className="material-symbols-outlined text-[20px] text-amber-600 shrink-0">
+                  info
+                </span>
+                <div>
+                  <strong className="block font-semibold">Client-Side Architecture Notice</strong>
+                  ColorCut runs entirely inside your browser without a remote backend or database. Feedback entered below is processed strictly in your local browser memory and is not transmitted to or stored on any external server.
+                </div>
+              </div>
+
               <div>
                 <label className="block text-[13px] font-medium text-[#111827] mb-1.5">
                   How would you rate your cutout experience?
@@ -305,9 +315,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               {feedbackSent ? (
-                <div className="p-3 bg-emerald-50 text-emerald-700 rounded-xl flex items-center gap-2 text-[13px] font-medium">
-                  <span className="material-symbols-outlined text-[18px]">check_circle</span>
-                  <span>Thank you! Your feedback has been received.</span>
+                <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl flex items-start gap-2 text-[13px] font-medium">
+                  <span className="material-symbols-outlined text-[18px] text-amber-600 shrink-0 mt-0.5">info</span>
+                  <span>Notice: As a 100% client-side application, ColorCut does not transmit or store feedback on a remote server. Your input was handled in local browser memory only.</span>
                 </div>
               ) : (
                 <button
@@ -315,7 +325,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   className="px-5 py-2.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-[13px] font-semibold rounded-xl shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[18px]">send</span>
-                  <span>Submit Feedback</span>
+                  <span>Record Local Feedback</span>
                 </button>
               )}
             </form>

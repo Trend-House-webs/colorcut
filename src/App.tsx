@@ -16,6 +16,10 @@ import { ErrorModal, InfoModal, ProcessingModal } from './components/Modals';
 import { LegalModal, LegalDocType } from './components/LegalPages';
 import { ShowcaseSection } from './components/ShowcaseSection';
 import { UseCasesSection, UseCaseType } from './components/UseCasesSection';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { TermsPage } from './pages/TermsPage';
+import { AboutPage } from './pages/AboutPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
 import { DEFAULT_EDITOR_IMAGE, NEUTRAL_ID_SAMPLE, SAMPLE_IMAGES } from './data/samples';
 import { ImageData, ViewState } from './types';
 import {
@@ -24,8 +28,24 @@ import {
   validateUploadFile,
 } from './utils/imageProcessing';
 
-export default function App() {
-  const [currentView, setCurrentView] = useState<ViewState>('home');
+interface AppProps {
+  initialView?: ViewState;
+}
+
+export default function App({ initialView }: AppProps = {}) {
+  const getInitialView = (): ViewState => {
+    if (initialView) return initialView;
+    if (typeof window !== 'undefined' && window.location) {
+      const path = window.location.pathname.replace(/\/$/, '');
+      if (path === '/privacy') return 'privacy';
+      if (path === '/terms') return 'terms';
+      if (path === '/about') return 'about';
+      if (path === '/how-it-works') return 'how-it-works';
+    }
+    return 'home';
+  };
+
+  const [currentView, setCurrentView] = useState<ViewState>(getInitialView);
   const [currentImage, setCurrentImage] = useState<ImageData>(DEFAULT_EDITOR_IMAGE);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [processingTitle, setProcessingTitle] = useState<string>('Preparing background remover...');
@@ -223,7 +243,64 @@ export default function App() {
         }}
       />
 
-      {currentView === 'home' ? (
+      {currentView === 'privacy' ? (
+        <PrivacyPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'terms' ? (
+        <TermsPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'about' ? (
+        <AboutPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'how-it-works' ? (
+        <HowItWorksPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'editor' ? (
+        <React.Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-[#6B7280]">Loading editor workspace...</div>}>
+          <EditorWorkspace
+            currentImage={currentImage}
+            onNavigateHome={() => {
+              if (typeof window !== 'undefined' && window.history) {
+                window.history.pushState({}, '', '/');
+              }
+              setCurrentView('home');
+            }}
+            onChangeImage={handleTriggerUpload}
+          />
+        </React.Suspense>
+      ) : (
         <>
           <Header
             currentView={currentView}
@@ -274,14 +351,6 @@ export default function App() {
             onNavigateHome={() => setCurrentView('home')}
           />
         </>
-      ) : (
-        <React.Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-[#6B7280]">Loading editor workspace...</div>}>
-          <EditorWorkspace
-            currentImage={currentImage}
-            onNavigateHome={() => setCurrentView('home')}
-            onChangeImage={handleTriggerUpload}
-          />
-        </React.Suspense>
       )}
 
       {/* Global Processing State Modal */}

@@ -60,14 +60,26 @@ export const Header: React.FC<HeaderProps> = ({
               Home
             </a>
             <a
-              href="#how-it-works"
+              href="/how-it-works"
               onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('how-it-works');
+                if (currentView === 'home') {
+                  e.preventDefault();
+                  scrollToSection('how-it-works');
+                }
               }}
-              className="text-[#6B7280] hover:text-[#111827] font-medium transition-colors cursor-pointer"
+              className={`hover:text-[#111827] font-medium transition-colors cursor-pointer ${
+                currentView === 'how-it-works' ? 'text-[#4F46E5] font-semibold' : 'text-[#6B7280]'
+              }`}
             >
               How It Works
+            </a>
+            <a
+              href="/about"
+              className={`hover:text-[#111827] font-medium transition-colors cursor-pointer ${
+                currentView === 'about' ? 'text-[#4F46E5] font-semibold' : 'text-[#6B7280]'
+              }`}
+            >
+              About
             </a>
             <a
               href="#three-states"
@@ -170,15 +182,27 @@ export const Header: React.FC<HeaderProps> = ({
                   Home
                 </a>
                 <a
-                  href="#how-it-works"
+                  href="/how-it-works"
                   onClick={(e) => {
-                    e.preventDefault();
-                    setMobileMenuOpen(false);
-                    scrollToSection('how-it-works');
+                    if (currentView === 'home') {
+                      e.preventDefault();
+                      setMobileMenuOpen(false);
+                      scrollToSection('how-it-works');
+                    }
                   }}
-                  className="text-left text-[#4B5563] hover:text-[#111827] py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
+                  className={`text-left py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors ${
+                    currentView === 'how-it-works' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                  }`}
                 >
                   How It Works
+                </a>
+                <a
+                  href="/about"
+                  className={`text-left py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors ${
+                    currentView === 'about' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                  }`}
+                >
+                  About
                 </a>
                 <a
                   href="#three-states"

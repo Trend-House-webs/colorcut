@@ -6,4 +6,28 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://color.cutfree.workers.dev/how-it-works</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://color.cutfree.workers.dev/about</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://color.cutfree.workers.dev/privacy</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://color.cutfree.workers.dev/terms</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

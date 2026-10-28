@@ -14,6 +14,60 @@ export interface Env {
   };
 }
 
+/**
+ * Production Security Headers Configuration
+ * - X-Content-Type-Options: nosniff prevents MIME sniffing attacks
+ * - Referrer-Policy: strict-origin-when-cross-origin preserves privacy while retaining origin
+ * - X-Frame-Options: SAMEORIGIN guards against clickjacking in legacy user-agents
+ * - Permissions-Policy: restricts unnecessary device APIs (camera, microphone, geolocation)
+ * - Content-Security-Policy: carefully configured to allow:
+ *     * Inline scripts & font preloader (unsafe-inline)
+ *     * WebAssembly SIMD ONNX inference (wasm-unsafe-eval)
+ *     * Background Web Workers from blob URLs (worker-src blob:)
+ *     * Model weights from local proxy and staticimgly CDN
+ *     * Google Fonts stylesheets and woff2 font files
+ *     * User photo uploads and canvas exports (blob:, data:)
+ *     * Framing restriction (frame-ancestors 'self')
+ * - Strict-Transport-Security: max-age=31536000; includeSubDomains; preload (enforced over HTTPS)
+ */
+const SECURITY_HEADERS: Record<string, string> = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://staticimgly.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: blob: https://color.cutfree.workers.dev",
+    "connect-src 'self' blob: data: https://staticimgly.com https://fonts.googleapis.com https://fonts.gstatic.com",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "frame-ancestors 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests",
+  ].join('; '),
+};
+
+function withSecurityHeaders(response: Response, isHttps = true): Response {
+  const headers = new Headers(response.headers);
+  for (const [key, val] of Object.entries(SECURITY_HEADERS)) {
+    headers.set(key, val);
+  }
+  if (isHttps) {
+    headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  }
+
+  const body = (response.status === 204 || response.status === 304) ? null : response.body;
+  return new Response(body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -44,6 +98,9 @@ export default {
         headers.set('Access-Control-Allow-Origin', '*');
         headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
         headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+        headers.set('X-Content-Type-Options', 'nosniff');
+        headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+        headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 
         return new Response(upstreamResponse.body, {
           status: upstreamResponse.status,
@@ -53,17 +110,30 @@ export default {
       } catch (err) {
         return new Response(JSON.stringify({ error: 'Failed to fetch upstream model data', details: String(err) }), {
           status: 502,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Content-Type-Options': 'nosniff',
+            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+          },
         });
       }
     }
 
     // 3. Fetch the requested resource from static assets
-    const response = await env.ASSETS.fetch(request);
+    let response = await env.ASSETS.fetch(request);
 
-    // If the asset exists and is found (200, 304, etc.), return it directly
+    // If initial fetch returned 404, check if this is a known clean informational route
+    if (response.status === 404) {
+      const trimmed = url.pathname.replace(/\/$/, '');
+      if (['/privacy', '/terms', '/about', '/how-it-works'].includes(trimmed)) {
+        const routeUrl = new URL(`${trimmed}/index.html`, request.url);
+        response = await env.ASSETS.fetch(new Request(routeUrl.toString(), request));
+      }
+    }
+
+    // If the asset exists and is found (200, 304, etc.), return with security headers
     if (response.status !== 404) {
-      return response;
+      return withSecurityHeaders(response, true);
     }
 
     // 4. Issue B: Unknown route requested.
@@ -77,15 +147,16 @@ export default {
       headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       headers.set('X-Robots-Tag', 'noindex, nofollow');
 
-      return new Response(notFoundResponse.body, {
+      const custom404 = new Response(notFoundResponse.body, {
         status: 404,
         statusText: 'Not Found',
         headers,
       });
+      return withSecurityHeaders(custom404, true);
     }
 
     // Fallback if 404.html is not found
-    return new Response('404 Not Found', {
+    const fallback404 = new Response('404 Not Found', {
       status: 404,
       statusText: 'Not Found',
       headers: {
@@ -93,5 +164,6 @@ export default {
         'X-Robots-Tag': 'noindex, nofollow',
       },
     });
+    return withSecurityHeaders(fallback404, true);
   },
 };

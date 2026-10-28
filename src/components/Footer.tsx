@@ -33,27 +33,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
 
         {/* Navigation / Legal Links */}
         <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-[13px]">
-          <button
-            type="button"
-            onClick={() => onOpenLegalModal('privacy')}
+          <a
+            href="/how-it-works"
+            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+          >
+            How It Works
+          </a>
+          <a
+            href="/about"
+            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+          >
+            About &amp; Architecture
+          </a>
+          <a
+            href="/privacy"
             className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
           >
             Privacy Policy
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenLegalModal('terms')}
+          </a>
+          <a
+            href="/terms"
             className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
           >
             Terms of Use
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenLegalModal('api')}
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            Architecture
-          </button>
+          </a>
           <button
             type="button"
             onClick={() => onOpenLegalModal('feedback')}
