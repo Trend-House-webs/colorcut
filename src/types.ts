@@ -5,6 +5,7 @@ export interface ImageData {
   dimensionsStr: string;
   cutoutUrl: string;
   originalUrl: string;
+  thumbnailUrl?: string;
   category?: string;
   description?: string;
   isCustomUpload?: boolean;

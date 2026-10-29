@@ -22,11 +22,8 @@ import { AboutPage } from './pages/AboutPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { DEFAULT_EDITOR_IMAGE, NEUTRAL_ID_SAMPLE, SAMPLE_IMAGES } from './data/samples';
 import { ImageData, ViewState } from './types';
-import {
-  ProgressCallbackData,
-  removeImageBackgroundAI,
-  validateUploadFile,
-} from './utils/imageProcessing';
+import type { ProgressCallbackData } from './utils/imageProcessing';
+import { validateUploadFile } from './utils/fileValidation';
 
 interface AppProps {
   initialView?: ViewState;
@@ -115,7 +112,8 @@ export default function App({ initialView }: AppProps = {}) {
         setProcessingPercent(data.percent);
       };
 
-      // 2. Run real AI background removal in the browser
+      // 2. Run real AI background removal in the browser (dynamically imported on demand)
+      const { removeImageBackgroundAI } = await import('./utils/imageProcessing');
       const result = await removeImageBackgroundAI(file, onProgress);
 
       // Clean up previous custom blob URLs to conserve browser memory

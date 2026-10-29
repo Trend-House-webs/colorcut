@@ -182,11 +182,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 >
                   <div className="w-8 h-8 rounded-lg overflow-hidden bg-[#F3F4F6] shrink-0 border border-[#E5E7EB]">
                     <img
-                      src={sample.originalUrl}
+                      src={sample.thumbnailUrl || sample.originalUrl}
                       alt={sample.category || sample.name}
                       width={32}
                       height={32}
-                      loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
