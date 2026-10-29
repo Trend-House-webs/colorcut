@@ -74,13 +74,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </span>
           </div>
 
-          <h1 className="text-[32px] sm:text-[44px] md:text-[54px] font-headline font-extrabold text-[#111827] tracking-tight leading-[1.15] mb-4 text-balance">
-            Remove Backgrounds.<br className="hidden sm:inline" />{' '}
-            <span className="text-[#4F46E5]">Change Colors. Done.</span>
+          <h1 className="text-[32px] sm:text-[44px] md:text-[52px] font-headline font-extrabold text-[#111827] tracking-tight leading-[1.15] mb-4 text-balance">
+            Free AI Background Remover<br className="hidden sm:inline" />{' '}
+            <span className="text-[#4F46E5]">and Color Changer</span>
           </h1>
 
           <p className="text-[15px] sm:text-[17px] text-[#6B7280] max-w-2xl mx-auto leading-relaxed">
-            Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and private client-side processing.
+            Remove image backgrounds online for free, download a transparent PNG, or add a solid-color background. No account or watermark required.
           </p>
         </div>
 

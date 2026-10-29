@@ -257,7 +257,16 @@ export default {
       // If initial fetch returned 404, check clean informational routes
       if (response && response.status === 404 && env?.ASSETS?.fetch) {
         const trimmed = url.pathname.replace(/\/$/, '');
-        if (['/privacy', '/terms', '/about', '/how-it-works'].includes(trimmed)) {
+        const validCleanRoutes = [
+          '/privacy',
+          '/terms',
+          '/about',
+          '/how-it-works',
+          '/how-to-make-a-background-transparent',
+          '/white-background-for-product-photos',
+          '/change-photo-background-color',
+        ];
+        if (validCleanRoutes.includes(trimmed)) {
           const routeUrl = new URL(`${trimmed}/index.html`, request.url);
           try {
             response = await env.ASSETS.fetch(new Request(routeUrl.toString(), request));

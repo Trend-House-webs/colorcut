@@ -20,6 +20,9 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { AboutPage } from './pages/AboutPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
+import { TransparentPngGuidePage } from './pages/TransparentPngGuidePage';
+import { WhiteBackgroundGuidePage } from './pages/WhiteBackgroundGuidePage';
+import { ChangeColorGuidePage } from './pages/ChangeColorGuidePage';
 import { DEFAULT_EDITOR_IMAGE, NEUTRAL_ID_SAMPLE, SAMPLE_IMAGES } from './data/samples';
 import { ImageData, ViewState } from './types';
 import type { ProgressCallbackData } from './utils/imageProcessing';
@@ -38,6 +41,9 @@ export default function App({ initialView }: AppProps = {}) {
       if (path === '/terms') return 'terms';
       if (path === '/about') return 'about';
       if (path === '/how-it-works') return 'how-it-works';
+      if (path === '/how-to-make-a-background-transparent') return 'transparent-png-guide';
+      if (path === '/white-background-for-product-photos') return 'white-background-guide';
+      if (path === '/change-photo-background-color') return 'change-color-guide';
     }
     return 'home';
   };
@@ -276,6 +282,39 @@ export default function App({ initialView }: AppProps = {}) {
         />
       ) : currentView === 'how-it-works' ? (
         <HowItWorksPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'transparent-png-guide' ? (
+        <TransparentPngGuidePage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'white-background-guide' ? (
+        <WhiteBackgroundGuidePage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'change-color-guide' ? (
+        <ChangeColorGuidePage
           onNavigateHome={() => {
             if (typeof window !== 'undefined' && window.history) {
               window.history.pushState({}, '', '/');

@@ -124,6 +124,43 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({
             </div>
           ))}
         </div>
+
+        {/* Informative Guide Links Banner */}
+        <div className="mt-10 p-5 rounded-xl bg-white border border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="flex items-center gap-3">
+            <span className="material-symbols-outlined text-[#4F46E5] text-[24px] hidden sm:inline">menu_book</span>
+            <div>
+              <p className="text-[14px] font-medium text-[#111827]">
+                Looking for step-by-step walkthroughs and formatting advice?
+              </p>
+              <p className="text-[12px] text-[#6B7280]">
+                Explore our practical guides for transparent cutouts, e-commerce white backdrops, and solid color palettes.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[13px] font-semibold">
+            <a
+              href="/how-to-make-a-background-transparent"
+              className="text-[#4F46E5] hover:underline whitespace-nowrap"
+            >
+              Transparent PNGs →
+            </a>
+            <span className="text-[#D1D5DB] hidden sm:inline">|</span>
+            <a
+              href="/white-background-for-product-photos"
+              className="text-[#4F46E5] hover:underline whitespace-nowrap"
+            >
+              White Product Photos →
+            </a>
+            <span className="text-[#D1D5DB] hidden sm:inline">|</span>
+            <a
+              href="/change-photo-background-color"
+              className="text-[#4F46E5] hover:underline whitespace-nowrap"
+            >
+              Change Color Guide →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

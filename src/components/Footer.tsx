@@ -27,43 +27,72 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
         </div>
 
         {/* Accurate Privacy & Processing Statement */}
-        <div className="text-[12px] text-[#6B7280] text-center md:text-left max-w-md">
+        <div className="text-[12px] text-[#6B7280] text-center md:text-left max-w-sm">
           © {new Date().getFullYear()} ColorCut. Client-side neural segmentation running in-browser via WebAssembly. Private, fast, and free.
         </div>
 
-        {/* Navigation / Legal Links */}
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-[13px]">
-          <a
-            href="/how-it-works"
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            How It Works
-          </a>
-          <a
-            href="/about"
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            About &amp; Architecture
-          </a>
-          <a
-            href="/privacy"
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            Privacy Policy
-          </a>
-          <a
-            href="/terms"
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            Terms of Use
-          </a>
-          <button
-            type="button"
-            onClick={() => onOpenLegalModal('feedback')}
-            className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
-          >
-            Feedback
-          </button>
+        {/* Navigation / Links Section */}
+        <div className="flex flex-col sm:flex-row gap-6 text-[13px] text-center sm:text-left">
+          {/* Guides */}
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[11px] font-semibold text-[#111827] uppercase tracking-wider">Guides</span>
+            <a
+              href="/how-to-make-a-background-transparent"
+              className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+            >
+              Transparent PNG Guide
+            </a>
+            <a
+              href="/white-background-for-product-photos"
+              className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+            >
+              White Background for Products
+            </a>
+            <a
+              href="/change-photo-background-color"
+              className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+            >
+              Change Background Color
+            </a>
+          </div>
+
+          {/* About & Legal */}
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[11px] font-semibold text-[#111827] uppercase tracking-wider">Product &amp; Legal</span>
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+              <a
+                href="/how-it-works"
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                How It Works
+              </a>
+              <a
+                href="/about"
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                About
+              </a>
+              <a
+                href="/privacy"
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                Privacy
+              </a>
+              <a
+                href="/terms"
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                Terms
+              </a>
+              <button
+                type="button"
+                onClick={() => onOpenLegalModal('feedback')}
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                Feedback
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

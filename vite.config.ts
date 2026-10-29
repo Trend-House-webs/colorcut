@@ -49,7 +49,17 @@ function statusAndRoutingPlugin(): Plugin {
 
     // 2. In Vite dev server, allow all valid application routes and internal assets to be transformed natively
     const trimmedPath = pathname.replace(/\/$/, '') || '/';
-    const validPublicRoutes = ['/', '/index.html', '/privacy', '/terms', '/about', '/how-it-works'];
+    const validPublicRoutes = [
+      '/',
+      '/index.html',
+      '/privacy',
+      '/terms',
+      '/about',
+      '/how-it-works',
+      '/how-to-make-a-background-transparent',
+      '/white-background-for-product-photos',
+      '/change-photo-background-color',
+    ];
 
     if (
       validPublicRoutes.includes(trimmedPath) ||
@@ -112,10 +122,30 @@ function statusAndRoutingPlugin(): Plugin {
     }
 
     const trimmedPath = pathname.replace(/\/$/, '') || '/';
-    const validPublicRoutes = ['/', '/index.html', '/privacy', '/terms', '/about', '/how-it-works'];
+    const validPublicRoutes = [
+      '/',
+      '/index.html',
+      '/privacy',
+      '/terms',
+      '/about',
+      '/how-it-works',
+      '/how-to-make-a-background-transparent',
+      '/white-background-for-product-photos',
+      '/change-photo-background-color',
+    ];
 
     // In preview mode, serve prerendered clean routes
-    if (['/privacy', '/terms', '/about', '/how-it-works'].includes(trimmedPath)) {
+    if (
+      [
+        '/privacy',
+        '/terms',
+        '/about',
+        '/how-it-works',
+        '/how-to-make-a-background-transparent',
+        '/white-background-for-product-photos',
+        '/change-photo-background-color',
+      ].includes(trimmedPath)
+    ) {
       const distRoutePath = path.resolve('dist', trimmedPath.slice(1), 'index.html');
       if (fs.existsSync(distRoutePath)) {
         const content = fs.readFileSync(distRoutePath, 'utf-8');

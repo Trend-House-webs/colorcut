@@ -144,6 +144,56 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </ul>
             </div>
 
+            {/* Technical Answers & FAQ (AEO) */}
+            <div className="pt-8 border-t border-[#E5E7EB] space-y-6">
+              <div>
+                <h2 className="text-[20px] sm:text-[22px] font-headline font-bold text-[#111827] mb-1">
+                  Architecture &amp; Privacy Questions
+                </h2>
+                <p className="text-[14px] text-[#6B7280]">
+                  Clear, verified answers about how ColorCut runs and how user data is protected.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-[14px]">
+                <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
+                  <h3 className="font-semibold text-[#111827] text-[15px]">
+                    Are images processed in the browser?
+                  </h3>
+                  <p className="text-[#4B5563] leading-relaxed">
+                    Yes. All image decoding, neural network segmentation (via ONNX Runtime Web and WebAssembly), and canvas color rendering execute entirely within your local browser memory.
+                  </p>
+                </div>
+
+                <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
+                  <h3 className="font-semibold text-[#111827] text-[15px]">
+                    Are images uploaded to any remote server or database?
+                  </h3>
+                  <p className="text-[#4B5563] leading-relaxed">
+                    No. Your photos are never uploaded to, sent to, or stored on any server, backend worker, or database. Your image data exists solely in transient browser RAM during your active session.
+                  </p>
+                </div>
+
+                <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
+                  <h3 className="font-semibold text-[#111827] text-[15px]">
+                    What network requests actually leave the device?
+                  </h3>
+                  <p className="text-[#4B5563] leading-relaxed">
+                    When you load ColorCut, your browser downloads standard static website assets (HTML, CSS, JS) and the open-source neural model weight files (~20–40 MB) from our static CDN. No user photos, personal identity markers, or telemetry are ever transmitted.
+                  </p>
+                </div>
+
+                <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
+                  <h3 className="font-semibold text-[#111827] text-[15px]">
+                    Does ColorCut require an account or subscription?
+                  </h3>
+                  <p className="text-[#4B5563] leading-relaxed">
+                    No. ColorCut requires no account registration, login credentials, or email address. All features—including transparent PNG and solid-color JPG downloads at full original resolution—are 100% free with zero watermarks.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Related Links */}
             <div className="pt-8 border-t border-[#E5E7EB]">
               <h2 className="text-[17px] font-headline font-semibold text-[#111827] mb-3">

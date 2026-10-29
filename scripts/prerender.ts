@@ -13,6 +13,7 @@ interface PageConfig {
   description: string;
   canonical: string;
   expectedH1: string;
+  breadcrumb?: { name: string; url: string }[];
 }
 
 const PRODUCTION_ORIGIN = 'https://color.cutfree.workers.dev';
@@ -21,26 +22,34 @@ const PAGES: PageConfig[] = [
   {
     path: '/',
     view: 'home',
-    title: 'ColorCut AI — Free AI Background Remover & Color Changer',
-    description: 'Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing.',
+    title: 'Free AI Background Remover & Color Changer — ColorCut',
+    description: 'Remove image backgrounds online for free, download a transparent PNG, or add a solid-color background. No account or watermark required.',
     canonical: `${PRODUCTION_ORIGIN}/`,
-    expectedH1: 'Remove Backgrounds.',
+    expectedH1: 'Free AI Background Remover',
   },
   {
     path: '/how-it-works',
     view: 'how-it-works',
-    title: 'How ColorCut Works — In-Browser Background Removal & Color Changing',
-    description: 'Step-by-step workflow guide to uploading images, running neural background segmentation, and exporting transparent PNGs or solid-color JPGs.',
+    title: 'How to Remove a Background from an Image Online — ColorCut',
+    description: 'Learn how to remove an image background, create a transparent PNG, and add a solid-color background in your browser.',
     canonical: `${PRODUCTION_ORIGIN}/how-it-works`,
-    expectedH1: 'How ColorCut Works',
+    expectedH1: 'How to Remove a Background from an Image Online',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'How It Works', url: `${PRODUCTION_ORIGIN}/how-it-works` },
+    ],
   },
   {
     path: '/about',
     view: 'about',
-    title: 'About ColorCut — In-Browser Background Removal Architecture',
+    title: 'About ColorCut — Private In-Browser Background Removal',
     description: "Explore ColorCut's client-side architecture using ONNX Runtime, WebAssembly, and HTML5 Canvas for fast, private background removal.",
     canonical: `${PRODUCTION_ORIGIN}/about`,
     expectedH1: 'About ColorCut',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'About', url: `${PRODUCTION_ORIGIN}/about` },
+    ],
   },
   {
     path: '/privacy',
@@ -49,6 +58,10 @@ const PAGES: PageConfig[] = [
     description: 'Learn how ColorCut isolates photos locally in your browser memory via WebAssembly with zero server uploads and zero tracking cookies.',
     canonical: `${PRODUCTION_ORIGIN}/privacy`,
     expectedH1: 'ColorCut Privacy Policy',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'Privacy Policy', url: `${PRODUCTION_ORIGIN}/privacy` },
+    ],
   },
   {
     path: '/terms',
@@ -57,6 +70,49 @@ const PAGES: PageConfig[] = [
     description: "Terms of use, licensing, and acceptable use guidelines for ColorCut's free client-side image editing application.",
     canonical: `${PRODUCTION_ORIGIN}/terms`,
     expectedH1: 'ColorCut Terms of Use',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'Terms of Use', url: `${PRODUCTION_ORIGIN}/terms` },
+    ],
+  },
+  {
+    path: '/how-to-make-a-background-transparent',
+    view: 'transparent-png-guide',
+    title: 'How to Make an Image Background Transparent Online — ColorCut',
+    description: "Learn how to remove an image background online and download a transparent PNG using ColorCut's browser-based tool.",
+    canonical: `${PRODUCTION_ORIGIN}/how-to-make-a-background-transparent`,
+    expectedH1: 'How to Make an Image Background Transparent',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'How It Works', url: `${PRODUCTION_ORIGIN}/how-it-works` },
+      { name: 'Transparent PNG Guide', url: `${PRODUCTION_ORIGIN}/how-to-make-a-background-transparent` },
+    ],
+  },
+  {
+    path: '/white-background-for-product-photos',
+    view: 'white-background-guide',
+    title: 'Make a Product Photo Background White Online — ColorCut',
+    description: "Remove a product photo's background and give it a solid white background with ColorCut's browser-based image tool.",
+    canonical: `${PRODUCTION_ORIGIN}/white-background-for-product-photos`,
+    expectedH1: 'Make Product Photo Backgrounds White Online',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'How It Works', url: `${PRODUCTION_ORIGIN}/how-it-works` },
+      { name: 'White Background for Product Photos', url: `${PRODUCTION_ORIGIN}/white-background-for-product-photos` },
+    ],
+  },
+  {
+    path: '/change-photo-background-color',
+    view: 'change-color-guide',
+    title: 'Change a Photo Background Color Online — ColorCut',
+    description: 'Remove an image background and choose a solid background color online with ColorCut. Preview your result and download the finished image.',
+    canonical: `${PRODUCTION_ORIGIN}/change-photo-background-color`,
+    expectedH1: 'Change a Photo Background Color Online',
+    breadcrumb: [
+      { name: 'Home', url: `${PRODUCTION_ORIGIN}/` },
+      { name: 'How It Works', url: `${PRODUCTION_ORIGIN}/how-it-works` },
+      { name: 'Change Photo Background Color', url: `${PRODUCTION_ORIGIN}/change-photo-background-color` },
+    ],
   },
 ];
 
@@ -147,7 +203,26 @@ async function prerenderAllPages() {
       `<meta name="twitter:url" content="${page.canonical}"`
     );
 
-    // 6. Inject prerendered content into <div id="root">...</div>
+    // 6. Schema.org Structured Data: Inject BreadcrumbList for supporting pages
+    if (page.breadcrumb && page.breadcrumb.length > 0) {
+      const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': page.breadcrumb.map((item, idx) => ({
+          '@type': 'ListItem',
+          'position': idx + 1,
+          'name': item.name,
+          'item': item.url,
+        })),
+      };
+      const jsonLdString = JSON.stringify(breadcrumbSchema, null, 2);
+      pageHtml = pageHtml.replace(
+        /<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+        `<script type="application/ld+json">\n${jsonLdString}\n    </script>`
+      );
+    }
+
+    // 7. Inject prerendered content into <div id="root">...</div>
     pageHtml = pageHtml.replace(rootRegex, `<div id="root">${renderedApp}</div>`);
 
     // Write file outputs
@@ -168,7 +243,7 @@ async function prerenderAllPages() {
     }
   }
 
-  console.log('\n🎉 Prerendering completed successfully for all 5 public routes!');
+  console.log(`\n🎉 Prerendering completed successfully for all ${PAGES.length} public routes!`);
 }
 
 prerenderAllPages().catch(err => {

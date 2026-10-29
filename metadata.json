@@ -1,6 +1,6 @@
 {
   "name": "ColorCut",
-  "description": "Instantly remove image backgrounds and replace them with clean, professional solid colors. Free, simple, and client-side processing.",
+  "description": "Remove image backgrounds online for free, download a transparent PNG, or add a solid-color background. No account or watermark required.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
