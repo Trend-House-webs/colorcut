@@ -76,6 +76,7 @@ export default function App({ initialView }: AppProps = {}) {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const customBlobUrlsRef = useRef<string[]>([]);
+  const uploadOpIdRef = useRef<number>(0);
 
   // Cleanup object URLs on unmount
   React.useEffect(() => {
@@ -100,6 +101,8 @@ export default function App({ initialView }: AppProps = {}) {
       return;
     }
 
+    const opId = ++uploadOpIdRef.current;
+
     try {
       setErrorMessage(null);
       setIsProcessing(true);
@@ -108,6 +111,7 @@ export default function App({ initialView }: AppProps = {}) {
       setProcessingPercent(undefined);
 
       const onProgress = (data: ProgressCallbackData) => {
+        if (uploadOpIdRef.current !== opId) return;
         if (data.stage === 'preparing') {
           setProcessingTitle(data.message);
           setProcessingSubtitle('Downloading and caching neural model weights...');
@@ -121,6 +125,12 @@ export default function App({ initialView }: AppProps = {}) {
       // 2. Run real AI background removal in the browser (dynamically imported on demand)
       const { removeImageBackgroundAI } = await import('./utils/imageProcessing');
       const result = await removeImageBackgroundAI(file, onProgress);
+
+      if (uploadOpIdRef.current !== opId) {
+        if (result.cutoutUrl.startsWith('blob:')) URL.revokeObjectURL(result.cutoutUrl);
+        if (result.originalUrl.startsWith('blob:')) URL.revokeObjectURL(result.originalUrl);
+        return;
+      }
 
       // Clean up previous custom blob URLs to conserve browser memory
       if (currentImage.isCustomUpload) {
@@ -144,7 +154,7 @@ export default function App({ initialView }: AppProps = {}) {
       const newImageData: ImageData = {
         id: `upload-${Date.now()}`,
         name: file.name,
-        sizeStr: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+        sizeStr: `${Math.max(0.1, file.size / (1024 * 1024)).toFixed(1)} MB`,
         dimensionsStr: `${result.width}×${result.height}`,
         cutoutUrl: result.cutoutUrl,
         originalUrl: result.originalUrl,
@@ -155,6 +165,7 @@ export default function App({ initialView }: AppProps = {}) {
       setIsProcessing(false);
       setCurrentView('editor');
     } catch (err: unknown) {
+      if (uploadOpIdRef.current !== opId) return;
       console.error('Error during background removal:', err);
       setIsProcessing(false);
       const msg = err instanceof Error ? err.message : 'An unexpected error occurred during processing.';
@@ -171,7 +182,6 @@ export default function App({ initialView }: AppProps = {}) {
     if (isProcessing) return;
 
     try {
-      // Fetch the actual local sample image file
       const response = await fetch(sample.originalUrl);
       if (!response.ok) {
         throw new Error(`Failed to load sample image: ${response.statusText}`);
@@ -179,12 +189,10 @@ export default function App({ initialView }: AppProps = {}) {
       const blob = await response.blob();
       const file = new File([blob], sample.name, { type: blob.type || 'image/jpeg' });
 
-      // Send through real background removal workflow
       await handleFileUpload(file);
     } catch (err: unknown) {
       console.warn('Sample background removal notice:', err);
-      // Graceful fallback to verified sample cutout so user is never blocked
-      setCurrentImage(sample);
+      setCurrentImage({ ...sample, id: `${sample.id}-${Date.now()}` });
       setCurrentView('editor');
       setIsProcessing(false);
     }
@@ -396,7 +404,10 @@ export default function App({ initialView }: AppProps = {}) {
         title={processingTitle}
         subtitle={processingSubtitle}
         percent={processingPercent}
-        onCancel={() => setIsProcessing(false)}
+        onCancel={() => {
+          uploadOpIdRef.current += 1;
+          setIsProcessing(false);
+        }}
       />
 
       {/* Global Error Modal */}

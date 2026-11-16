@@ -5,6 +5,8 @@ import {
   downloadCompositedImage,
   hexToRgb,
   isValidHex,
+  normalizeHex,
+  renderCompositedPreviewToCanvas,
   RgbColor,
 } from '../utils/imageProcessing';
 import { BrandLogo } from './BrandLogo';
@@ -28,24 +30,66 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
   const [isComparing, setIsComparing] = useState<boolean>(false);
   const [downloading, setDownloading] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [canvasReady, setCanvasReady] = useState<boolean>(false);
 
   const nativePickerRef = useRef<HTMLInputElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cutoutImgRef = useRef<HTMLImageElement | null>(null);
 
   // Update RGB breakdown when custom color or preset changes
   useEffect(() => {
     if (selectedColor !== 'transparent' && isValidHex(selectedColor)) {
-      setRgbValues(hexToRgb(selectedColor));
-      setCustomHex(selectedColor.replace('#', '').toUpperCase());
+      const norm = normalizeHex(selectedColor) || selectedColor;
+      setRgbValues(hexToRgb(norm));
+      setCustomHex(norm.replace('#', '').toUpperCase());
     } else {
       setRgbValues({ r: 255, g: 255, b: 255 });
     }
   }, [selectedColor]);
 
-  // When currentImage changes, reset zoom
+  // When currentImage changes, reset editor state cleanly
   useEffect(() => {
     setZoomLevel(100);
+    setSelectedColor('transparent');
+    setActiveColorLabel('Transparent');
+    setIsComparing(false);
   }, [currentImage.id]);
+
+  // Load cutout image once per cutoutUrl and render onto preview canvas
+  useEffect(() => {
+    let cancelled = false;
+    setCanvasReady(false);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      if (cancelled) return;
+      cutoutImgRef.current = img;
+      if (previewCanvasRef.current) {
+        renderCompositedPreviewToCanvas(previewCanvasRef.current, img, selectedColor);
+        setCanvasReady(true);
+      }
+    };
+    img.onerror = () => {
+      if (cancelled) return;
+      cutoutImgRef.current = null;
+      setCanvasReady(false);
+    };
+    img.src = currentImage.cutoutUrl;
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentImage.cutoutUrl]);
+
+  // Re-composite canvas immediately whenever selectedColor changes (without re-running background removal)
+  useEffect(() => {
+    if (cutoutImgRef.current && previewCanvasRef.current) {
+      renderCompositedPreviewToCanvas(previewCanvasRef.current, cutoutImgRef.current, selectedColor);
+      setCanvasReady(true);
+    }
+  }, [selectedColor]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -69,10 +113,20 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
     setCustomHex(rawVal.toUpperCase());
 
     if (rawVal.length === 6) {
-      const fullHex = `#${rawVal}`;
+      const fullHex = `#${rawVal.toUpperCase()}`;
       setSelectedColor(fullHex);
-      setActiveColorLabel(fullHex.toUpperCase());
+      setActiveColorLabel(fullHex);
       setRgbValues(hexToRgb(fullHex));
+    }
+  };
+
+  const commitHexInput = () => {
+    const normalized = normalizeHex(customHex);
+    if (normalized) {
+      setCustomHex(normalized.slice(1));
+      setSelectedColor(normalized);
+      setActiveColorLabel(normalized);
+      setRgbValues(hexToRgb(normalized));
     }
   };
 
@@ -114,6 +168,7 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
     setZoomLevel(100);
     setSelectedColor('transparent');
     setActiveColorLabel('Transparent');
+    setIsComparing(false);
     showToast('Canvas reset to transparent background (100% zoom)');
   };
 
@@ -305,13 +360,24 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
                 }`}
               />
 
-              {/* Cutout Foreground Subject Image with genuine alpha channel */}
-              <img
-                src={currentImage.cutoutUrl}
-                alt="Cutout Subject on Selected Background"
-                referrerPolicy="no-referrer"
-                className="relative z-10 block max-h-[320px] sm:max-h-[440px] lg:max-h-[540px] max-w-full w-auto object-contain pointer-events-none select-none"
+              {/* Authoritative HTML5 Canvas Composited Preview (matches PNG/JPG export 1:1) */}
+              <canvas
+                ref={previewCanvasRef}
+                aria-label="Composited Cutout Subject Preview Canvas"
+                className={`relative z-10 block max-h-[320px] sm:max-h-[440px] lg:max-h-[540px] max-w-full w-auto h-auto object-contain pointer-events-none select-none ${
+                  canvasReady ? 'opacity-100' : 'hidden'
+                }`}
               />
+
+              {/* Fallback Cutout Img while Canvas initializes */}
+              {!canvasReady && (
+                <img
+                  src={currentImage.cutoutUrl}
+                  alt="Cutout Subject on Selected Background"
+                  referrerPolicy="no-referrer"
+                  className="relative z-10 block max-h-[320px] sm:max-h-[440px] lg:max-h-[540px] max-w-full w-auto object-contain pointer-events-none select-none"
+                />
+              )}
 
               {/* Original Image Layer for Compare Inspection (Visible when holding compare button) */}
               {isComparing && (
@@ -469,7 +535,7 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
                       ref={nativePickerRef}
                       type="color"
                       aria-label="Native color palette spectrum"
-                      value={isTransparent ? '#2563EB' : selectedColor}
+                      value={isTransparent ? '#2563EB' : normalizeHex(selectedColor) || '#2563EB'}
                       onChange={handleNativeColorChange}
                       className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
                     />
@@ -485,16 +551,22 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
                     </div>
                   </div>
 
-                  {/* Hex Code Input with integrated hash */}
+                  {/* Hex Code Input with integrated hash (supports pasting #RRGGBB or RRGGBB) */}
                   <div className="flex-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#9CA3AF] font-mono text-[13px]">
                       #
                     </div>
                     <input
                       type="text"
-                      maxLength={6}
+                      maxLength={7}
                       value={customHex}
                       onChange={handleHexInputChange}
+                      onBlur={commitHexInput}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') {
+                          commitHexInput();
+                        }
+                      }}
                       placeholder="HEX"
                       aria-label="Hex color value input"
                       className="w-full pl-7 pr-3 py-2 font-mono text-[13px] text-[#111827] bg-white border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-[#4F46E5] focus:border-[#4F46E5] transition-all uppercase"

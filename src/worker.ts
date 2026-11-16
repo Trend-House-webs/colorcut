@@ -25,7 +25,7 @@ const HTML_SECURITY_HEADERS: Record<string, string> = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://staticimgly.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://staticimgly.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: blob: https://color.cutfree.workers.dev",
@@ -208,11 +208,24 @@ export default {
 
       // 4. Production AI model proxy: route /imgly-data/* to official CDN
       if (url.pathname.startsWith('/imgly-data/')) {
+        if (request.method === 'OPTIONS') {
+          return new Response(null, {
+            status: 204,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+              'Access-Control-Allow-Headers': '*',
+              'Access-Control-Max-Age': '86400',
+            },
+          });
+        }
+
         const assetSubPath = url.pathname.replace(/^\/imgly-data\//, '');
         const upstreamUrl = `https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/${assetSubPath}${url.search}`;
         
         try {
           const upstreamResponse = await fetch(upstreamUrl, {
+            method: request.method === 'HEAD' ? 'HEAD' : 'GET',
             headers: {
               'User-Agent': request.headers.get('User-Agent') || 'ColorCut-Worker',
               'Accept': request.headers.get('Accept') || '*/*',
@@ -227,7 +240,8 @@ export default {
           headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
           headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 
-          return new Response(upstreamResponse.body, {
+          const body = request.method === 'HEAD' ? null : upstreamResponse.body;
+          return new Response(body, {
             status: upstreamResponse.status,
             statusText: upstreamResponse.statusText,
             headers,
@@ -237,6 +251,7 @@ export default {
             status: 502,
             headers: {
               'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
               'X-Content-Type-Options': 'nosniff',
               'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
             },

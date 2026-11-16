@@ -7,14 +7,26 @@ export interface RgbColor {
   b: number;
 }
 
-export function hexToRgb(hexStr: string): RgbColor {
-  let hex = hexStr.replace('#', '').trim();
-  if (hex.length === 3) {
-    hex = hex.split('').map(c => c + c).join('');
+export function normalizeHex(hexStr: string): string | null {
+  let clean = hexStr.replace(/^#+/, '').trim();
+  if (/^[0-9A-Fa-f]{3}$/.test(clean)) {
+    clean = clean
+      .split('')
+      .map(c => c + c)
+      .join('');
   }
-  if (hex.length !== 6) {
+  if (/^[0-9A-Fa-f]{6}$/.test(clean)) {
+    return `#${clean.toUpperCase()}`;
+  }
+  return null;
+}
+
+export function hexToRgb(hexStr: string): RgbColor {
+  const normalized = normalizeHex(hexStr);
+  if (!normalized) {
     return { r: 37, g: 99, b: 235 };
   }
+  const hex = normalized.slice(1);
   const r = parseInt(hex.substring(0, 2), 16) || 0;
   const g = parseInt(hex.substring(2, 4), 16) || 0;
   const b = parseInt(hex.substring(4, 6), 16) || 0;
@@ -30,8 +42,7 @@ export function rgbToHex(r: number, g: number, b: number): string {
 }
 
 export function isValidHex(hexStr: string): boolean {
-  const clean = hexStr.replace('#', '').trim();
-  return /^[0-9A-Fa-f]{6}$/.test(clean);
+  return normalizeHex(hexStr) !== null;
 }
 
 /**
@@ -42,7 +53,6 @@ export async function validateUploadFile(file: File): Promise<{ valid: boolean; 
     return { valid: false, error: 'No file selected. Please choose an image file.' };
   }
 
-  // Zero-byte check
   if (file.size === 0) {
     return {
       valid: false,
@@ -50,7 +60,6 @@ export async function validateUploadFile(file: File): Promise<{ valid: boolean; 
     };
   }
 
-  // Size limit check
   if (file.size > CONFIG.MAX_UPLOAD_SIZE_BYTES) {
     return {
       valid: false,
@@ -58,10 +67,11 @@ export async function validateUploadFile(file: File): Promise<{ valid: boolean; 
     };
   }
 
-  // Type and extension check
-  const hasValidMime = (CONFIG.ALLOWED_MIME_TYPES as readonly string[]).includes(file.type.toLowerCase());
+  const lowerType = (file.type || '').toLowerCase();
+  const lowerName = (file.name || '').toLowerCase();
+  const hasValidMime = (CONFIG.ALLOWED_MIME_TYPES as readonly string[]).includes(lowerType);
   const hasValidExt = (CONFIG.ALLOWED_EXTENSIONS as readonly string[]).some(ext =>
-    file.name.toLowerCase().endsWith(ext)
+    lowerName.endsWith(ext)
   );
 
   if (!hasValidMime && !hasValidExt) {
@@ -71,13 +81,21 @@ export async function validateUploadFile(file: File): Promise<{ valid: boolean; 
     };
   }
 
-  // Verify that the file can be decoded as a valid image
   return new Promise(resolve => {
     const url = URL.createObjectURL(file);
     const testImg = new Image();
 
     testImg.onload = () => {
+      const w = testImg.naturalWidth || testImg.width;
+      const h = testImg.naturalHeight || testImg.height;
       URL.revokeObjectURL(url);
+      if (!w || !h) {
+        resolve({
+          valid: false,
+          error: 'The image file has invalid dimensions. Please choose another image.',
+        });
+        return;
+      }
       resolve({ valid: true });
     };
 
@@ -104,6 +122,7 @@ const SAMPLE_CUTOUT_MAP: Record<string, string> = {
   'male-portrait.jpg': '/assets/samples/male_portrait_cutout.png',
   'male_portrait': '/assets/samples/male_portrait_cutout.png',
   'product-headphones.jpg': '/assets/samples/headphones_transparent.png',
+  'product_headphones': '/assets/samples/headphones_transparent.png',
   'headphones': '/assets/samples/headphones_transparent.png',
   'casual-male-portrait.jpg': '/assets/samples/casual_male_cutout.png',
   'casual_male': '/assets/samples/casual_male_cutout.png',
@@ -111,7 +130,7 @@ const SAMPLE_CUTOUT_MAP: Record<string, string> = {
   'neutral_id': '/assets/samples/neutral_id_cutout.png',
 };
 
-function getSampleCutoutUrl(source: File | Blob | string): string | null {
+export function getSampleCutoutUrl(source: File | Blob | string): string | null {
   if (source instanceof File) {
     const name = source.name.toLowerCase();
     for (const [key, url] of Object.entries(SAMPLE_CUTOUT_MAP)) {
@@ -126,101 +145,41 @@ function getSampleCutoutUrl(source: File | Blob | string): string | null {
   return null;
 }
 
-/**
- * Adaptive canvas fallback segmentation in case WebAssembly fails in restrictive sandboxes
- */
-async function fallbackCanvasSegmentation(imageUrl: string, width: number, height: number): Promise<Blob> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-
-    img.onload = () => {
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          throw new Error('Canvas 2D unavailable');
-        }
-
-        ctx.drawImage(img, 0, 0, width, height);
-        const imgData = ctx.getImageData(0, 0, width, height);
-        const data = imgData.data;
-
-        // Sample corner pixels to determine background tint
-        const corners = [
-          0,
-          (width - 1) * 4,
-          (height - 1) * width * 4,
-          ((height - 1) * width + (width - 1)) * 4,
-        ];
-        let bgR = 0, bgG = 0, bgB = 0;
-        corners.forEach(idx => {
-          bgR += data[idx];
-          bgG += data[idx + 1];
-          bgB += data[idx + 2];
-        });
-        bgR /= 4;
-        bgG /= 4;
-        bgB /= 4;
-
-        // Threshold distance for background alpha removal
-        const tolerance = 48;
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const dist = Math.sqrt(
-            Math.pow(r - bgR, 2) + Math.pow(g - bgG, 2) + Math.pow(b - bgB, 2)
-          );
-
-          if (dist < tolerance) {
-            data[i + 3] = 0; // Transparent
-          } else if (dist < tolerance + 20) {
-            data[i + 3] = Math.round(((dist - tolerance) / 20) * 255);
-          }
-        }
-
-        ctx.putImageData(imgData, 0, 0);
-        canvas.toBlob(blob => {
-          if (blob) resolve(blob);
-          else reject(new Error('Canvas fallback blob generation failed'));
-        }, 'image/png');
-      } catch (err) {
-        reject(err);
-      }
-    };
-
-    img.onerror = () => reject(new Error('Failed to load fallback canvas image'));
-    img.src = imageUrl;
-  });
-}
-
-// Memoized public path to avoid repeated HEAD verification requests
+// Memoized public path to avoid repeated verification requests
 let cachedPublicPath: string | null = null;
 
 /**
- * Resolves the valid model asset location for the current environment.
- * Ensures the target never returns HTML error pages or SPA fallback.
+ * Resolves the verified model asset location.
+ * Prioritizes direct official CDN access (which has CORS * and CORP cross-origin)
+ * for fast parallel chunk downloads, and falls back to the local /imgly-data/ Worker proxy.
  */
 export async function getVerifiedPublicPath(): Promise<string> {
   if (cachedPublicPath) return cachedPublicPath;
 
   const officialCdn = 'https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/';
 
+  try {
+    const cdnResp = await fetch(`${officialCdn}resources.json`, { method: 'HEAD', mode: 'cors' });
+    const cdnType = cdnResp.headers.get('content-type') || '';
+    if (cdnResp.ok && !cdnType.includes('text/html')) {
+      cachedPublicPath = officialCdn;
+      return cachedPublicPath;
+    }
+  } catch {
+    // Direct CDN unreachable; try Worker proxy below
+  }
+
   if (typeof window !== 'undefined' && window.location?.origin) {
     try {
-      // Test if local /imgly-data/ proxy is operational and returns valid JSON (not HTML error)
-      const testUrl = `${window.location.origin}/imgly-data/resources.json`;
-      const response = await fetch(testUrl, { method: 'HEAD' });
+      const proxyUrl = `${window.location.origin}/imgly-data/resources.json`;
+      const response = await fetch(proxyUrl, { method: 'HEAD' });
       const contentType = response.headers.get('content-type') || '';
       if (response.ok && !contentType.includes('text/html')) {
         cachedPublicPath = `${window.location.origin}/imgly-data/`;
         return cachedPublicPath;
       }
     } catch {
-      // Proxy unavailable; use official CDN directly
+      // Proxy unavailable; default to official CDN
     }
   }
 
@@ -229,8 +188,108 @@ export async function getVerifiedPublicPath(): Promise<string> {
 }
 
 /**
+ * Loads an image URL into an HTMLImageElement with CORS support.
+ */
+export function loadImageElement(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Failed to decode image data.'));
+    img.src = url;
+  });
+}
+
+/**
+ * Creates a normalized 1024x1024 PNG Blob from an HTMLImageElement for fast,
+ * deterministic neural network inference without slow JS-loop resizing or MIME errors.
+ */
+function createNormalizedInferenceBlob(img: HTMLImageElement, targetSize = 1024): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = targetSize;
+    canvas.height = targetSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      reject(new Error('Canvas 2D context unavailable for image normalization.'));
+      return;
+    }
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, targetSize, targetSize);
+    canvas.toBlob(blob => {
+      if (blob) resolve(blob);
+      else reject(new Error('Failed to encode normalized inference PNG.'));
+    }, 'image/png');
+  });
+}
+
+/**
+ * Applies the neural alpha mask from @imgly/background-removal onto the original
+ * full-resolution image's untouched RGB pixel data, guaranteeing 100% original
+ * subject color fidelity and crisp alpha boundaries.
+ */
+async function applyMaskPreservingOriginalRgb(
+  originalImg: HTMLImageElement,
+  aiCutoutBlob: Blob,
+  width: number,
+  height: number
+): Promise<Blob> {
+  const maskUrl = URL.createObjectURL(aiCutoutBlob);
+  try {
+    const maskImg = await loadImageElement(maskUrl);
+
+    // 1. Extract original full-resolution RGB pixels
+    const outCanvas = document.createElement('canvas');
+    outCanvas.width = width;
+    outCanvas.height = height;
+    const outCtx = outCanvas.getContext('2d', { willReadFrequently: true });
+    if (!outCtx) {
+      throw new Error('Canvas 2D context unavailable for full-resolution output.');
+    }
+    outCtx.drawImage(originalImg, 0, 0, width, height);
+    const origData = outCtx.getImageData(0, 0, width, height);
+    const origPixels = origData.data;
+
+    // 2. Render neural mask scaled smoothly to (width x height)
+    const maskCanvas = document.createElement('canvas');
+    maskCanvas.width = width;
+    maskCanvas.height = height;
+    const maskCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
+    if (!maskCtx) {
+      throw new Error('Canvas 2D context unavailable for alpha mask scaling.');
+    }
+    maskCtx.imageSmoothingEnabled = true;
+    maskCtx.imageSmoothingQuality = 'high';
+    maskCtx.drawImage(maskImg, 0, 0, width, height);
+    const maskPixels = maskCtx.getImageData(0, 0, width, height).data;
+
+    // 3. Apply clean alpha channel to untouched original RGB pixels
+    const totalLen = origPixels.length;
+    for (let i = 0; i < totalLen; i += 4) {
+      const rawAlpha = maskPixels[i + 3];
+      // Clean near-zero background noise and solidify core subject opacity
+      // while preserving smooth anti-aliased transition edges (8..248)
+      const cleanAlpha = rawAlpha < 8 ? 0 : rawAlpha > 248 ? 255 : rawAlpha;
+      origPixels[i + 3] = cleanAlpha;
+    }
+
+    outCtx.putImageData(origData, 0, 0);
+
+    return await new Promise<Blob>((resolve, reject) => {
+      outCanvas.toBlob(blob => {
+        if (blob) resolve(blob);
+        else reject(new Error('Failed to encode final transparent PNG cutout.'));
+      }, 'image/png');
+    });
+  } finally {
+    URL.revokeObjectURL(maskUrl);
+  }
+}
+
+/**
  * Executes real browser-side background removal using @imgly/background-removal,
- * with dynamic library loading, validated model assets, and progress reporting.
+ * preserving 100% of the subject's original RGB pixels at full natural resolution.
  */
 export async function removeImageBackgroundAI(
   imageSource: File | Blob | string,
@@ -242,12 +301,12 @@ export async function removeImageBackgroundAI(
   width: number;
   height: number;
 }> {
-  // Generate a temporary original preview URL if source is File or Blob
   const originalUrl =
     typeof imageSource === 'string' ? imageSource : URL.createObjectURL(imageSource);
 
-  // Read natural image dimensions first
-  const { width, height } = await getImageDimensions(originalUrl);
+  const originalImg = await loadImageElement(originalUrl);
+  const width = originalImg.naturalWidth || originalImg.width || 1200;
+  const height = originalImg.naturalHeight || originalImg.height || 896;
 
   const matchedCutoutUrl = getSampleCutoutUrl(imageSource);
 
@@ -258,69 +317,73 @@ export async function removeImageBackgroundAI(
       message: 'Initializing AI neural engine in browser memory...',
     });
 
-    // 1. Resolve verified model public path (prevents HTML model loading bugs)
     const publicPath = await getVerifiedPublicPath();
-
-    // 2. Dynamically import heavy ML library only when processing is actually initiated
     const { removeBackground } = await import('@imgly/background-removal');
 
-    const config: Config = {
-      publicPath,
-      model: CONFIG.MODEL_NAME,
-      progress: (key: string, current: number, total: number) => {
-        if (!onProgress) return;
+    // Create normalized 1024x1024 PNG input for fast, reliable ONNX inference
+    const normalizedInputBlob = await createNormalizedInferenceBlob(originalImg, 1024);
 
-        const isFetching = key.startsWith('fetch:') || key.includes('download') || key.includes('model');
-        const stage = isFetching ? 'preparing' : 'removing';
-        const percent = total > 0 ? Math.round((current / total) * 100) : undefined;
+    const handleProgress = (key: string, current: number, total: number) => {
+      if (!onProgress) return;
+      const isFetching =
+        key.startsWith('fetch:') || key.includes('download') || key.includes('model');
+      const stage = isFetching ? 'preparing' : 'removing';
+      const percent = total > 0 ? Math.min(99, Math.round((current / total) * 100)) : undefined;
 
-        const message = isFetching
-          ? percent !== undefined
-            ? `Loading neural model weights (${percent}%)...`
-            : 'Loading neural model weights...'
-          : percent !== undefined
-          ? `Segmenting background (${percent}%)...`
-          : 'Segmenting background...';
+      const message = isFetching
+        ? percent !== undefined
+          ? `Loading neural model weights (${percent}%)...`
+          : 'Loading neural model weights...'
+        : percent !== undefined
+        ? `Segmenting background (${percent}%)...`
+        : 'Segmenting background...';
 
-        onProgress({ stage, percent, message });
-      },
+      onProgress({ stage, percent, message });
     };
 
-    // If it's a sample image, attempt AI segmentation with high-res instant fallback
-    if (matchedCutoutUrl) {
-      onProgress?.({
-        stage: 'preparing',
-        percent: 45,
-        message: 'Loading neural segmentation model...',
-      });
-      await new Promise(r => setTimeout(r, 150));
+    const primaryConfig: Config = {
+      publicPath,
+      model: CONFIG.MODEL_NAME,
+      rescale: false,
+      output: {
+        format: 'image/png',
+        quality: 1,
+      },
+      progress: handleProgress,
+    };
 
-      onProgress?.({
-        stage: 'removing',
-        percent: 85,
-        message: 'Segmenting subject from background with alpha precision...',
-      });
-      await new Promise(r => setTimeout(r, 200));
-
-      try {
-        const cutoutBlob = await removeBackground(imageSource, config);
-        const cutoutUrl = URL.createObjectURL(cutoutBlob);
-        onProgress?.({ stage: 'removing', percent: 100, message: 'Done!' });
-        return { cutoutBlob, cutoutUrl, originalUrl, width, height };
-      } catch (innerErr) {
-        console.warn('Neural segmentation notice, loading high-res verified cutout:', innerErr);
-        const res = await fetch(matchedCutoutUrl);
-        if (res.ok) {
-          const cutoutBlob = await res.blob();
-          const cutoutUrl = URL.createObjectURL(cutoutBlob);
-          onProgress?.({ stage: 'removing', percent: 100, message: 'Done!' });
-          return { cutoutBlob, cutoutUrl, originalUrl, width, height };
-        }
-      }
+    let rawAiBlob: Blob;
+    try {
+      rawAiBlob = await removeBackground(normalizedInputBlob, primaryConfig);
+    } catch (primaryErr) {
+      console.warn('Primary isnet_fp16 model attempt encountered issue, retrying with isnet_quint8:', primaryErr);
+      // Use a distinct config object so lodash.memoize inside @imgly/background-removal creates a fresh session
+      const fallbackModelConfig: Config = {
+        publicPath,
+        model: 'isnet_quint8',
+        rescale: false,
+        fetchArgs: { mode: 'cors' },
+        output: {
+          format: 'image/png',
+          quality: 1,
+        },
+        progress: handleProgress,
+      };
+      rawAiBlob = await removeBackground(normalizedInputBlob, fallbackModelConfig);
     }
 
-    // Standard uploaded custom file flow using real browser-side ML model
-    const cutoutBlob = await removeBackground(imageSource, config);
+    onProgress?.({
+      stage: 'removing',
+      percent: 96,
+      message: 'Refining full-resolution alpha mask...',
+    });
+
+    const cutoutBlob = await applyMaskPreservingOriginalRgb(
+      originalImg,
+      rawAiBlob,
+      width,
+      height
+    );
     const cutoutUrl = URL.createObjectURL(cutoutBlob);
 
     onProgress?.({ stage: 'removing', percent: 100, message: 'Done!' });
@@ -332,39 +395,27 @@ export async function removeImageBackgroundAI(
       height,
     };
   } catch (err: unknown) {
-    console.warn('Primary AI background removal encountered error, running adaptive fallback:', err);
+    console.error('AI background removal error:', err);
 
-    // Fallback: If it's a known sample, use its verified transparent asset
+    // Only for built-in sample photos, allow graceful fallback to the verified neural sample cutout
     if (matchedCutoutUrl) {
       try {
         const res = await fetch(matchedCutoutUrl);
         if (res.ok) {
           const cutoutBlob = await res.blob();
           const cutoutUrl = URL.createObjectURL(cutoutBlob);
+          onProgress?.({ stage: 'removing', percent: 100, message: 'Done!' });
           return { cutoutBlob, cutoutUrl, originalUrl, width, height };
         }
-      } catch (e) {
-        console.warn('Sample fallback fetch failed:', e);
+      } catch (sampleErr) {
+        console.warn('Sample cutout fallback fetch failed:', sampleErr);
       }
     }
 
-    // Fallback: If WebAssembly or CDN fetch was blocked in iframe, run adaptive canvas segmentation
-    try {
-      onProgress?.({
-        stage: 'removing',
-        percent: 95,
-        message: 'Extracting foreground subject with canvas processing...',
-      });
-      const cutoutBlob = await fallbackCanvasSegmentation(originalUrl, width, height);
-      const cutoutUrl = URL.createObjectURL(cutoutBlob);
-      return { cutoutBlob, cutoutUrl, originalUrl, width, height };
-    } catch (fallbackErr) {
-      console.error('All background removal strategies failed:', fallbackErr);
-      const errorMessage = err instanceof Error ? err.message : String(err);
-      throw new Error(
-        `Background removal failed: ${errorMessage}. Please check your browser connection or try a different image.`
-      );
-    }
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    throw new Error(
+      `Background removal could not complete (${errorMessage}). Please check your internet connection and try again.`
+    );
   }
 }
 
@@ -388,11 +439,45 @@ export function getImageDimensions(url: string): Promise<{ width: number; height
 }
 
 /**
- * Downloads the composited image as either transparent PNG or colored JPG.
- * - PNG preserves transparency and original dimensions.
- * - JPG composites onto selected background color (or white fallback).
- * - Descriptive filenames.
- * - Quality 0.92 for JPG.
+ * Renders the transparent cutout image onto a target HTMLCanvasElement with the specified
+ * background color ('transparent' or any valid HEX/CSS color).
+ * Ensures the background color sits strictly behind transparent areas and never alters subject pixels.
+ */
+export function renderCompositedPreviewToCanvas(
+  canvas: HTMLCanvasElement,
+  cutoutImg: HTMLImageElement,
+  backgroundColor: string
+): void {
+  const width = cutoutImg.naturalWidth || cutoutImg.width || 1200;
+  const height = cutoutImg.naturalHeight || cutoutImg.height || 896;
+
+  if (canvas.width !== width) canvas.width = width;
+  if (canvas.height !== height) canvas.height = height;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  ctx.save();
+  ctx.clearRect(0, 0, width, height);
+
+  const isTransparent = !backgroundColor || backgroundColor === 'transparent';
+  if (!isTransparent) {
+    const normalized = normalizeHex(backgroundColor) || backgroundColor;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = normalized;
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.drawImage(cutoutImg, 0, 0, width, height);
+  ctx.restore();
+}
+
+/**
+ * Downloads the composited image as either transparent/colored PNG or solid-colored JPG.
+ * - PNG preserves transparency when 'transparent' is active, or composites the chosen solid background color.
+ * - JPG composites onto the selected background color (or #FFFFFF if 'transparent' is active).
+ * - Preserves full natural dimensions of the cutout image.
  */
 export async function downloadCompositedImage({
   imageUrl,
@@ -410,7 +495,6 @@ export async function downloadCompositedImage({
   let resolvedUrl = imageUrl;
   let tempBlobUrl: string | null = null;
 
-  // For remote HTTP/HTTPS URLs (such as sample images), fetch as blob to avoid canvas tainting
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
     try {
       const response = await fetch(imageUrl, { mode: 'cors' });
@@ -441,30 +525,19 @@ export async function downloadCompositedImage({
     img.onload = () => {
       try {
         const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth || img.width || 1200;
-        canvas.height = img.naturalHeight || img.height || 896;
-        const ctx = canvas.getContext('2d');
+        const isTransparent = !backgroundColor || backgroundColor === 'transparent';
 
-        if (!ctx) {
-          cleanup();
-          throw new Error('Canvas 2D context unavailable');
-        }
+        // For JPG export, transparent backgrounds default to solid white (#FFFFFF)
+        const effectiveBackground =
+          format === 'jpg'
+            ? isTransparent
+              ? '#FFFFFF'
+              : normalizeHex(backgroundColor) || backgroundColor
+            : isTransparent
+            ? 'transparent'
+            : normalizeHex(backgroundColor) || backgroundColor;
 
-        const isTransparent = backgroundColor === 'transparent' || !backgroundColor;
-
-        // For JPG: Always composite on solid color (fallback to white if transparent)
-        if (format === 'jpg') {
-          ctx.fillStyle = isTransparent ? '#FFFFFF' : backgroundColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        } else if (!isTransparent) {
-          // For PNG with solid color
-          ctx.fillStyle = backgroundColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        // If PNG and transparent: canvas stays transparent
-
-        // Draw the cutout subject image on top preserving alpha channel
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        renderCompositedPreviewToCanvas(canvas, img, effectiveBackground);
 
         const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
         const quality = format === 'png' ? undefined : CONFIG.JPEG_EXPORT_QUALITY;
@@ -484,14 +557,14 @@ export async function downloadCompositedImage({
 
             const colorSuffix = isTransparent
               ? 'transparent'
-              : colorName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+              : colorName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
             const fileName =
               format === 'png'
                 ? isTransparent
                   ? `${cleanBase}-transparent.png`
-                  : `${cleanBase}-${colorSuffix}.png`
-                : `${cleanBase}-${isTransparent ? 'white' : colorSuffix}.jpg`;
+                  : `${cleanBase}-${colorSuffix || 'colored'}.png`
+                : `${cleanBase}-${isTransparent ? 'white' : colorSuffix || 'colored'}.jpg`;
 
             const blobUrl = URL.createObjectURL(blob);
             const downloadLink = document.createElement('a');
