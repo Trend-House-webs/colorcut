@@ -26,7 +26,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
   const steps = [
     {
       num: '01',
-      title: 'Upload Any Photo to ColorCut',
+      title: 'Upload Any Photo to CutColor',
       description:
         'Choose any portrait, headshot, product photo, or graphic in JPG, PNG, or WebP format up to 10 MB. No login, account creation, or payment is required to use our background color changer.',
     },
@@ -82,7 +82,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
               Change a Photo Background Color Online
             </h1>
             <p className="text-[16px] text-[#6B7280] mt-3 leading-relaxed max-w-3xl">
-              Remove an image background and choose a solid background color online with ColorCut. Preview your result in real time and download full-resolution finished images with zero watermarks.
+              Remove an image background and choose a solid background color online with CutColor. Preview your result in real time and download full-resolution finished images with zero watermarks.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] text-[#6B7280]">
               <span className="inline-flex items-center gap-1.5 font-medium text-[#4F46E5] bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-200">
@@ -105,10 +105,10 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                 How to Change Photo Background Color Online
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed mb-4">
-                Changing an image background color with ColorCut involves two simple automated stages:
+                Changing an image background color with CutColor involves two simple automated stages:
               </p>
               <ol className="list-decimal pl-5 space-y-2 text-[14px] text-[#374151]">
-                <li><strong>Remove original backdrop:</strong> Upload any photo; ColorCut automatically cuts out the subject into an alpha transparency channel.</li>
+                <li><strong>Remove original backdrop:</strong> Upload any photo; CutColor automatically cuts out the subject into an alpha transparency channel.</li>
                 <li><strong>Pick your new solid color:</strong> Choose from 17 curated color presets or enter a custom 6-digit hex code.</li>
                 <li><strong>Instant canvas compositing:</strong> The solid color renders strictly behind the subject, preserving all original foreground details.</li>
                 <li><strong>Download full-resolution export:</strong> Download as a clean solid-color JPG or keep a transparent PNG copy.</li>
@@ -121,7 +121,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                 The Two-Stage In-Browser Workflow
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed">
-                Unlike complex graphic design suites that require manual pen tool tracing or magic wand adjustments, ColorCut automates the process into two distinct, high-fidelity stages:
+                Unlike complex graphic design suites that require manual pen tool tracing or magic wand adjustments, CutColor automates the process into two distinct, high-fidelity stages:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] shadow-xs space-y-2">
@@ -140,7 +140,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                     Stage 2: Precision Canvas Compositing
                   </div>
                   <p className="text-[13px] text-[#6B7280] leading-relaxed">
-                    ColorCut renders the chosen solid color onto an HTML5 Canvas layer positioned directly underneath the transparent cutout, creating a flawless solid-color portrait or product image.
+                    CutColor renders the chosen solid color onto an HTML5 Canvas layer positioned directly underneath the transparent cutout, creating a flawless solid-color portrait or product image.
                   </p>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                 17 Curated Solid Color Presets &amp; Custom HEX Picker
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed">
-                ColorCut includes an extensive palette of solid studio tones designed for common photographic and professional requirements, plus a custom HEX picker for exact hex code matching:
+                CutColor includes an extensive palette of solid studio tones designed for common photographic and professional requirements, plus a custom HEX picker for exact hex code matching:
               </p>
 
               <div className="flex flex-wrap gap-2.5 pt-1">
@@ -219,10 +219,10 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                 </h2>
               </div>
               <p className="text-[14px] text-[#4B5563] leading-relaxed">
-                ColorCut is a dedicated solid background color changer. It does not synthesize imaginary outdoor scenery, virtual coffee shops, or generative AI room backgrounds.
+                CutColor is a dedicated solid background color changer. It does not synthesize imaginary outdoor scenery, virtual coffee shops, or generative AI room backgrounds.
               </p>
               <p className="text-[14px] text-[#4B5563] leading-relaxed">
-                This is a deliberate architectural advantage: generative background tools frequently introduce lighting mismatches, warped perspective angles, and synthetic artifacts. ColorCut's solid-color replacement preserves the natural lighting, shadows, and true color accuracy of your original subject.
+                This is a deliberate architectural advantage: generative background tools frequently introduce lighting mismatches, warped perspective angles, and synthetic artifacts. CutColor's solid-color replacement preserves the natural lighting, shadows, and true color accuracy of your original subject.
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
               </h3>
               <ul className="text-[13px] text-[#4B5563] space-y-1.5 list-disc pl-5">
                 <li><strong>Supported Inputs:</strong> Single JPG, PNG, or WebP photo up to 10 MB.</li>
-                <li><strong>Single Photo Workflow:</strong> ColorCut processes one photo at a time; batch multi-photo conversion is not supported.</li>
+                <li><strong>Single Photo Workflow:</strong> CutColor processes one photo at a time; batch multi-photo conversion is not supported.</li>
                 <li><strong>Private In-Memory Execution:</strong> Neural model inference runs locally via WebAssembly with zero server photo uploads.</li>
                 <li><strong>Initial Model Weight Cache:</strong> First run downloads model weights (~20–40 MB) from CDN and caches them locally for subsequent speed.</li>
               </ul>
@@ -256,25 +256,25 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                     Can I change an image background to a custom solid color?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Yes. ColorCut provides 17 curated solid color presets (including studio white, neutral grays, deep navy, vibrant greens, and pastels) plus a custom HEX picker (<code className="text-[#4F46E5] font-mono">#RRGGBB</code>) allowing you to match any brand or creative palette.
+                    Yes. CutColor provides 17 curated solid color presets (including studio white, neutral grays, deep navy, vibrant greens, and pastels) plus a custom HEX picker (<code className="text-[#4F46E5] font-mono">#RRGGBB</code>) allowing you to match any brand or creative palette.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    Can ColorCut replace a photo background with an outdoor scene or photograph?
+                    Can CutColor replace a photo background with an outdoor scene or photograph?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut is dedicated to precision solid-color studio backgrounds and transparent cutouts. It does not replace backdrops with external photographs or generate synthetic AI backgrounds.
+                    No. CutColor is dedicated to precision solid-color studio backgrounds and transparent cutouts. It does not replace backdrops with external photographs or generate synthetic AI backgrounds.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    How does ColorCut blend edges when applying dark or vibrant colors?
+                    How does CutColor blend edges when applying dark or vibrant colors?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    ColorCut uses sub-pixel 2D canvas alpha compositing. The neural network calculates partial transparency values along hair strands and soft borders, allowing the new solid color to blend naturally without harsh jagged outlines.
+                    CutColor uses sub-pixel 2D canvas alpha compositing. The neural network calculates partial transparency values along hair strands and soft borders, allowing the new solid color to blend naturally without harsh jagged outlines.
                   </p>
                 </div>
 
@@ -313,7 +313,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                   href="/how-it-works"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How ColorCut Works</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How CutColor Works</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">In-browser 3-step workflow</span>
                 </a>
               </div>
@@ -326,7 +326,7 @@ export const ChangeColorGuidePage: React.FC<ChangeColorGuidePageProps> = ({
                   Change a photo background color now
                 </h3>
                 <p className="text-[13px] text-[#6B7280] mt-0.5">
-                  Upload your photo to ColorCut. Choose from 17 presets or pick any custom HEX color.
+                  Upload your photo to CutColor. Choose from 17 presets or pick any custom HEX color.
                 </p>
               </div>
               <button

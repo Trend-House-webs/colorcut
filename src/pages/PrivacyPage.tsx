@@ -47,10 +47,10 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
               Transparency &amp; Data Protection
             </span>
             <h1 className="text-[32px] sm:text-[42px] font-headline font-bold text-[#111827] mt-1.5 tracking-tight">
-              ColorCut Privacy Policy
+              CutColor Privacy Policy
             </h1>
             <p className="text-[16px] text-[#6B7280] mt-3 leading-relaxed">
-              ColorCut processes images locally in your browser memory via WebAssembly. Your photos are never sent to or stored on our servers.
+              CutColor processes images locally in your browser memory via WebAssembly. Your photos are never sent to or stored on our servers.
             </p>
             <div className="mt-4 flex items-center gap-3 text-[12px] text-[#6B7280]">
               <span className="inline-flex items-center gap-1.5 font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
@@ -77,7 +77,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                   100% Client-Side Architecture
                 </h2>
                 <p className="text-[14px] text-emerald-900 leading-relaxed">
-                  When you edit an image with ColorCut, your file is read into your browser&apos;s volatile RAM using HTML5 Canvas and WebAssembly. It is processed directly by an in-browser ONNX machine learning model. At no stage is your photo uploaded to a backend, cloud worker, or remote database.
+                  When you edit an image with CutColor, your file is read into your browser&apos;s volatile RAM using HTML5 Canvas and WebAssembly. It is processed directly by an in-browser ONNX machine learning model. At no stage is your photo uploaded to a backend, cloud worker, or remote database.
                 </p>
               </div>
             </div>
@@ -88,7 +88,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 1. Local Image Processing &amp; Memory Lifecycle
               </h2>
               <p className="mb-3">
-                ColorCut operates as a static client-side single-page application. When you select or drag and drop a photo (JPG, PNG, or WebP up to 10MB):
+                CutColor operates as a static client-side single-page application. When you select or drag and drop a photo (JPG, PNG, or WebP up to 10MB):
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li>The image file is loaded strictly into browser memory using standard JavaScript APIs (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">FileReader</code> and <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">HTMLCanvasElement</code>).</li>
@@ -103,7 +103,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 2. Neural Network Model Assets &amp; CDN Downloads
               </h2>
               <p className="mb-3">
-                To isolate subjects with hair and edge precision without a server-side GPU farm, ColorCut loads the open-source <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">isnet_fp16</code> neural network segmentation model via the <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">@imgly/background-removal</code> engine.
+                To isolate subjects with hair and edge precision without a server-side GPU farm, CutColor loads the open-source <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">isnet_fp16</code> neural network segmentation model via the <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">@imgly/background-removal</code> engine.
               </p>
               <p className="mb-3">
                 On initial use, your browser downloads static WebAssembly binaries (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">ort-wasm-simd-threaded.jsep.wasm</code>) and model weights from verified static asset CDNs (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">https://staticimgly.com</code> or our edge proxy <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">/imgly-data/*</code>).
@@ -123,7 +123,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li><strong>No User Accounts:</strong> You do not need to register, enter an email address, or provide credentials.</li>
-                <li><strong>No Advertising or Tracking Cookies:</strong> ColorCut does not set third-party marketing cookies, user profiling beacons, or cross-site tracking tags.</li>
+                <li><strong>No Advertising or Tracking Cookies:</strong> CutColor does not set third-party marketing cookies, user profiling beacons, or cross-site tracking tags.</li>
                 <li><strong>No Telemetry Storage:</strong> Image processing runs completely offline once the static model assets are cached by your browser.</li>
               </ul>
             </div>
@@ -134,7 +134,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 4. Feedback Submissions
               </h2>
               <p>
-                ColorCut includes an optional feedback form designed for rating cutout quality. Because ColorCut is hosted as a serverless static website without a persistent remote backend or database, any feedback submitted in the feedback modal is handled in local browser memory only and is not transmitted to or stored on a remote server.
+                CutColor includes an optional feedback form designed for rating cutout quality. Because CutColor is hosted as a serverless static website without a persistent remote backend or database, any feedback submitted in the feedback modal is handled in local browser memory only and is not transmitted to or stored on a remote server.
               </p>
             </div>
 
@@ -144,7 +144,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 5. Third-Party Code &amp; Hosting
               </h2>
               <p className="mb-3">
-                ColorCut is statically served via Cloudflare Workers and Pages edge infrastructure (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">https://color.cutfree.workers.dev</code>) and enforced over HTTPS.
+                CutColor is statically served over global edge infrastructure (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">https://cutcolor.vercel.app</code>) and enforced over HTTPS.
               </p>
               <p>
                 All machine-learning segmentation dependencies are open-source and run within standard browser security sandbox boundaries.
@@ -175,7 +175,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                   href="/about"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About ColorCut</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About CutColor</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">Architecture &amp; technology</span>
                 </a>
               </div>
@@ -188,7 +188,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                   Ready to remove an image background?
                 </h3>
                 <p className="text-[13px] text-[#6B7280] mt-0.5">
-                  Try ColorCut with your own photos or curated sample portraits.
+                  Try CutColor with your own photos or curated sample portraits.
                 </p>
               </div>
               <button

@@ -1,5 +1,5 @@
 /**
- * ColorCut - Cloudflare Worker Edge Handler
+ * CutColor - Cloudflare Worker Edge Handler
  * 
  * Production features:
  * 1. Permanent 301 redirect from HTTP to HTTPS preserving full pathname and query parameters.
@@ -28,7 +28,7 @@ const HTML_SECURITY_HEADERS: Record<string, string> = {
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://staticimgly.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
-    "img-src 'self' data: blob: https://color.cutfree.workers.dev",
+    "img-src 'self' data: blob: https://cutcolor.vercel.app",
     "connect-src 'self' blob: data: https://staticimgly.com https://fonts.googleapis.com https://fonts.gstatic.com",
     "worker-src 'self' blob:",
     "object-src 'none'",
@@ -57,8 +57,8 @@ const BRANDED_404_HTML = `<!doctype html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — Page Not Found | ColorCut AI</title>
-    <meta name="description" content="The page you requested could not be found. Return to ColorCut AI to remove image backgrounds and replace colors." />
+    <title>404 — Page Not Found | CutColor AI</title>
+    <meta name="description" content="The page you requested could not be found. Return to CutColor AI to remove image backgrounds and replace colors." />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -114,7 +114,7 @@ const BRANDED_404_HTML = `<!doctype html>
               <path d="M 76 44 C 55.5 44 39 60.5 39 81 C 39 101.5 55.5 118 76 118 C 96.5 118 113 101.5 113 81 L 94 81 C 94 91 85.9 99 76 99 C 66.1 99 58 90.9 58 81 C 58 71.1 66.1 63 76 63 C 83.5 63 89.8 67.6 92.5 74 L 111.5 74 C 107.5 56.6 93.3 44 76 44 Z" fill="url(#logoMagentaOrange)" />
             </svg>
           </div>
-          <span class="brand-name">ColorCut</span>
+          <span class="brand-name">CutColor</span>
         </a>
         <a href="/" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Open Tool</a>
       </div>
@@ -123,18 +123,19 @@ const BRANDED_404_HTML = `<!doctype html>
       <div class="card">
         <div class="status-pill">HTTP 404 &bull; Not Found</div>
         <h1>Page Not Found</h1>
-        <p>The page or URL you requested does not exist on ColorCut. Please check the address or return to the background remover tool.</p>
-        <a href="/" class="btn-primary">Return to ColorCut Homepage &rarr;</a>
+        <p>The page or URL you requested does not exist on CutColor. Please check the address or return to the background remover tool.</p>
+        <a href="/" class="btn-primary">Return to CutColor Homepage &rarr;</a>
         <div class="nav-links">
           <a href="/how-it-works">How It Works</a>
           <a href="/about">About</a>
+          <a href="/contact">Contact</a>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>
         </div>
       </div>
     </main>
     <footer>
-      &copy; 2026 ColorCut AI. All rights reserved. Client-side neural background removal.
+      &copy; 2026 CutColor AI. All rights reserved. Client-side neural background removal.
     </footer>
   </body>
 </html>`;
@@ -227,7 +228,7 @@ export default {
           const upstreamResponse = await fetch(upstreamUrl, {
             method: request.method === 'HEAD' ? 'HEAD' : 'GET',
             headers: {
-              'User-Agent': request.headers.get('User-Agent') || 'ColorCut-Worker',
+              'User-Agent': request.headers.get('User-Agent') || 'CutColor-Worker',
               'Accept': request.headers.get('Accept') || '*/*',
             },
           });
@@ -276,6 +277,7 @@ export default {
           '/privacy',
           '/terms',
           '/about',
+          '/contact',
           '/how-it-works',
           '/how-to-make-a-background-transparent',
           '/white-background-for-product-photos',

@@ -211,7 +211,7 @@ export const EditorWorkspace: React.FC<EditorWorkspaceProps> = ({
             type="button"
             onClick={onNavigateHome}
             title="Back to Homepage"
-            aria-label="ColorCut Home"
+            aria-label="CutColor Home"
             className="flex items-center space-x-2 text-left group focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xl cursor-pointer"
           >
             <BrandLogo size={32} textSize="text-[18px]" />

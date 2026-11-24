@@ -23,6 +23,7 @@ export type ViewState =
   | 'privacy'
   | 'terms'
   | 'about'
+  | 'contact'
   | 'how-it-works'
   | 'transparent-png-guide'
   | 'white-background-guide'

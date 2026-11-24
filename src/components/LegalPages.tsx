@@ -50,7 +50,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                 id="legal-modal-title"
                 className="font-headline font-bold text-[18px] text-[#111827]"
               >
-                ColorCut Documentation &amp; Legal
+                CutColor Documentation &amp; Legal
               </h2>
               <p className="text-[12px] text-[#6B7280]">
                 Transparency on privacy, terms, client-side processing, and licensing
@@ -135,7 +135,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   1. Local Processing &amp; Image Data
                 </h3>
                 <p>
-                  When you upload an image to ColorCut, it is read into your browser's local memory via standard browser APIs (`FileReader`, `HTMLCanvasElement`, and WebAssembly). Your photo pixels are segmented by an ONNX neural network model running directly on your CPU or GPU. At no point is your image uploaded to a remote backend, persistent database, or third-party storage bucket.
+                  When you upload an image to CutColor, it is read into your browser's local memory via standard browser APIs (`FileReader`, `HTMLCanvasElement`, and WebAssembly). Your photo pixels are segmented by an ONNX neural network model running directly on your CPU or GPU. At no point is your image uploaded to a remote backend, persistent database, or third-party storage bucket.
                 </p>
               </div>
 
@@ -153,7 +153,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   3. Cookies and Analytics
                 </h3>
                 <p>
-                  ColorCut does not use tracking cookies, cross-site profiling beacons, or advertising pixels. No personal registration or credit card information is collected.
+                  CutColor does not use tracking cookies, cross-site profiling beacons, or advertising pixels. No personal registration or credit card information is collected.
                 </p>
               </div>
 
@@ -175,7 +175,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   1. License &amp; Permitted Use
                 </h3>
                 <p>
-                  ColorCut is provided free of charge for personal, educational, creative, and commercial use. You are free to process portrait headshots, e-commerce catalog items, marketing graphics, social media assets, and product photos.
+                  CutColor is provided free of charge for personal, educational, creative, and commercial use. You are free to process portrait headshots, e-commerce catalog items, marketing graphics, social media assets, and product photos.
                 </p>
               </div>
 
@@ -184,7 +184,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   2. Intellectual Property Rights
                 </h3>
                 <p>
-                  You retain 100% of the copyright, trademark, and ownership rights to any images you upload and export using ColorCut. ColorCut claims no intellectual property interest in your content. No watermarks are applied, and no licensing fees or royalties are required.
+                  You retain 100% of the copyright, trademark, and ownership rights to any images you upload and export using CutColor. CutColor claims no intellectual property interest in your content. No watermarks are applied, and no licensing fees or royalties are required.
                 </p>
               </div>
 
@@ -202,7 +202,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   4. Disclaimer of Warranties
                 </h3>
                 <p>
-                  ColorCut is provided &quot;as is&quot; without warranties of any kind, whether express or implied. While the AI segmentation model strives for high precision, edge accuracy may vary based on photo resolution, contrast, subject lighting, and camera depth-of-field.
+                  CutColor is provided &quot;as is&quot; without warranties of any kind, whether express or implied. While the AI segmentation model strives for high precision, edge accuracy may vary based on photo resolution, contrast, subject lighting, and camera depth-of-field.
                 </p>
               </div>
             </div>
@@ -215,7 +215,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   Client-Side Architecture
                 </h3>
                 <p>
-                  ColorCut is architected as an edge-ready, static single-page application (SPA). Instead of making slow, costly calls to cloud image-processing APIs, ColorCut compiles lightweight WebAssembly binaries and runs neural segmentation models directly inside your browser.
+                  CutColor is architected as an edge-ready, static single-page application (SPA). Instead of making slow, costly calls to cloud image-processing APIs, CutColor compiles lightweight WebAssembly binaries and runs neural segmentation models directly inside your browser.
                 </p>
               </div>
 
@@ -232,7 +232,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   Hosting &amp; Static Deployment
                 </h3>
                 <p>
-                  Because ColorCut requires no Node.js backend or database, the entire application compiles to static HTML, CSS, and JavaScript, deployable on modern edge networks such as Cloudflare Pages, GitHub Pages, or any static hosting service.
+                  Because CutColor requires no Node.js backend or database, the entire application compiles to static HTML, CSS, and JavaScript, deployable on modern edge networks such as Cloudflare Pages, GitHub Pages, or any static hosting service.
                 </p>
               </div>
             </div>
@@ -246,7 +246,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                 </span>
                 <div>
                   <strong className="block font-semibold">Client-Side Architecture Notice</strong>
-                  ColorCut runs entirely inside your browser without a remote backend or database. Feedback entered below is processed strictly in your local browser memory and is not transmitted to or stored on any external server.
+                  CutColor runs entirely inside your browser without a remote backend or database. Feedback entered below is processed strictly in your local browser memory and is not transmitted to or stored on any external server.
                 </div>
               </div>
 
@@ -317,7 +317,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               {feedbackSent ? (
                 <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl flex items-start gap-2 text-[13px] font-medium">
                   <span className="material-symbols-outlined text-[18px] text-amber-600 shrink-0 mt-0.5">info</span>
-                  <span>Notice: As a 100% client-side application, ColorCut does not transmit or store feedback on a remote server. Your input was handled in local browser memory only.</span>
+                  <span>Notice: As a 100% client-side application, CutColor does not transmit or store feedback on a remote server. Your input was handled in local browser memory only.</span>
                 </div>
               ) : (
                 <button

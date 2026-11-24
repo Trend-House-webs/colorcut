@@ -47,10 +47,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               Architecture &amp; Mission
             </span>
             <h1 className="text-[32px] sm:text-[42px] font-headline font-bold text-[#111827] mt-1.5 tracking-tight">
-              About ColorCut
+              About CutColor
             </h1>
             <p className="text-[16px] text-[#6B7280] mt-3 leading-relaxed">
-              ColorCut is a modern web application designed for instant, high-fidelity image background removal and studio solid-color replacement, executed entirely inside client browser memory.
+              CutColor is a modern web application designed for instant, high-fidelity image background removal and studio solid-color replacement, executed entirely inside client browser memory.
             </p>
             <div className="mt-4 flex items-center gap-3 text-[12px] text-[#6B7280]">
               <span className="inline-flex items-center gap-1.5 font-medium text-[#4F46E5] bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-200">
@@ -70,13 +70,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {/* Overview / Mission */}
             <div>
               <h2 className="text-[20px] sm:text-[22px] font-headline font-bold text-[#111827] mb-3">
-                Why ColorCut Exists
+                Why CutColor Exists
               </h2>
               <p className="mb-3">
                 Most web-based background removal tools require expensive monthly subscriptions, lock full-resolution downloads behind paywalls, place intrusive watermarks across your photos, or require uploading private images to remote servers for processing.
               </p>
               <p>
-                ColorCut was built on a different engineering philosophy: leveraging modern browser capabilities—specifically WebAssembly (Wasm) and HTML5 Canvas—to bring neural network image segmentation directly onto the user&apos;s device.
+                CutColor was built on a different engineering philosophy: leveraging modern browser capabilities—specifically WebAssembly (Wasm) and HTML5 Canvas—to bring neural network image segmentation directly onto the user&apos;s device.
               </p>
             </div>
 
@@ -118,13 +118,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Client-Side Capabilities &amp; System Realities
               </h2>
               <p className="mb-3">
-                To maintain transparency with our users, here is what you need to know about how ColorCut operates:
+                To maintain transparency with our users, here is what you need to know about how CutColor operates:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li><strong>No Cloud GPU Farm:</strong> Processing runs directly on your CPU or GPU using your device&apos;s available hardware resources. Performance scales with your hardware.</li>
                 <li><strong>Initial Asset Caching:</strong> On your first run, the browser downloads the neural network model weights (~20-40 MB). Once downloaded, modern browsers cache these assets, making subsequent edits significantly faster.</li>
                 <li><strong>Zero Telemetry &amp; No Database:</strong> There is no backend server collecting user emails, usage metrics, or uploaded photos.</li>
-                <li><strong>Static Edge Hosting:</strong> ColorCut is served as static HTML, CSS, and JavaScript from Cloudflare Workers edge nodes (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">https://color.cutfree.workers.dev</code>).</li>
+                <li><strong>Static Edge Hosting:</strong> CutColor is served as static HTML, CSS, and JavaScript over global edge infrastructure (<code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">https://cutcolor.vercel.app</code>).</li>
               </ul>
             </div>
 
@@ -134,7 +134,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Open-Source Technology
               </h2>
               <p className="mb-3">
-                ColorCut is built with modern web technologies:
+                CutColor is built with modern web technologies:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li><strong>React 19 &amp; Vite:</strong> For fast client-side rendering and static build prerendering.</li>
@@ -151,7 +151,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   Architecture &amp; Privacy Questions
                 </h2>
                 <p className="text-[14px] text-[#6B7280]">
-                  Clear, verified answers about how ColorCut runs and how user data is protected.
+                  Clear, verified answers about how CutColor runs and how user data is protected.
                 </p>
               </div>
 
@@ -179,16 +179,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                     What network requests actually leave the device?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    When you load ColorCut, your browser downloads standard static website assets (HTML, CSS, JS) and the open-source neural model weight files (~20–40 MB) from our static CDN. No user photos, personal identity markers, or telemetry are ever transmitted.
+                    When you load CutColor, your browser downloads standard static website assets (HTML, CSS, JS) and the open-source neural model weight files (~20–40 MB) from our static CDN. No user photos, personal identity markers, or telemetry are ever transmitted.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    Does ColorCut require an account or subscription?
+                    Does CutColor require an account or subscription?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut requires no account registration, login credentials, or email address. All features—including transparent PNG and solid-color JPG downloads at full original resolution—are 100% free with zero watermarks.
+                    No. CutColor requires no account registration, login credentials, or email address. All features—including transparent PNG and solid-color JPG downloads at full original resolution—are 100% free with zero watermarks.
                   </p>
                 </div>
               </div>
@@ -197,9 +197,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {/* Related Links */}
             <div className="pt-8 border-t border-[#E5E7EB]">
               <h2 className="text-[17px] font-headline font-semibold text-[#111827] mb-3">
-                Explore ColorCut
+                Explore CutColor
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <a
                   href="/how-it-works"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
@@ -221,6 +221,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">Terms of Use</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">Licensing and usage rules</span>
                 </a>
+                <a
+                  href="/contact"
+                  className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
+                >
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">Contact Us</span>
+                  <span className="text-[12px] text-[#6B7280] mt-1">Support &amp; issue reporting</span>
+                </a>
               </div>
             </div>
 
@@ -228,7 +235,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <div className="p-6 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h3 className="font-headline font-semibold text-[17px] text-[#111827]">
-                  Experience ColorCut in action
+                  Experience CutColor in action
                 </h3>
                 <p className="text-[13px] text-[#6B7280] mt-0.5">
                   Isolate portrait subjects or product shots in seconds.

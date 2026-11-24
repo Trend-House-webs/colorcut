@@ -80,38 +80,53 @@ export const COLOR_PRESETS: ColorPreset[] = [
 
 export const FAQ_ITEMS = [
   {
-    question: 'How does ColorCut remove image backgrounds?',
+    question: 'What is CutColor?',
     answer:
-      'ColorCut uses an advanced client-side neural network segmentation model running directly in your web browser via WebAssembly (Wasm). The model evaluates edges and foreground subject features to generate a high-precision alpha matte without requiring server-side rendering.',
+      'CutColor is a free, browser-based AI image background remover and solid background color changer. It isolates the foreground subject from JPG, PNG, and WebP photos locally in your browser using WebAssembly, allowing you to download a lossless transparent PNG or apply a solid background color.',
   },
   {
-    question: 'Are my images uploaded to a server?',
+    question: 'How do I remove an image background online with CutColor?',
     answer:
-      'No. Your images are processed entirely on your local device inside your browser memory. Your photos never leave your computer or phone, and they are never stored on any remote server or database.',
-  },
-  {
-    question: 'Which image formats are supported?',
-    answer:
-      'ColorCut supports standard JPG, JPEG, PNG, and modern WebP image formats. Files up to 10 MB in size are supported to ensure smooth and responsive in-browser performance.',
+      'Upload or drag and drop a JPG, PNG, or WebP image (up to 10 MB) onto the CutColor upload card. The client-side neural segmentation model (isnet_fp16) automatically detects the subject and removes the background in your browser memory, opening the interactive editor where you can download a transparent PNG or apply a solid background color.',
   },
   {
     question: 'Can I download a transparent PNG?',
     answer:
-      'Yes. You can keep the background transparent and export full-resolution PNG files with complete alpha transparency, ready for use in Photoshop, Canva, Figma, or website designs.',
+      'Yes. Keep the background option set to Transparent and click "Download PNG — Transparent" to export a full-resolution 32-bit RGBA PNG file with complete alpha transparency, ready for Canva, Figma, Photoshop, or web graphics.',
   },
   {
-    question: 'Can I change the background to a solid color?',
+    question: 'Can I change the background to white?',
     answer:
-      'Yes. Once the background is removed, you can instantly choose from 17 curated solid color presets or use the custom HEX picker. The solid color is composited directly behind the transparent foreground subject without altering the subject.',
+      'Yes. After background removal, select the White (#FFFFFF) swatch from the preset palette to place a pure white background behind your product photo or portrait, then download the finished image as a solid-color JPG or PNG.',
   },
   {
-    question: 'Why does processing take longer on some devices?',
+    question: 'Can I select a custom background color?',
     answer:
-      'Because all neural processing runs directly on your device rather than on a remote cloud GPU, performance depends on your device CPU and available RAM. Additionally, on your very first use, the browser downloads and caches the neural model weights (approx. 20-40 MB). Subsequent runs on the same device are significantly faster.',
+      'Yes. In addition to 17 curated solid color presets (including White, Black, Light Gray, Navy, Blue, Green, Yellow, and Beige), you can use the custom HEX color input (#RRGGBB) or native color picker to preview and apply any solid background color.',
   },
   {
-    question: 'Is ColorCut free to use?',
+    question: 'Which image formats are supported?',
     answer:
-      'Yes. ColorCut is 100% free with no subscription tiers, paywalls, watermarks, or account registration requirements.',
+      'CutColor supports standard JPG, JPEG, PNG, and WebP input files up to 10 MB. You can export your finished image at full original pixel dimensions as a 32-bit transparent/colored PNG or a 24-bit solid-color JPG.',
+  },
+  {
+    question: 'Is an account required and is there a watermark?',
+    answer:
+      'No account, sign-up, or email registration is required, and no watermark is ever added. CutColor is 100% free to use with full-resolution downloads.',
+  },
+  {
+    question: 'How are images processed and are my photos uploaded to a server?',
+    answer:
+      'All image decoding, neural network segmentation (via ONNX Runtime Web and WebAssembly), and HTML5 Canvas color compositing happen locally inside your browser memory. Your photos are not uploaded to or stored on a remote server. On your first run, your browser downloads and caches the static AI model weights (~20–40 MB) from a public CDN so subsequent edits run faster.',
+  },
+  {
+    question: 'Does CutColor generate AI background scenes or replace backgrounds with uploaded images?',
+    answer:
+      'No. CutColor is built specifically for background removal, transparent PNG cutouts, and solid-color background replacement. It does not generate synthetic AI background scenes and does not replace backgrounds with custom uploaded backdrop photos.',
+  },
+  {
+    question: 'Does CutColor support batch processing or passport compliance verification?',
+    answer:
+      'No. CutColor processes one image at a time so you can inspect edge quality and preview solid colors before exporting. While you can apply neutral solid background colors to portraits, CutColor does not automatically crop, resize, or certify compliance with official passport or government ID regulations.',
   },
 ];

@@ -1,0 +1,28 @@
+# CutColor
+
+> CutColor (https://cutcolor.vercel.app/) is a free, browser-based AI image background remover and solid background color changer. It uses ONNX Runtime Web and WebAssembly (`isnet_fp16`) to isolate foreground subjects locally inside the user's browser memory without uploading photos to a remote server.
+
+## Product Facts & Capabilities
+- **Canonical URL:** https://cutcolor.vercel.app/
+- **Core Functionality:** Automatic foreground segmentation, transparent PNG creation (32-bit RGBA), and solid-color background replacement.
+- **Supported Input Formats:** JPG, JPEG, PNG, and WebP images up to 10 MB per file.
+- **Background Color Options:** Transparent (alpha), 17 curated solid color presets (including pure white `#FFFFFF`, black `#000000`, light gray `#F3F4F6`, navy `#1E3A8A`, blue `#2563EB`, green `#22C55E`, warm beige `#F5F5DC`), and a custom HEX color picker (`#RRGGBB`).
+- **Export Formats:** Full original pixel resolution 32-bit transparent PNG or 24-bit solid-color JPG (0.92 quality) with zero watermarks.
+- **Privacy & Processing Architecture:** 100% client-side execution in browser memory via WebAssembly and HTML5 2D Canvas. No user account or registration is required. On first run, the browser downloads and caches the static neural network model weights (~20–40 MB) from CDN.
+
+## Product Scope & Limitations
+- **Single-Image Workflow:** Processes one photo at a time; batch or bulk multi-image processing is not supported.
+- **Solid-Color & Transparent Only:** Does not generate synthetic AI background scenes and does not replace backgrounds with uploaded custom background images.
+- **Still Images Only:** Does not process video files or animated GIFs.
+- **Document/ID Photos:** Provides neutral solid background colors for portraits, but does not automatically crop, resize, or certify compliance with government passport specifications.
+
+## Public Pages & Guides
+- [Homepage & Background Remover Tool](https://cutcolor.vercel.app/): Upload and edit JPG, PNG, or WebP images directly in the browser.
+- [How It Works](https://cutcolor.vercel.app/how-it-works): 5-step guide explaining client-side AI background removal, alpha channels, and export formats.
+- [How to Make an Image Background Transparent](https://cutcolor.vercel.app/how-to-make-a-background-transparent): Tutorial on creating 32-bit transparent PNG cutouts and why JPG does not support transparency.
+- [Make Product Photo Backgrounds White Online](https://cutcolor.vercel.app/white-background-for-product-photos): Guide to placing e-commerce product photos on a pure white (`#FFFFFF`) background.
+- [Change a Photo Background Color Online](https://cutcolor.vercel.app/change-photo-background-color): Guide to replacing photo backgrounds with 17 solid color presets or custom HEX values.
+- [About CutColor](https://cutcolor.vercel.app/about): Technical architecture overview covering ONNX Runtime Web, WebAssembly, and HTML5 Canvas compositing.
+- [Contact Us](https://cutcolor.vercel.app/contact): Support, bug reporting, and contact information for CutColor.
+- [Privacy Policy](https://cutcolor.vercel.app/privacy): Details on in-browser image isolation, zero photo uploads, and static CDN model caching.
+- [Terms of Use](https://cutcolor.vercel.app/terms): Personal and commercial usage rights, user content ownership, and open-source attribution (AGPLv3).

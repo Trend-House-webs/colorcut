@@ -1,4 +1,5 @@
 import React from 'react';
+import { SITE_NAME } from '../config';
 
 interface BrandLogoProps {
   size?: number;
@@ -16,7 +17,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
-      {/* Official ColorCut Icon */}
+      {/* Official CutColor Icon */}
       <div
         style={{ width: size, height: size }}
         className="rounded-xl overflow-hidden shrink-0 shadow-xs flex items-center justify-center bg-white border border-[#E5E7EB]"
@@ -61,7 +62,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
         <span
           className={`font-headline font-bold ${textSize} text-[#111827] tracking-tight flex items-center`}
         >
-          ColorCut
+          {SITE_NAME}
         </span>
       )}
     </div>

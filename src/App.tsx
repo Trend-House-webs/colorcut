@@ -19,6 +19,7 @@ import { UseCasesSection, UseCaseType } from './components/UseCasesSection';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { TransparentPngGuidePage } from './pages/TransparentPngGuidePage';
 import { WhiteBackgroundGuidePage } from './pages/WhiteBackgroundGuidePage';
@@ -40,6 +41,7 @@ export default function App({ initialView }: AppProps = {}) {
       if (path === '/privacy') return 'privacy';
       if (path === '/terms') return 'terms';
       if (path === '/about') return 'about';
+      if (path === '/contact') return 'contact';
       if (path === '/how-it-works') return 'how-it-works';
       if (path === '/how-to-make-a-background-transparent') return 'transparent-png-guide';
       if (path === '/white-background-for-product-photos') return 'white-background-guide';
@@ -77,6 +79,15 @@ export default function App({ initialView }: AppProps = {}) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const customBlobUrlsRef = useRef<string[]>([]);
   const uploadOpIdRef = useRef<number>(0);
+
+  // Sync view state with browser Back/Forward navigation
+  React.useEffect(() => {
+    const handlePopState = () => {
+      setCurrentView(getInitialView());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Cleanup object URLs on unmount
   React.useEffect(() => {
@@ -227,7 +238,7 @@ export default function App({ initialView }: AppProps = {}) {
   const handleOpenHelpModal = () => {
     setInfoModal({
       isOpen: true,
-      title: 'How to use ColorCut',
+      title: 'How to use CutColor',
       content:
         '1. Upload an image: Drag and drop any JPG, PNG, or WebP photo (up to 10 MB), or test with a sample photo.\n\n2. Automatic AI Segmentation: The browser-compatible AI model runs locally on your device to segment the background with sub-pixel alpha precision.\n\n3. Choose Solid Colors: Select from 17 curated color presets or enter any custom HEX value to preview instantly behind the subject.\n\n4. Real Export: Download full-resolution transparent PNG or solid-colored JPG with zero watermarks.',
     });
@@ -279,6 +290,17 @@ export default function App({ initialView }: AppProps = {}) {
         />
       ) : currentView === 'about' ? (
         <AboutPage
+          onNavigateHome={() => {
+            if (typeof window !== 'undefined' && window.history) {
+              window.history.pushState({}, '', '/');
+            }
+            setCurrentView('home');
+          }}
+          onTriggerUpload={handleTriggerUpload}
+          onOpenHelpModal={handleOpenHelpModal}
+        />
+      ) : currentView === 'contact' ? (
+        <ContactPage
           onNavigateHome={() => {
             if (typeof window !== 'undefined' && window.history) {
               window.history.pushState({}, '', '/');

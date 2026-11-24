@@ -38,10 +38,10 @@ export const HowItWorksSection: React.FC = () => {
               Quick Overview
             </span>
             <h2 className="text-[20px] sm:text-[24px] font-headline font-bold text-[#111827] mt-1 mb-2.5">
-              What does ColorCut do?
+              What does CutColor do?
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#4B5563] leading-relaxed">
-              ColorCut removes the background from JPG, PNG, and WebP images in your browser. You can download the result as a transparent PNG or place the cutout on a solid-color background. No account is required.
+              CutColor removes the background from JPG, PNG, and WebP images directly in your browser. You can download the cutout as a lossless 32-bit transparent PNG or place the subject on a solid-color background using 17 curated presets or any custom HEX code. No account or registration is required.
             </p>
           </div>
         </div>
@@ -52,7 +52,7 @@ export const HowItWorksSection: React.FC = () => {
             Simple 3-Step Workflow
           </span>
           <h2 className="text-[26px] sm:text-[34px] font-headline font-bold text-[#111827] mt-1.5 tracking-tight">
-            How ColorCut Works
+            How CutColor Works
           </h2>
           <p className="text-[15px] text-[#6B7280] mt-2 leading-relaxed">
             Remove background from image and make it transparent, or change image background color in three simple interactions.
@@ -108,7 +108,7 @@ export const HowItWorksSection: React.FC = () => {
             </h3>
           </div>
           <p className="text-[14px] text-[#6B7280] leading-relaxed mb-4">
-            ColorCut is specialized for fast, private, single-image background removal and solid-color replacement. To keep expectations clear:
+            CutColor is specialized for fast, private, single-image background removal and solid-color replacement. To keep expectations clear:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] text-[#4B5563]">
             <div className="space-y-2.5 bg-white p-4 rounded-xl border border-[#E5E7EB]">

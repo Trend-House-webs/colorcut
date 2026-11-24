@@ -47,10 +47,10 @@ export const TermsPage: React.FC<TermsPageProps> = ({
               Legal Agreement &amp; Acceptable Use
             </span>
             <h1 className="text-[32px] sm:text-[42px] font-headline font-bold text-[#111827] mt-1.5 tracking-tight">
-              ColorCut Terms of Use
+              CutColor Terms of Use
             </h1>
             <p className="text-[16px] text-[#6B7280] mt-3 leading-relaxed">
-              Clear, transparent rules governing your use of the ColorCut client-side background removal and image editing tool.
+              Clear, transparent rules governing your use of the CutColor client-side background removal and image editing tool.
             </p>
             <div className="mt-4 flex items-center gap-3 text-[12px] text-[#6B7280]">
               <span className="inline-flex items-center gap-1.5 font-medium text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-200">
@@ -77,7 +77,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                   You Retain 100% Ownership of Your Content
                 </h2>
                 <p className="text-[14px] text-indigo-900 leading-relaxed">
-                  ColorCut claims zero copyright, licensing, or intellectual property rights over any photos you upload or export. You are free to use your exported cutouts for commercial, personal, and professional projects without watermarks or royalties.
+                  CutColor claims zero copyright, licensing, or intellectual property rights over any photos you upload or export. You are free to use your exported cutouts for commercial, personal, and professional projects without watermarks or royalties.
                 </p>
               </div>
             </div>
@@ -88,7 +88,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                 1. Permitted Use &amp; License
               </h2>
               <p className="mb-3">
-                ColorCut is provided free of charge for personal, educational, commercial, and creative use. You may use ColorCut to:
+                CutColor is provided free of charge for personal, educational, commercial, and creative use. You may use CutColor to:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li>Process professional portrait headshots for resumes, LinkedIn profiles, and company directories.</li>
@@ -104,11 +104,11 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                 2. User Responsibility &amp; Content Rights
               </h2>
               <p className="mb-3">
-                By uploading images to ColorCut, you represent and warrant that:
+                By uploading images to CutColor, you represent and warrant that:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li>You own the intellectual property rights in the image, or have obtained explicit permission or licensing from the copyright holder to edit the content.</li>
-                <li>You will not use ColorCut to process illegal, non-consensual intimate imagery, defamatory material, or content that infringes upon third-party rights.</li>
+                <li>You will not use CutColor to process illegal, non-consensual intimate imagery, defamatory material, or content that infringes upon third-party rights.</li>
               </ul>
             </div>
 
@@ -118,7 +118,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                 3. Open-Source Component Attribution (AGPLv3)
               </h2>
               <p className="mb-3">
-                The client-side neural segmentation engine in ColorCut uses <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">@imgly/background-removal</code>, licensed under the GNU Affero General Public License v3 (AGPLv3).
+                The client-side neural segmentation engine in CutColor uses <code className="px-1.5 py-0.5 rounded bg-gray-100 text-[13px] font-mono">@imgly/background-removal</code>, licensed under the GNU Affero General Public License v3 (AGPLv3).
               </p>
               <p>
                 In compliance with AGPLv3, the web application source code and its client-side integration are maintained with open transparency.
@@ -136,7 +136,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
               <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
                 <li>Processing speeds depend directly on your device CPU, available RAM, and browser WebAssembly/WebGPU capabilities.</li>
                 <li>Initial asset download requires approximately 20-40 MB of network bandwidth to download model weights, which are subsequently cached locally by your browser.</li>
-                <li>ColorCut recommends image files up to 10 MB in standard formats (JPG, PNG, WebP) for optimal performance.</li>
+                <li>CutColor recommends image files up to 10 MB in standard formats (JPG, PNG, WebP) for optimal performance.</li>
               </ul>
             </div>
 
@@ -146,10 +146,10 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                 5. Disclaimer of Warranties &amp; Limitation of Liability
               </h2>
               <p className="mb-3">
-                ColorCut is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis, without warranty of any kind, whether express, implied, statutory, or otherwise.
+                CutColor is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis, without warranty of any kind, whether express, implied, statutory, or otherwise.
               </p>
               <p>
-                While the underlying AI model strives for high sub-pixel edge fidelity, cutout precision varies depending on subject contrast, motion blur, lighting conditions, and resolution. ColorCut shall not be liable for any indirect, incidental, or consequential damages resulting from your use of the application.
+                While the underlying AI model strives for high sub-pixel edge fidelity, cutout precision varies depending on subject contrast, motion blur, lighting conditions, and resolution. CutColor shall not be liable for any indirect, incidental, or consequential damages resulting from your use of the application.
               </p>
             </div>
 
@@ -177,7 +177,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
                   href="/about"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About ColorCut</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About CutColor</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">Architecture &amp; pipeline</span>
                 </a>
               </div>
@@ -187,7 +187,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
             <div className="p-6 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h3 className="font-headline font-semibold text-[17px] text-[#111827]">
-                  Start editing with ColorCut
+                  Start editing with CutColor
                 </h3>
                 <p className="text-[13px] text-[#6B7280] mt-0.5">
                   Free, instant background removal with zero sign-ups.

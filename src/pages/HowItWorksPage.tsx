@@ -29,7 +29,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       title: 'Select a Supported Image',
       subtitle: 'Upload without signup or Photoshop',
       description:
-        'Choose any JPG, PNG, or WebP photo up to 10 MB from your computer, smartphone, or tablet. If you wonder "how do I remove background from image online free without Photoshop," ColorCut lets you begin immediately with zero account registration, no email entry, and no software installations.',
+        'Choose any JPG, PNG, or WebP photo up to 10 MB from your computer, smartphone, or tablet. If you wonder "how do I remove background from image online free without Photoshop," CutColor lets you begin immediately with zero account registration, no email entry, and no software installations.',
       icon: 'add_photo_alternate',
       highlights: ['Formats: JPG, PNG, WebP', 'Max File Size: 10 MB', 'No Sign-Up Required'],
     },
@@ -212,7 +212,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                 </h2>
               </div>
               <p className="text-[14px] text-[#4B5563] leading-relaxed">
-                ColorCut operates completely within your browser using open-source machine learning. To ensure transparent expectations before editing:
+                CutColor operates completely within your browser using open-source machine learning. To ensure transparent expectations before editing:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px] text-[#4B5563]">
                 <div className="p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-2">
@@ -224,7 +224,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                 <div className="p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-2">
                   <div className="font-semibold text-[#111827]">Hardware &amp; Model Weights Download</div>
                   <p className="text-[#6B7280] leading-relaxed">
-                    Because inference runs locally via WebAssembly, your computer or mobile CPU/RAM handles the computation. The initial run requires downloading model weights (~20–40 MB), which are cached in your browser. ColorCut does not provide batch editing or video processing.
+                    Because inference runs locally via WebAssembly, your computer or mobile CPU/RAM handles the computation. The initial run requires downloading model weights (~20–40 MB), which are cached in your browser. CutColor does not provide batch editing or video processing.
                   </p>
                 </div>
               </div>
@@ -265,7 +265,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                   Frequently Asked Questions &amp; Direct Answers
                 </h2>
                 <p className="text-[14px] text-[#6B7280]">
-                  Direct, concise answers to common questions about ColorCut&apos;s workflow, capabilities, and system specifications.
+                  Direct, concise answers to common questions about CutColor&apos;s workflow, capabilities, and system specifications.
                 </p>
               </div>
 
@@ -275,7 +275,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                     How do I remove a background from an image online?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Upload any JPG, PNG, or WebP photo up to 10 MB to ColorCut. The browser-based AI model automatically detects your foreground subject, removes the backdrop in seconds, and displays your transparent cutout without uploading your photo to any server.
+                    Upload any JPG, PNG, or WebP photo up to 10 MB to CutColor. The browser-based AI model automatically detects your foreground subject, removes the backdrop in seconds, and displays your transparent cutout without uploading your photo to any server.
                   </p>
                 </div>
 
@@ -284,7 +284,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                     Can I make an image background transparent and save it as a PNG?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Yes. Once the background is removed, ColorCut creates a full 32-bit alpha transparency channel. Click &quot;Download PNG&quot; to export a lossless transparent cutout ready for Canva, Figma, Photoshop, or web design.
+                    Yes. Once the background is removed, CutColor creates a full 32-bit alpha transparency channel. Click &quot;Download PNG&quot; to export a lossless transparent cutout ready for Canva, Figma, Photoshop, or web design.
                   </p>
                 </div>
 
@@ -302,7 +302,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                     Which image formats and file sizes are supported?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    ColorCut supports JPG, JPEG, PNG, and WebP input images up to 10 MB. Output downloads are provided at 100% original pixel resolution with zero watermarks as transparent PNG or solid-color JPG files.
+                    CutColor supports JPG, JPEG, PNG, and WebP input images up to 10 MB. Output downloads are provided at 100% original pixel resolution with zero watermarks as transparent PNG or solid-color JPG files.
                   </p>
                 </div>
 
@@ -320,25 +320,25 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                     Why can hair, fur, or low-contrast edges look soft?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Fine stray hairs and low-contrast borders (such as dark hair against dark shadows or white clothing against light walls) share pixel luminance with the background. While ColorCut isolates fine contours, high-contrast photos with distinct lighting produce the sharpest cutout edges.
+                    Fine stray hairs and low-contrast borders (such as dark hair against dark shadows or white clothing against light walls) share pixel luminance with the background. While CutColor isolates fine contours, high-contrast photos with distinct lighting produce the sharpest cutout edges.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    Can ColorCut generate a new background scene or replace backgrounds with photos?
+                    Can CutColor generate a new background scene or replace backgrounds with photos?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut focuses strictly on precision background removal and solid-color replacement. It does not generate synthetic AI scenes, photo-realistic landscapes, or inpaint replacement images.
+                    No. CutColor focuses strictly on precision background removal and solid-color replacement. It does not generate synthetic AI scenes, photo-realistic landscapes, or inpaint replacement images.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    Can ColorCut process multiple images at once (batch editing)?
+                    Can CutColor process multiple images at once (batch editing)?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut processes one image at a time with full interactive preview and color control. Batch editing and bulk queue uploads are not supported.
+                    No. CutColor processes one image at a time with full interactive preview and color control. Batch editing and bulk queue uploads are not supported.
                   </p>
                 </div>
               </div>
@@ -387,7 +387,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
                   href="/about"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About ColorCut</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">About CutColor</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">In-browser architecture &amp; mission</span>
                 </a>
                 <a

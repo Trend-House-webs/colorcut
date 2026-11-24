@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../data/samples';
 
 export const FaqSection: React.FC = () => {
-  // Independent open state per question allows expanding and collapsing independently
-  const [openIndices, setOpenIndices] = useState<number[]>([0]);
+  // Default all FAQ items to open so every answer is visible in initial rendered HTML and on load
+  const [openIndices, setOpenIndices] = useState<number[]>(() =>
+    FAQ_ITEMS.map((_, idx) => idx)
+  );
 
   const toggleItem = (idx: number) => {
     setOpenIndices(prev =>
@@ -22,7 +24,7 @@ export const FaqSection: React.FC = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-[15px] text-[#6B7280] mt-2">
-            Clear, honest answers regarding client-side processing, formats, and privacy.
+            Clear, direct answers about CutColor&apos;s client-side processing, supported formats, capabilities, and limitations.
           </p>
         </div>
 
@@ -37,31 +39,33 @@ export const FaqSection: React.FC = () => {
                 key={idx}
                 className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden transition-all duration-200 shadow-xs"
               >
-                <button
-                  type="button"
-                  id={headerId}
-                  aria-expanded={isOpen}
-                  aria-controls={answerId}
-                  onClick={() => toggleItem(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex justify-between items-center gap-4 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] cursor-pointer"
-                >
-                  <span className="font-headline font-semibold text-[15px] sm:text-[16px] text-[#111827]">
-                    {item.question}
-                  </span>
-                  <span
-                    className={`material-symbols-outlined text-[#6B7280] transition-transform duration-200 shrink-0 ${
-                      isOpen ? 'rotate-180 text-[#4F46E5]' : ''
-                    }`}
+                <h3 className="m-0">
+                  <button
+                    type="button"
+                    id={headerId}
+                    aria-expanded={isOpen}
+                    aria-controls={answerId}
+                    onClick={() => toggleItem(idx)}
+                    className="w-full p-5 sm:p-6 text-left flex justify-between items-center gap-4 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] cursor-pointer"
                   >
-                    expand_more
-                  </span>
-                </button>
+                    <span className="font-headline font-semibold text-[15px] sm:text-[16px] text-[#111827]">
+                      {item.question}
+                    </span>
+                    <span
+                      className={`material-symbols-outlined text-[#6B7280] transition-transform duration-200 shrink-0 ${
+                        isOpen ? 'rotate-180 text-[#4F46E5]' : ''
+                      }`}
+                    >
+                      expand_more
+                    </span>
+                  </button>
+                </h3>
 
                 <div
                   id={answerId}
                   role="region"
                   aria-labelledby={headerId}
-                  className={`px-5 sm:px-6 pb-6 text-[14px] text-[#6B7280] leading-relaxed border-t border-[#E5E7EB]/60 pt-4 ${
+                  className={`px-5 sm:px-6 pb-6 text-[14px] text-[#4B5563] leading-relaxed border-t border-[#E5E7EB]/60 pt-4 ${
                     isOpen ? 'block' : 'hidden'
                   }`}
                 >

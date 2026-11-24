@@ -32,20 +32,23 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <header className="bg-white border-b border-[#E5E7EB] sticky top-0 z-40">
         <div className="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 max-w-7xl mx-auto h-16">
-          {/* Brand Logo & Name (No "FREE TOOL" label) */}
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            aria-label="ColorCut Home"
+          {/* Brand Logo & Name */}
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateHome();
+            }}
+            aria-label="CutColor Home"
             className="flex items-center text-left focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xl cursor-pointer"
           >
             <BrandLogo size={36} />
-          </button>
+          </a>
 
           {/* Desktop Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8 text-[14px]">
+          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-7 text-[14px]">
             <a
-              href="#hero"
+              href="/"
               onClick={(e) => {
                 e.preventDefault();
                 onNavigateHome();
@@ -61,12 +64,6 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
             <a
               href="/how-it-works"
-              onClick={(e) => {
-                if (currentView === 'home') {
-                  e.preventDefault();
-                  scrollToSection('how-it-works');
-                }
-              }}
               className={`hover:text-[#111827] font-medium transition-colors cursor-pointer ${
                 currentView === 'how-it-works' ? 'text-[#4F46E5] font-semibold' : 'text-[#6B7280]'
               }`}
@@ -82,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
               About
             </a>
             <a
-              href="#three-states"
+              href="/#three-states"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('three-states');
@@ -92,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
               Demonstration
             </a>
             <a
-              href="#use-cases"
+              href="/#use-cases"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('use-cases');
@@ -102,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
               Use Cases
             </a>
             <a
-              href="#faq"
+              href="/#faq"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('faq');
@@ -111,6 +108,14 @@ export const Header: React.FC<HeaderProps> = ({
             >
               FAQ
             </a>
+            <a
+              href="/contact"
+              className={`hover:text-[#111827] font-medium transition-colors cursor-pointer ${
+                currentView === 'contact' ? 'text-[#4F46E5] font-semibold' : 'text-[#6B7280]'
+              }`}
+            >
+              Contact
+            </a>
           </nav>
 
           {/* Trailing Action Cluster */}
@@ -118,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               aria-label="Help & Guide"
               onClick={onOpenHelpModal}
-              title="How to use ColorCut"
+              title="How to use CutColor"
               className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6B7280] hover:text-[#111827] hover:bg-[#F3F4F6] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] cursor-pointer"
               type="button"
             >
@@ -154,7 +159,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative bg-white w-4/5 max-w-[320px] h-full p-6 shadow-xl flex flex-col justify-between z-10">
+          <div className="relative bg-white w-4/5 max-w-[320px] h-full p-6 shadow-xl flex flex-col justify-between z-10 overflow-y-auto">
             <div className="space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
                 <BrandLogo size={32} />
@@ -168,28 +173,23 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               </div>
 
-              <nav className="flex flex-col space-y-3 font-medium">
+              <nav className="flex flex-col space-y-2.5 font-medium text-[14px]">
                 <a
-                  href="#hero"
+                  href="/"
                   onClick={(e) => {
                     e.preventDefault();
                     setMobileMenuOpen(false);
                     onNavigateHome();
                     scrollToSection('hero');
                   }}
-                  className="text-left text-[#4F46E5] font-semibold py-2 px-2 rounded-lg hover:bg-indigo-50"
+                  className={`text-left py-2 px-2 rounded-lg hover:bg-indigo-50 ${
+                    currentView === 'home' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                  }`}
                 >
                   Home
                 </a>
                 <a
                   href="/how-it-works"
-                  onClick={(e) => {
-                    if (currentView === 'home') {
-                      e.preventDefault();
-                      setMobileMenuOpen(false);
-                      scrollToSection('how-it-works');
-                    }
-                  }}
                   className={`text-left py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors ${
                     currentView === 'how-it-works' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
                   }`}
@@ -205,38 +205,42 @@ export const Header: React.FC<HeaderProps> = ({
                   About
                 </a>
                 <a
-                  href="#three-states"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMobileMenuOpen(false);
-                    scrollToSection('three-states');
-                  }}
-                  className="text-left text-[#4B5563] hover:text-[#111827] py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
+                  href="/contact"
+                  className={`text-left py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors ${
+                    currentView === 'contact' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                  }`}
                 >
-                  Demonstration
+                  Contact
                 </a>
-                <a
-                  href="#use-cases"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMobileMenuOpen(false);
-                    scrollToSection('use-cases');
-                  }}
-                  className="text-left text-[#4B5563] hover:text-[#111827] py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                >
-                  Use Cases
-                </a>
-                <a
-                  href="#faq"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMobileMenuOpen(false);
-                    scrollToSection('faq');
-                  }}
-                  className="text-left text-[#4B5563] hover:text-[#111827] py-2 px-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                >
-                  FAQ
-                </a>
+                <div className="pt-2 border-t border-[#E5E7EB]">
+                  <span className="text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider px-2 block mb-1">
+                    Guides
+                  </span>
+                  <a
+                    href="/how-to-make-a-background-transparent"
+                    className={`block py-1.5 px-2 rounded-lg hover:bg-[#F3F4F6] text-[13px] ${
+                      currentView === 'transparent-png-guide' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                    }`}
+                  >
+                    Transparent PNG Guide
+                  </a>
+                  <a
+                    href="/white-background-for-product-photos"
+                    className={`block py-1.5 px-2 rounded-lg hover:bg-[#F3F4F6] text-[13px] ${
+                      currentView === 'white-background-guide' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                    }`}
+                  >
+                    White Background for Products
+                  </a>
+                  <a
+                    href="/change-photo-background-color"
+                    className={`block py-1.5 px-2 rounded-lg hover:bg-[#F3F4F6] text-[13px] ${
+                      currentView === 'change-color-guide' ? 'text-[#4F46E5] font-semibold' : 'text-[#4B5563]'
+                    }`}
+                  >
+                    Change Background Color
+                  </a>
+                </div>
               </nav>
             </div>
 

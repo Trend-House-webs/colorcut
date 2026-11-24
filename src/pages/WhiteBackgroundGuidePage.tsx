@@ -33,13 +33,13 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
       num: '02',
       title: 'Automatic Neural Background Removal',
       description:
-        'ColorCut runs in-browser neural segmentation using the isnet_fp16 model via WebAssembly. It isolates the product edges, contours, and physical silhouette without transmitting your photo to an external cloud server.',
+        'CutColor runs in-browser neural segmentation using the isnet_fp16 model via WebAssembly. It isolates the product edges, contours, and physical silhouette without transmitting your photo to an external cloud server.',
     },
     {
       num: '03',
       title: 'Select Pure White (#FFFFFF) Preset',
       description:
-        'Click the "White" color swatch in ColorCut\'s preset palette. The tool composites a pure #FFFFFF backdrop directly behind your transparent product cutout with pixel precision.',
+        'Click the "White" color swatch in CutColor\'s preset palette. The tool composites a pure #FFFFFF backdrop directly behind your transparent product cutout with pixel precision.',
     },
     {
       num: '04',
@@ -81,7 +81,7 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
               Make Product Photo Backgrounds White Online
             </h1>
             <p className="text-[16px] text-[#6B7280] mt-3 leading-relaxed max-w-3xl">
-              Remove a product photo's background and give it a solid white background with ColorCut's browser-based image tool. Perfect for online store listings, catalog shots, and clean marketplace presentations.
+              Remove a product photo's background and give it a solid white background with CutColor's browser-based image tool. Perfect for online store listings, catalog shots, and clean marketplace presentations.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] text-[#6B7280]">
               <span className="inline-flex items-center gap-1.5 font-medium text-[#4F46E5] bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-200">
@@ -104,11 +104,11 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                 How to Change a Photo Background to White Online
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed mb-4">
-                To create a white background for product photos with ColorCut:
+                To create a white background for product photos with CutColor:
               </p>
               <ol className="list-decimal pl-5 space-y-2 text-[14px] text-[#374151]">
                 <li><strong>Upload your product photo:</strong> Select your single product image (JPG, PNG, or WebP up to 10 MB).</li>
-                <li><strong>In-browser background removal:</strong> ColorCut isolates the product silhouette locally in your device's memory.</li>
+                <li><strong>In-browser background removal:</strong> CutColor isolates the product silhouette locally in your device's memory.</li>
                 <li><strong>Select White (#FFFFFF):</strong> Choose the White swatch from the 17 color presets.</li>
                 <li><strong>Export full resolution:</strong> Download the clean solid-color JPG or keep a transparent PNG copy for future edits.</li>
               </ol>
@@ -117,10 +117,10 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
             {/* Which product photos suit the tool */}
             <div className="space-y-4">
               <h2 className="text-[22px] sm:text-[26px] font-headline font-bold text-[#111827]">
-                Which Product Photographs Suit ColorCut?
+                Which Product Photographs Suit CutColor?
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed">
-                ColorCut is optimized for single-item product photography where you need to change photo background to white quickly without launching heavy desktop software like Photoshop.
+                CutColor is optimized for single-item product photography where you need to change photo background to white quickly without launching heavy desktop software like Photoshop.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-[13px]">
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] shadow-xs space-y-2">
@@ -187,7 +187,7 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                 Many modern generative tools attempt to create complex synthetic background scenes (such as virtual marble countertops or outdoor foliage). While visually striking, generated scenes often alter product shadows, introduce mismatched lighting angles, or violate marketplace guidelines requiring pure, uncluttered white backgrounds.
               </p>
               <p className="text-[14px] text-[#4B5563] leading-relaxed">
-                ColorCut takes an honest, straightforward approach: we provide genuine, solid-color compositing that places your real product on an authentic pure white (#FFFFFF) backdrop without altering the original colors, labels, or geometry of your product.
+                CutColor takes an honest, straightforward approach: we provide genuine, solid-color compositing that places your real product on an authentic pure white (#FFFFFF) backdrop without altering the original colors, labels, or geometry of your product.
               </p>
             </div>
 
@@ -197,20 +197,20 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                 Tool Scope &amp; Limitations for Product Photography
               </h2>
               <p className="text-[14px] text-[#6B7280]">
-                To ensure ColorCut fits your workflow, keep these realistic capabilities and limits in mind:
+                To ensure CutColor fits your workflow, keep these realistic capabilities and limits in mind:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[13px]">
                 <div className="p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <div className="font-semibold text-[#111827]">Single-Item Editing</div>
-                  <p className="text-[#6B7280]">ColorCut focuses on single-photo editing. We do not provide batch processing of multiple images simultaneously.</p>
+                  <p className="text-[#6B7280]">CutColor focuses on single-photo editing. We do not provide batch processing of multiple images simultaneously.</p>
                 </div>
                 <div className="p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <div className="font-semibold text-[#111827]">No Synthetic Shadows</div>
-                  <p className="text-[#6B7280]">ColorCut removes original backgrounds completely. It does not automatically generate synthetic 3D contact shadows.</p>
+                  <p className="text-[#6B7280]">CutColor removes original backgrounds completely. It does not automatically generate synthetic 3D contact shadows.</p>
                 </div>
                 <div className="p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <div className="font-semibold text-[#111827]">Marketplace Cropping</div>
-                  <p className="text-[#6B7280]">ColorCut preserves original pixel dimensions. It does not automatically crop, resize, or center items to specific marketplace aspect ratios.</p>
+                  <p className="text-[#6B7280]">CutColor preserves original pixel dimensions. It does not automatically crop, resize, or center items to specific marketplace aspect ratios.</p>
                 </div>
               </div>
             </div>
@@ -233,7 +233,7 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                   Frequently Asked Questions About White Backgrounds
                 </h2>
                 <p className="text-[14px] text-[#6B7280]">
-                  Direct answers regarding marketplace compliance, product photography, and ColorCut&apos;s capabilities.
+                  Direct answers regarding marketplace compliance, product photography, and CutColor&apos;s capabilities.
                 </p>
               </div>
 
@@ -243,16 +243,16 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                     Can I change a photo background to pure white online?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Yes. Once ColorCut segments your product, select the White preset (<code className="text-[#4F46E5] font-mono">#FFFFFF</code>). ColorCut immediately composites a true, pure white backdrop behind your product and lets you download a high-resolution JPG or PNG.
+                    Yes. Once CutColor segments your product, select the White preset (<code className="text-[#4F46E5] font-mono">#FFFFFF</code>). CutColor immediately composites a true, pure white backdrop behind your product and lets you download a high-resolution JPG or PNG.
                   </p>
                 </div>
 
                 <div className="p-5 bg-white rounded-xl border border-[#E5E7EB] space-y-1.5">
                   <h3 className="font-semibold text-[#111827] text-[15px]">
-                    Does ColorCut create AI-generated product backgrounds or shadows?
+                    Does CutColor create AI-generated product backgrounds or shadows?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut is specifically designed for clean solid-color studio backgrounds and transparent cutouts. It does not generate synthetic lifestyle scenes, virtual room backdrops, or simulated drop shadows.
+                    No. CutColor is specifically designed for clean solid-color studio backgrounds and transparent cutouts. It does not generate synthetic lifestyle scenes, virtual room backdrops, or simulated drop shadows.
                   </p>
                 </div>
 
@@ -261,7 +261,7 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                     Can I process hundreds of product photos in a batch?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    No. ColorCut operates as a focused single-image editor in your browser. Each product photo is inspected, refined, and downloaded individually to guarantee edge accuracy without automated batch errors.
+                    No. CutColor operates as a focused single-image editor in your browser. Each product photo is inspected, refined, and downloaded individually to guarantee edge accuracy without automated batch errors.
                   </p>
                 </div>
 
@@ -300,7 +300,7 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
                   href="/how-it-works"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How ColorCut Works</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How CutColor Works</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">In-browser 3-step workflow</span>
                 </a>
               </div>

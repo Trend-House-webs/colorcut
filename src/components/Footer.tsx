@@ -13,14 +13,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
       <div className="flex flex-col md:flex-row justify-between items-center w-full px-4 sm:px-6 md:px-12 max-w-7xl mx-auto py-8 gap-6">
         {/* Brand & Tagline */}
         <div className="flex flex-col items-center md:items-start gap-1">
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            aria-label="ColorCut Home"
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateHome();
+            }}
+            aria-label="CutColor Home"
             className="flex items-center cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-lg"
           >
             <BrandLogo size={30} textSize="text-[18px]" />
-          </button>
+          </a>
           <p className="text-[13px] text-[#6B7280] text-center md:text-left mt-1">
             Remove backgrounds. Choose solid colors. Download in seconds.
           </p>
@@ -28,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
 
         {/* Accurate Privacy & Processing Statement */}
         <div className="text-[12px] text-[#6B7280] text-center md:text-left max-w-sm">
-          © {new Date().getFullYear()} ColorCut. Client-side neural segmentation running in-browser via WebAssembly. Private, fast, and free.
+          © {new Date().getFullYear()} CutColor. Client-side neural segmentation running in-browser via WebAssembly. Private, fast, and free.
         </div>
 
         {/* Navigation / Links Section */}
@@ -56,10 +59,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
             </a>
           </div>
 
-          {/* About & Legal */}
+          {/* About, Contact & Legal */}
           <div className="flex flex-col gap-1.5">
             <span className="text-[11px] font-semibold text-[#111827] uppercase tracking-wider">Product &amp; Legal</span>
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1.5">
               <a
                 href="/how-it-works"
                 className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
@@ -71,6 +74,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalModal, onNavigateHome
                 className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
               >
                 About
+              </a>
+              <a
+                href="/contact"
+                className="text-[#6B7280] hover:text-[#4F46E5] hover:underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#4F46E5] rounded-xs cursor-pointer"
+              >
+                Contact
               </a>
               <a
                 href="/privacy"

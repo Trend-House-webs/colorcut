@@ -15,7 +15,7 @@ function statusAndRoutingPlugin(): Plugin {
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
     };
 
-    if (proto === 'https' || host.includes('workers.dev')) {
+    if (proto === 'https' || host.includes('vercel.app') || host.includes('cutcolor')) {
       headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload';
       headers['X-Frame-Options'] = 'SAMEORIGIN';
     }
@@ -36,7 +36,7 @@ function statusAndRoutingPlugin(): Plugin {
     }
 
     // 1. Issue A: Check for HTTP protocol via headers
-    if (proto === 'http' && (host.includes('workers.dev') || host.includes('colorcut'))) {
+    if (proto === 'http' && (host.includes('vercel.app') || host.includes('cutcolor'))) {
       const httpsUrl = `https://${host}${rawUrl}`;
       res.writeHead(301, {
         Location: httpsUrl,
@@ -55,6 +55,7 @@ function statusAndRoutingPlugin(): Plugin {
       '/privacy',
       '/terms',
       '/about',
+      '/contact',
       '/how-it-works',
       '/how-to-make-a-background-transparent',
       '/white-background-for-product-photos',
@@ -110,7 +111,7 @@ function statusAndRoutingPlugin(): Plugin {
       res.setHeader(k, v);
     }
 
-    if (proto === 'http' && (host.includes('workers.dev') || host.includes('colorcut'))) {
+    if (proto === 'http' && (host.includes('vercel.app') || host.includes('cutcolor'))) {
       const httpsUrl = `https://${host}${rawUrl}`;
       res.writeHead(301, {
         Location: httpsUrl,
@@ -128,6 +129,7 @@ function statusAndRoutingPlugin(): Plugin {
       '/privacy',
       '/terms',
       '/about',
+      '/contact',
       '/how-it-works',
       '/how-to-make-a-background-transparent',
       '/white-background-for-product-photos',
@@ -140,6 +142,7 @@ function statusAndRoutingPlugin(): Plugin {
         '/privacy',
         '/terms',
         '/about',
+        '/contact',
         '/how-it-works',
         '/how-to-make-a-background-transparent',
         '/white-background-for-product-photos',

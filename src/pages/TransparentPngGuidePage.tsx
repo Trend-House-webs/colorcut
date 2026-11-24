@@ -25,7 +25,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
   const steps = [
     {
       num: '01',
-      title: 'Upload Your Photo to ColorCut',
+      title: 'Upload Your Photo to CutColor',
       description:
         'Select any JPG, PNG, or WebP image up to 10 MB. Your file is read directly into local browser memory without uploading to an external server. You can also test immediately using our sample product and portrait photos.',
     },
@@ -45,7 +45,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
       num: '04',
       title: 'Export Lossless Transparent PNG',
       description:
-        'Click "Download PNG". ColorCut exports a full-resolution 32-bit RGBA PNG file preserving complete alpha transparency. The output file has zero watermarks and is immediately ready for Canva, Figma, Photoshop, or web design.',
+        'Click "Download PNG". CutColor exports a full-resolution 32-bit RGBA PNG file preserving complete alpha transparency. The output file has zero watermarks and is immediately ready for Canva, Figma, Photoshop, or web design.',
     },
   ];
 
@@ -104,11 +104,11 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                 Quick Summary: Making an Image Background Transparent
               </h2>
               <p className="text-[15px] text-[#4B5563] leading-relaxed mb-4">
-                To make an image background transparent using ColorCut:
+                To make an image background transparent using CutColor:
               </p>
               <ol className="list-decimal pl-5 space-y-2 text-[14px] text-[#374151]">
-                <li><strong>Select your photo:</strong> Open ColorCut and upload any JPG, PNG, or WebP image (up to 10 MB).</li>
-                <li><strong>Automatic neural removal:</strong> ColorCut isolates the subject locally in browser memory via WebAssembly.</li>
+                <li><strong>Select your photo:</strong> Open CutColor and upload any JPG, PNG, or WebP image (up to 10 MB).</li>
+                <li><strong>Automatic neural removal:</strong> CutColor isolates the subject locally in browser memory via WebAssembly.</li>
                 <li><strong>Inspect transparency:</strong> Verify the edge contours against the checkerboard transparency grid.</li>
                 <li><strong>Download PNG:</strong> Click "Download PNG" to save a 32-bit transparent PNG. Do not save as JPG if transparency is required.</li>
               </ol>
@@ -157,10 +157,10 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
               </p>
             </div>
 
-            {/* Step-by-Step Workflow in ColorCut */}
+            {/* Step-by-Step Workflow in CutColor */}
             <div className="space-y-6">
               <h2 className="text-[22px] sm:text-[26px] font-headline font-bold text-[#111827]">
-                Step-by-Step: Creating a Transparent PNG in ColorCut
+                Step-by-Step: Creating a Transparent PNG in CutColor
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {steps.map(s => (
@@ -220,7 +220,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                     Expecting Animated or Video Cutouts
                   </div>
                   <p className="text-[#6B7280] leading-relaxed">
-                    ColorCut is designed for still photos (JPG, PNG, WebP). It does not support animated GIFs, APNG sequences, or video frame background removal.
+                    CutColor is designed for still photos (JPG, PNG, WebP). It does not support animated GIFs, APNG sequences, or video frame background removal.
                   </p>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                     Can I make an image background transparent online without Photoshop?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Yes. ColorCut runs an advanced neural segmentation model entirely in your web browser. You can upload any photo, remove the background automatically without Photoshop, and download a transparent PNG file for free.
+                    Yes. CutColor runs an advanced neural segmentation model entirely in your web browser. You can upload any photo, remove the background automatically without Photoshop, and download a transparent PNG file for free.
                   </p>
                 </div>
 
@@ -265,7 +265,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                     How do I download an image with a transparent background?
                   </h3>
                   <p className="text-[#4B5563] leading-relaxed">
-                    Once ColorCut processes your photo, keep the background setting as &quot;Transparent&quot; and click the &quot;Download PNG&quot; button. Your file is saved as a 32-bit RGBA PNG file that preserves true alpha transparency.
+                    Once CutColor processes your photo, keep the background setting as &quot;Transparent&quot; and click the &quot;Download PNG&quot; button. Your file is saved as a 32-bit RGBA PNG file that preserves true alpha transparency.
                   </p>
                 </div>
 
@@ -313,7 +313,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                   href="/how-it-works"
                   className="p-4 rounded-xl border border-[#E5E7EB] hover:border-[#4F46E5] hover:shadow-xs transition-all flex flex-col justify-between group"
                 >
-                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How ColorCut Works</span>
+                  <span className="font-medium text-[#111827] group-hover:text-[#4F46E5]">How CutColor Works</span>
                   <span className="text-[12px] text-[#6B7280] mt-1">Step-by-step workflow guide</span>
                 </a>
               </div>
@@ -326,7 +326,7 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
                   Make an image background transparent now
                 </h3>
                 <p className="text-[13px] text-[#6B7280] mt-0.5">
-                  Upload your photo to ColorCut. Free, instant, and runs directly in your browser.
+                  Upload your photo to CutColor. Free, instant, and runs directly in your browser.
                 </p>
               </div>
               <button
