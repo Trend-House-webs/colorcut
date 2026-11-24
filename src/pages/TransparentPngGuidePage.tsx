@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { AdSenseUnit } from '../components/AdSenseUnit';
 import { LegalModal, LegalDocType } from '../components/LegalPages';
 
 interface TransparentPngGuidePageProps {
@@ -347,6 +348,8 @@ export const TransparentPngGuidePage: React.FC<TransparentPngGuidePageProps> = (
 
           </div>
         </section>
+
+        <AdSenseUnit />
       </main>
 
       <Footer

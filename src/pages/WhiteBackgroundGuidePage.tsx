@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { AdSenseUnit } from '../components/AdSenseUnit';
 import { LegalModal, LegalDocType } from '../components/LegalPages';
 
 interface WhiteBackgroundGuidePageProps {
@@ -334,6 +335,8 @@ export const WhiteBackgroundGuidePage: React.FC<WhiteBackgroundGuidePageProps> =
 
           </div>
         </section>
+
+        <AdSenseUnit />
       </main>
 
       <Footer

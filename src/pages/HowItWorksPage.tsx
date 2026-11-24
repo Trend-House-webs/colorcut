@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { AdSenseUnit } from '../components/AdSenseUnit';
 import { LegalModal, LegalDocType } from '../components/LegalPages';
 import { COLOR_PRESETS } from '../data/samples';
 
@@ -435,6 +436,8 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
 
           </div>
         </section>
+
+        <AdSenseUnit />
       </main>
 
       <Footer

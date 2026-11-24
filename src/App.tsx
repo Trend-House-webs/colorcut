@@ -8,6 +8,7 @@ const EditorWorkspace = React.lazy(() =>
   import('./components/EditorWorkspace').then(m => ({ default: m.EditorWorkspace }))
 );
 import { FaqSection } from './components/FaqSection';
+import { AdSenseUnit } from './components/AdSenseUnit';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -397,6 +398,8 @@ export default function App({ initialView }: AppProps = {}) {
                 else handleSelectUseCase('profile');
               }}
             />
+
+            <AdSenseUnit />
 
             <FaqSection />
 
