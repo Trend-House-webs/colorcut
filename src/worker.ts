@@ -208,6 +208,34 @@ export default {
         }
       }
 
+      // 3b. Direct, reliable serving for /ads.txt with exact text/plain content-type and guaranteed record fallback
+      if (url.pathname === '/ads.txt') {
+        let adsTxtBody = 'google.com, pub-6848191601714172, DIRECT, f08c47fec0942fa0\n';
+        if (env?.ASSETS?.fetch) {
+          try {
+            const adsResponse = await env.ASSETS.fetch(request);
+            if (adsResponse && adsResponse.status === 200) {
+              const text = await adsResponse.text();
+              if (text.includes('pub-6848191601714172')) {
+                adsTxtBody = text;
+              }
+            }
+          } catch {
+            // Use guaranteed embedded record
+          }
+        }
+
+        return new Response(request.method === 'HEAD' ? null : adsTxtBody, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'public, max-age=3600, must-revalidate',
+            'X-Content-Type-Options': 'nosniff',
+            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+          },
+        });
+      }
+
       // 4. Production AI model proxy: route /imgly-data/* to official CDN
       if (url.pathname.startsWith('/imgly-data/')) {
         if (request.method === 'OPTIONS') {

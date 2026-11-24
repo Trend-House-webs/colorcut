@@ -268,6 +268,24 @@ async function prerenderAllPages() {
     }
   }
 
+  // Verify dist/ads.txt exists and contains the exact AdSense publisher record
+  const distAdsTxtPath = path.resolve('dist', 'ads.txt');
+  const requiredAdsRecord = 'google.com, pub-6848191601714172, DIRECT, f08c47fec0942fa0';
+  if (!fs.existsSync(distAdsTxtPath)) {
+    fs.writeFileSync(distAdsTxtPath, `${requiredAdsRecord}\n`, 'utf-8');
+  } else {
+    const existingAdsTxt = fs.readFileSync(distAdsTxtPath, 'utf-8');
+    if (!existingAdsTxt.includes(requiredAdsRecord)) {
+      const trimmed = existingAdsTxt.trim();
+      fs.writeFileSync(
+        distAdsTxtPath,
+        trimmed ? `${trimmed}\n${requiredAdsRecord}\n` : `${requiredAdsRecord}\n`,
+        'utf-8'
+      );
+    }
+  }
+  console.log(`\n✓ Verified dist/ads.txt contains exact publisher record: "${requiredAdsRecord}"`);
+
   console.log(`\n🎉 Prerendering completed successfully for all ${PAGES.length} public routes!`);
 }
 

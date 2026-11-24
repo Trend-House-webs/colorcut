@@ -207,6 +207,7 @@ function statusAndRoutingPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    publicDir: 'public',
     plugins: [react(), tailwindcss(), statusAndRoutingPlugin()],
     resolve: {
       alias: {
